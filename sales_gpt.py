@@ -161,7 +161,7 @@ class SalesGPT(Chain, BaseModel):
         # Add agent's response to conversation history
         self.conversation_history.append(ai_message)
 
-        print(f'{self.salesperson_name}: ', ai_message)
+        print(f'{self.salesperson_name}: ', ai_message.rstrip('<END_OF_TURN>'))
         return {}
 
     @classmethod
