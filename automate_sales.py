@@ -1,0 +1,48 @@
+import argparse
+
+import os
+
+from sales_gpt import SalesGPT
+from langchain.chat_models import ChatOpenAI
+
+if __name__ == "__main__":
+
+    # import your OpenAI key (put in your .env file)
+    with open('.env','r') as f:
+        env_file = f.readlines()
+    envs_dict = {key.strip("'"):value for key, value in [(i.split('=')) for i in env_file]}
+    os.environ['OPENAI_API_KEY'] = envs_dict['OPENAI_API_KEY']
+
+    # Initialize argparse
+    parser = argparse.ArgumentParser(description='Description of your program')
+
+    # Add arguments
+    parser.add_argument('--conf', type=str, help='Path to agent config file', default='')
+    parser.add_argument('--verbose', type=bool, help='Verbosity', default=False)
+    parser.add_argument('--max_num_turns', type=int, help='Maximum number of turns in the sales conversation', default=5)
+
+    # Parse arguments
+    args = parser.parse_args()
+
+    # Access arguments
+    config_path = args.conf
+    verbose = args.verbose
+    max_num_turns = args.max_num_turns
+
+    if config_path=='':
+        print('No agent config specified, using a standard config')
+    
+    llm = ChatOpenAI(temperature=0.9)
+    sales_agent = SalesGPT.from_llm(llm, verbose=verbose)
+
+    sales_agent.seed_agent()
+    sales_agent.determine_conversation_stage()
+    print('='*10)
+    cnt = 0
+    while cnt !=max_num_turns:
+        
+        print(sales_agent(inputs={}))
+        human_input = input('Your response: ')
+        sales_agent.human_step(human_input)
+        print('='*10)
+        sales_agent.determine_conversation_stage()

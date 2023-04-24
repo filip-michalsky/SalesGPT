@@ -4,7 +4,13 @@ This notebook demonstrates an implementation of a **context-aware** Sales AI age
 
 It demonstrates how we can use AI to automate sales development representatives activites, such as outbound sales calls. 
 
-SalesGPT can understand what section of a sales conversation (e.g., introduction, qualification, objection handling) is it at and act accordingly.
+SalesGPT can understand what section of a sales conversation is it in: 
+    - Introduction
+    - Qualification
+    - Objection handling
+    - etc.
+
+and acts accordingly.
 
 We leverage the LangChain library in this implementation and are inspired by BabyAGI [Link].
 

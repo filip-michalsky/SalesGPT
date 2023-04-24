@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Any
 
 from langchain import LLMChain, PromptTemplate
 from langchain.llms import BaseLLM
