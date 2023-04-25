@@ -13,11 +13,11 @@ import os
 from sales_gpt import SalesGPT
 from langchain.chat_models import ChatOpenAI
 
-os.environ['OPENAI_API_KEY'] = 'sk-xxx'
+os.environ['OPENAI_API_KEY'] = 'sk-xxx' # fill me in
 
 llm = ChatOpenAI(temperature=0.9)
 
-sales_agent = SalesGPT.from_llm(llm, verbose=verbose,
+sales_agent = SalesGPT.from_llm(llm, verbose=False,
                             salesperson_name="Ted Lasso",
                             salesperson_role="Sales Representative",
                             company_name="Sleep Haven",
@@ -37,7 +37,7 @@ sales_agent.determine_conversation_stage()
 sales_agent.step()
 
 # user
-user_input = input('Your response: Yea, sure')
+user_input = input('Your response: ') # Yea, sure
 sales_agent.human_step(user_input)
 
 # agent
@@ -72,24 +72,27 @@ The bot understands the conversation stage (you can define your own stages fitti
 As such, this agent can have a natural sales conversation with a prospect and behaves based on the conversation stage. Hence, this notebook demonstrates how we can use AI to automate sales development representatives activites, such as outbound sales calls. 
 
 
-
 ## Architecture
 
 TODO: add achitecture
 
+## Installation
 
+Make sure your have a python 3.10+ and run:
+
+`pip install -r requirements.txt`
+
+Create `.env` file and put your Open AI Key there by specifying a line: 
+
+`OPENAI_API_KEY=sk-xxx`
+
+## Try it out 
 
 To get a feel for a conversation with the AI Sales agent, you can run:
 
 `python run.py`
 
 from your terminal.
-
-make sure you environment is using Python 3.10+ and `requirements.txt` are installed.
-
-## Installation
-
-`pip install -r requirements.txt`
 
 
 ## Contact Us
