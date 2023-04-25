@@ -74,7 +74,7 @@ As such, this agent can have a natural sales conversation with a prospect and be
 
 ## Architecture
 
-TODO: add achitecture
+<img src="https://images-genai.s3.us-east-1.amazonaws.com/architecture2.png"  width="800" height="400">
 
 ## Installation
 
@@ -94,10 +94,9 @@ To get a feel for a conversation with the AI Sales agent, you can run:
 
 from your terminal.
 
-
 ## Contact Us
 
-For questions, you can [contact the notebook author](mailto:filipmichalsky@gmail.com).
+For questions, you can [contact the repo author](mailto:filipmichalsky@gmail.com).
 
 Follow me at [@FilipMichalsky](https://twitter.com/FilipMichalsky)
 
