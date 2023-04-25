@@ -48,7 +48,7 @@ if __name__ == "__main__":
     cnt = 0
     while cnt !=max_num_turns:
         
-        sales_agent(inputs={})
+        sales_agent.step()
         human_input = input('Your response: ')
         sales_agent.human_step(human_input)
         print('='*10)
