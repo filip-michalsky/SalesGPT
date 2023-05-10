@@ -10,13 +10,13 @@ We leverage the [`langchain`](https://github.com/hwchase17/langchain) library in
 
 We are building SalesGPT to power your best Autonomous Sales Agents. Hence, we would love to learn more about use cases you are building towards which will fuel SalesGPT development roadmap.
 
-**If you want us to build better towards your needs, please fill out our [SalesGPT Use Case Survey](https://5b7mfhwiany.typeform.com/to/xmJbWIjG)**
+**If you want us to build better towards your needs, please fill out our 45 seconds [SalesGPT Use Case Survey](https://5b7mfhwiany.typeform.com/to/xmJbWIjG)**
 
 ## :red_circle: Latest News
 
 ### If you looking for help building your Autonomous Sales Agents
 
-I am currently open to freelancing opps - please contact me through [my website](https://odysseypartners.ai) if you think I can help  you.
+I am currently open to freelancing opps - please contact me through [my website](https://odysseypartners.ai?utm_source=SalesGPT) if you think I can help  you.
 
 ## Quickstart
 
