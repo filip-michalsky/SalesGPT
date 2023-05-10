@@ -6,6 +6,18 @@ SalesGPT is context-aware, which means it can understand what section of a sales
 
 We leverage the [`langchain`](https://github.com/hwchase17/langchain) library in this implementation and are inspired by [BabyAGI](https://github.com/yoheinakajima/babyagi) architecture .
 
+## Our Vision: Build the Best Open-Source Autonomous Sales Agent
+
+We are building SalesGPT to power your best Autonomous Sales Agents. Hence, we would love to learn more about use cases you are building towards which will fuel SalesGPT development roadmap.
+
+**If you want us to build better towards your needs, please fill out our [SalesGPT Use Case Survey](https://5b7mfhwiany.typeform.com/to/xmJbWIjG)**
+
+## :red_circle: Latest News
+
+### If you looking for help building your Autonomous Sales Agents
+
+I am currently open to freelancing opps - please contact me through [my website](https://odysseypartners.ai) if you think I can help  you.
+
 ## Quickstart
 
 ```python
@@ -103,6 +115,7 @@ Follow me at [@FilipMichalsky](https://twitter.com/FilipMichalsky)
 
 ## SalesGPT Roadmap
 
+- Knowledge base for products/services a Sales Agent can offer (so that LLM does not make it up)
 - Convert LLM Chains (linear workflow) to an Agent (decides what to do based on user's input)
     - What tools should the agent have? (e.g., the ability to search the internet)
     - Add the ability of Sales Agent to interact with AI plugins on your website (.well-known/ai-plugin.json)
