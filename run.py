@@ -49,7 +49,7 @@ if __name__ == "__main__":
     while cnt !=max_num_turns:
         cnt+=1
         if cnt==max_num_turns:
-            print('Maximum number of turns reached - ending the call.')
+            print('Maximum number of turns reached - ending the conversation.')
             break
         sales_agent.step()
 
