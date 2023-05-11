@@ -104,7 +104,8 @@ class SalesGPT(Chain, BaseModel):
     """Controller model for the Sales Agent."""
 
     conversation_history: List[str] = []
-    current_conversation_stage: str = '1'
+    conversation_stage_id: str = '1'
+    current_conversation_stage: str = "Introduction: Start the conversation by introducing yourself and your company. Be polite and respectful while keeping the tone of the conversation professional. Your greeting should be welcoming. Always clarify in your greeting the reason why you are contacting the prospect."
     stage_analyzer_chain: StageAnalyzerChain = Field(...)
     sales_conversation_utterance_chain: SalesConversationChain = Field(...)
     conversation_stage_dict: Dict = {
@@ -142,16 +143,16 @@ class SalesGPT(Chain, BaseModel):
         self.conversation_history = []
 
     def determine_conversation_stage(self):
-        conversation_stage_id = self.stage_analyzer_chain.run(
+        self.conversation_stage_id = self.stage_analyzer_chain.run(
             conversation_history='"\n"'.join(self.conversation_history), current_conversation_stage=self.current_conversation_stage)
-
-        self.current_conversation_stage = self.retrieve_conversation_stage(conversation_stage_id)
+        print(f"Conversation Stage ID: {self.conversation_stage_id}")
+        self.current_conversation_stage = self.retrieve_conversation_stage(self.conversation_stage_id)
   
         print(f"Conversation Stage: {self.current_conversation_stage}")
         
     def human_step(self, human_input):
         # process human input
-        human_input = human_input + '<END_OF_TURN>'
+        human_input = 'User: ' + human_input + '<END_OF_TURN>'
         self.conversation_history.append(human_input)
 
     def step(self):
@@ -174,9 +175,10 @@ class SalesGPT(Chain, BaseModel):
         )
         
         # Add agent's response to conversation history
+        
+        ai_message = f'{self.salesperson_name}: ' + ai_message
         self.conversation_history.append(ai_message)
-
-        print(f'{self.salesperson_name}: ', ai_message.rstrip('<END_OF_TURN>'))
+        print(ai_message)
         return {}
 
     @classmethod
