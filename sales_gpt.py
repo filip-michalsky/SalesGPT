@@ -144,7 +144,7 @@ class SalesGPT(Chain, BaseModel):
 
     def determine_conversation_stage(self):
         self.conversation_stage_id = self.stage_analyzer_chain.run(
-            conversation_history='"\n"'.join(self.conversation_history), current_conversation_stage=self.current_conversation_stage)
+            conversation_history='\n'.join(self.conversation_history).rstrip("\n"), current_conversation_stage=self.current_conversation_stage)
         print(f"Conversation Stage ID: {self.conversation_stage_id}")
         self.current_conversation_stage = self.retrieve_conversation_stage(self.conversation_stage_id)
   
@@ -152,7 +152,7 @@ class SalesGPT(Chain, BaseModel):
         
     def human_step(self, human_input):
         # process human input
-        human_input = 'User: ' + human_input + '<END_OF_TURN>'
+        human_input = 'User: ' + human_input + ' <END_OF_TURN>'
         self.conversation_history.append(human_input)
 
     def step(self):
@@ -178,7 +178,7 @@ class SalesGPT(Chain, BaseModel):
         
         ai_message = f'{self.salesperson_name}: ' + ai_message
         self.conversation_history.append(ai_message)
-        print(ai_message)
+        print(ai_message.rstrip('<END_OF_TURN>'))
         return {}
 
     @classmethod
