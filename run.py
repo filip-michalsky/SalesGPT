@@ -21,7 +21,7 @@ if __name__ == "__main__":
     # Add arguments
     parser.add_argument('--config', type=str, help='Path to agent config file', default='')
     parser.add_argument('--verbose', type=bool, help='Verbosity', default=False)
-    parser.add_argument('--max_num_turns', type=int, help='Maximum number of turns in the sales conversation', default=5)
+    parser.add_argument('--max_num_turns', type=int, help='Maximum number of turns in the sales conversation', default=10)
 
     # Parse arguments
     args = parser.parse_args()
@@ -47,8 +47,16 @@ if __name__ == "__main__":
     print('='*10)
     cnt = 0
     while cnt !=max_num_turns:
-        
+        cnt+=1
+        if cnt==max_num_turns:
+            print('Maximum number of turns reached - ending the call.')
+            break
         sales_agent.step()
+
+        # end conversation 
+        if '<END_OF_CALL>' in sales_agent.conversation_history[-1]:
+            print('Sales Agent determined it is time to end the conversation.')
+            break
         human_input = input('Your response: ')
         sales_agent.human_step(human_input)
         print('='*10)
