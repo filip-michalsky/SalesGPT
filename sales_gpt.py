@@ -199,8 +199,7 @@ class SalesGPT(Chain, BaseModel):
         """Initialize the SalesGPT Controller."""
         stage_analyzer_chain = StageAnalyzerChain.from_llm(llm, verbose=verbose)
 
-        use_custom_prompt: bool = False,
-        if 'use_custom_prompt' in kwargs.keys() and kwargs['use_custom_prompt']:
+        if 'use_custom_prompt' in kwargs.keys() and kwargs['use_custom_prompt'] == 'True':
             
             use_custom_prompt = deepcopy(kwargs['use_custom_prompt'])
             custom_prompt = deepcopy(kwargs['custom_prompt'])
