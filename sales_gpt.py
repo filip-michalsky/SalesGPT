@@ -175,8 +175,6 @@ class SalesGPT(Chain, BaseModel):
     def _call(self, inputs: Dict[str, Any]) -> None:
         """Run one step of the sales agent."""
 
-        print('ATTRIBUTES')
-        print(self.prompt_attributes)
         # Generate agent's utterance
         ai_message = self.sales_conversation_utterance_chain.run(
             conversation_stage = self.current_conversation_stage,
