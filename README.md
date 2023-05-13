@@ -119,7 +119,9 @@ Follow me at [@FilipMichalsky](https://twitter.com/FilipMichalsky)
 - Convert LLM Chains (linear workflow) to an Agent (decides what to do based on user's input)
     - What tools should the agent have? (e.g., the ability to search the internet)
     - Add the ability of Sales Agent to interact with AI plugins on your website (.well-known/ai-plugin.json)
-- Add the ability to stop generation when user interupts the agent
+    
+~~-
+ Add the ability to stop generation when user interupts the agent~~
 - Add a vectorstore to incorporate a real product knowledge base vs. the LLM making it up.
 
 ## Contributing
