@@ -37,12 +37,12 @@ class StageAnalyzerChain(LLMChain):
             Only answer with a number between {first_stage} through {last_stage} with a best guess of what stage should the conversation continue with. 
             The answer needs to be one number only, no words.
             If there is no conversation history, output 1.
-            If the sales agent {salesperson_name} is concluding the conversation, or the user is busy, or not interested, output {last_stage}.
+            If the sales agent is concluding the conversation, or the user is busy, or not interested, output {last_stage}.
             Do not answer anything else nor add anything to you answer."""
             )
         prompt = PromptTemplate(
             template=stage_analyzer_inception_prompt_template,
-            input_variables=["conversation_history", "current_conversation_stage", "salesperson_name", "conversation_stages", "first_stage", "last_stage"],
+            input_variables=["conversation_history", "current_conversation_stage", "conversation_stages", "first_stage", "last_stage"],
         )
         return cls(prompt=prompt, llm=llm, verbose=verbose)
 
@@ -123,13 +123,16 @@ class SalesGPT(Chain, BaseModel):
     sales_conversation_utterance_chain: SalesConversationChain = Field(...)
     conversation_stage_dict: Dict = CONVERSATION_STAGES
 
-    salesperson_name: str = "Ted Lasso"
-    salesperson_role: str = "Business Development Representative"
-    company_name: str = "Sleep Haven"
-    company_business: str = "Sleep Haven is a premium mattress company that provides customers with the most comfortable and supportive sleeping experience possible. We offer a range of high-quality mattresses, pillows, and bedding accessories that are designed to meet the unique needs of our customers."
-    company_values: str = "Our mission at Sleep Haven is to help people achieve a better night's sleep by providing them with the best possible sleep solutions. We believe that quality sleep is essential to overall health and well-being, and we are committed to helping our customers achieve optimal sleep by offering exceptional products and customer service."
-    conversation_purpose: str = "find out whether they are looking to achieve better sleep via buying a premier mattress."
-    conversation_type: str = "call"
+    prompt_attributes: Dict = dict(
+        salesperson_name= "Ted Lasso",
+        salesperson_role="Business Development Representative",
+        company_name="Sleep Haven",
+        company_business="Sleep Haven is a premium mattress company that provides customers with the most comfortable and supportive sleeping experience possible. We offer a range of high-quality mattresses, pillows, and bedding accessories that are designed to meet the unique needs of our customers.",
+        company_values="Our mission at Sleep Haven is to help people achieve a better night's sleep by providing them with the best possible sleep solutions. We believe that quality sleep is essential to overall health and well-being, and we are committed to helping our customers achieve optimal sleep by offering exceptional products and customer service.",
+        conversation_purpose="find out whether they are looking to achieve better sleep via buying a premier mattress.",
+        conversation_type= "call"
+    )
+
 
     def retrieve_conversation_stage(self, key):
         return self.conversation_stage_dict.get(key, '1')
@@ -151,7 +154,6 @@ class SalesGPT(Chain, BaseModel):
         self.conversation_stage_id = self.stage_analyzer_chain.run(
             conversation_history='\n'.join(self.conversation_history).rstrip("\n"),
             current_conversation_stage=self.current_conversation_stage,
-            salesperson_name=self.salesperson_name,
             conversation_stages='\n'.join([str(key)+': '+ str(value) for key, value in CONVERSATION_STAGES.items()]),
             first_stage=min(self.conversation_stage_dict.keys()),
             last_stage=max(self.conversation_stage_dict.keys())
@@ -173,21 +175,18 @@ class SalesGPT(Chain, BaseModel):
     def _call(self, inputs: Dict[str, Any]) -> None:
         """Run one step of the sales agent."""
 
+        print('ATTRIBUTES')
+        print(self.prompt_attributes)
         # Generate agent's utterance
         ai_message = self.sales_conversation_utterance_chain.run(
-            salesperson_name = self.salesperson_name,
-            salesperson_role= self.salesperson_role,
-            company_name=self.company_name,
-            company_business=self.company_business,
-            company_values = self.company_values,
-            conversation_purpose = self.conversation_purpose,
-            conversation_history="\n".join(self.conversation_history),
             conversation_stage = self.current_conversation_stage,
-            conversation_type=self.conversation_type
+            conversation_history="\n".join(self.conversation_history),
+            **self.prompt_attributes
         )
         
         # Add agent's response to conversation history
-        ai_message = f'{self.salesperson_name}: ' + ai_message
+        agent_name = self.prompt_attributes.get('salesperson_name', 'AI bot')
+        ai_message = agent_name + ': ' + ai_message
         self.conversation_history.append(ai_message)
         print(ai_message.replace('<END_OF_TURN>', ''))
         return {}
