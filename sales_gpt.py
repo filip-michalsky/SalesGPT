@@ -1,5 +1,6 @@
 from typing import Dict, List, Any, Tuple
 from copy import deepcopy
+from base_logger import time_logger
 from langchain import LLMChain, PromptTemplate
 from langchain.llms import BaseLLM
 from pydantic import BaseModel, Field
@@ -21,6 +22,7 @@ class StageAnalyzerChain(LLMChain):
     """Chain to analyze which conversation stage should the conversation move into."""
 
     @classmethod
+    @time_logger
     def from_llm(cls, llm: BaseLLM, verbose: bool = True) -> LLMChain:
         """Get the response parser."""
         stage_analyzer_inception_prompt_template = (
@@ -49,6 +51,7 @@ class SalesConversationChain(LLMChain):
     """Chain to generate the next utterance for the conversation."""
 
     @classmethod
+    @time_logger
     def from_llm(cls, llm: BaseLLM, 
                  verbose: bool = True, 
                  use_custom_prompt: bool = False,
@@ -151,11 +154,13 @@ class SalesGPT(Chain, BaseModel):
     def output_keys(self) -> List[str]:
         return []
 
+    @time_logger
     def seed_agent(self):
         # Step 1: seed the conversation
         self.current_conversation_stage= self.retrieve_conversation_stage('1')
         self.conversation_history = []
 
+    @time_logger
     def determine_conversation_stage(self):
         self.conversation_stage_id = self.stage_analyzer_chain.run(
             conversation_history='\n'.join(self.conversation_history).rstrip("\n"),
@@ -173,6 +178,7 @@ class SalesGPT(Chain, BaseModel):
         human_input = 'User: ' + human_input + ' <END_OF_TURN>'
         self.conversation_history.append(human_input)
 
+    @time_logger
     def step(self):
         self._call(inputs={})
 
@@ -200,6 +206,7 @@ class SalesGPT(Chain, BaseModel):
         return {}
 
     @classmethod
+    @time_logger
     def from_llm(
         cls, llm: BaseLLM, verbose: bool = False, **kwargs
     ) -> "SalesGPT":
