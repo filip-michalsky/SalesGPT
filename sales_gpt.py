@@ -224,7 +224,7 @@ class SalesGPT(Chain, BaseModel):
             sales_conversation_utterance_chain = SalesConversationChain.from_llm(
                 llm, verbose=verbose
             )
-
+        
         return cls(
             stage_analyzer_chain=stage_analyzer_chain,
             sales_conversation_utterance_chain=sales_conversation_utterance_chain,
