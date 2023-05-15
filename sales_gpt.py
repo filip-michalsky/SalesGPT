@@ -6,6 +6,11 @@ from pydantic import BaseModel, Field
 from langchain.chains.base import Chain
 from langchain.chat_models import ChatOpenAI
 
+import os, sys
+DIRNAME = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(DIRNAME)
+from logger import time_logger
+
 
 CONVERSATION_STAGES = {'1' : "Introduction: Start the conversation by introducing yourself and your company. Be polite and respectful while keeping the tone of the conversation professional. Your greeting should be welcoming. Always clarify in your greeting the reason why you are calling.",
 '2': "Qualification: Qualify the prospect by confirming if they are the right person to talk to regarding your product/service. Ensure that they have the authority to make purchasing decisions.",
@@ -21,6 +26,7 @@ class StageAnalyzerChain(LLMChain):
     """Chain to analyze which conversation stage should the conversation move into."""
 
     @classmethod
+    @time_logger
     def from_llm(cls, llm: BaseLLM, verbose: bool = True) -> LLMChain:
         """Get the response parser."""
         stage_analyzer_inception_prompt_template = (
@@ -49,6 +55,7 @@ class SalesConversationChain(LLMChain):
     """Chain to generate the next utterance for the conversation."""
 
     @classmethod
+    @time_logger
     def from_llm(cls, llm: BaseLLM, 
                  verbose: bool = True, 
                  use_custom_prompt: bool = False,
@@ -151,11 +158,13 @@ class SalesGPT(Chain, BaseModel):
     def output_keys(self) -> List[str]:
         return []
 
+    @time_logger
     def seed_agent(self):
         # Step 1: seed the conversation
         self.current_conversation_stage= self.retrieve_conversation_stage('1')
         self.conversation_history = []
 
+    @time_logger
     def determine_conversation_stage(self):
         self.conversation_stage_id = self.stage_analyzer_chain.run(
             conversation_history='\n'.join(self.conversation_history).rstrip("\n"),
@@ -173,6 +182,7 @@ class SalesGPT(Chain, BaseModel):
         human_input = 'User: ' + human_input + ' <END_OF_TURN>'
         self.conversation_history.append(human_input)
 
+    @time_logger
     def step(self):
         self._call(inputs={})
 
@@ -200,6 +210,7 @@ class SalesGPT(Chain, BaseModel):
         return {}
 
     @classmethod
+    @time_logger
     def from_llm(
         cls, llm: BaseLLM, verbose: bool = False, **kwargs
     ) -> "SalesGPT":
