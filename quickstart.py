@@ -20,7 +20,6 @@ sales_agent = SalesGPT.from_llm(llm, verbose=False,
                             needs of our customers.''')
 
 sales_agent.seed_agent()
-sales_agent.determine_conversation_stage()
 
 # agent 
 sales_agent.step()
@@ -30,5 +29,4 @@ user_input = input('Your response: ')
 sales_agent.human_step(user_input)
 
 # agent
-sales_agent.determine_conversation_stage()
 sales_agent.step()
