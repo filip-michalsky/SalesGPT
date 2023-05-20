@@ -43,7 +43,7 @@ sales_agent = SalesGPT.from_llm(llm, verbose=False,
                             needs of our customers.''')
 
 sales_agent.seed_agent()
-sales_agent.determine_conversation_stage()
+sales_agent.determine_conversation_stage() # optional for demonstration, built into the prompt
 
 # agent 
 sales_agent.step()
@@ -53,7 +53,7 @@ user_input = input('Your response: ') # Yea, sure
 sales_agent.human_step(user_input)
 
 # agent
-sales_agent.determine_conversation_stage()
+sales_agent.determine_conversation_stage() # optional for demonstration, built into the prompt
 sales_agent.step()
 ```
 > Conversation Stage: 
@@ -80,6 +80,7 @@ The bot understands the conversation stage (you can define your own stages fitti
 - Solution presentation: Based on the prospect's needs, present your product/service as the solution that can address their pain points.
 - Objection handling: Address any objections that the prospect may have regarding your product/service. 
 - Close: Ask for the sale by proposing a next step. 
+- End Conversation: The user does not want to continue the conversation, so end the call.
  
 As such, this agent can have a natural sales conversation with a prospect and behaves based on the conversation stage. Hence, this notebook demonstrates how we can use AI to automate sales development representatives activites, such as outbound sales calls. 
 
