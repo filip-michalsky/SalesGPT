@@ -43,7 +43,6 @@ if __name__ == "__main__":
         sales_agent = SalesGPT.from_llm(llm, verbose=verbose, **config)
 
     sales_agent.seed_agent()
-    sales_agent.determine_conversation_stage()
     print('='*10)
     cnt = 0
     while cnt !=max_num_turns:
@@ -60,4 +59,3 @@ if __name__ == "__main__":
         human_input = input('Your response: ')
         sales_agent.human_step(human_input)
         print('='*10)
-        sales_agent.determine_conversation_stage()
