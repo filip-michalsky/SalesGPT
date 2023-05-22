@@ -228,10 +228,10 @@ class SalesGPT(Chain, BaseModel):
         
         inception_messages = prompt[0][0].to_messages()
 
-        message_dict = {'role': 'System', 'content': inception_messages[0].content}
+        message_dict = {'role': 'system', 'content': inception_messages[0].content}
         messages = [message_dict]
 
-        return self.llm.completion_with_retry(messages=messages, stream=True, model='gpt-3.5-turbo',
+        return self.sales_conversation_utterance_chain.llm.completion_with_retry(messages=messages, stream=True, model='gpt-3.5-turbo',
 )
 
     def _call(self, inputs: Dict[str, Any]) -> None:
