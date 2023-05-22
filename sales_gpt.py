@@ -229,6 +229,9 @@ class SalesGPT(Chain, BaseModel):
         inception_messages = prompt[0][0].to_messages()
 
         message_dict = {'role': 'system', 'content': inception_messages[0].content}
+
+        if self.sales_conversation_utterance_chain.verbose:
+            print('\033[92m' + inception_messages[0].content + '\033[0m')
         messages = [message_dict]
 
         return self.sales_conversation_utterance_chain.llm.completion_with_retry(messages=messages, stream=True, model='gpt-3.5-turbo',
