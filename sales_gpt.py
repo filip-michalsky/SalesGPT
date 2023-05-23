@@ -199,6 +199,7 @@ class SalesGPT(Chain, BaseModel):
         else:
             return self._streaming_generator()
 
+    # TO-DO change this override "run" override the "run method" in the SalesConversation chain!
     @time_logger
     def _streaming_generator(self):
         '''
@@ -234,7 +235,7 @@ class SalesGPT(Chain, BaseModel):
             print('\033[92m' + inception_messages[0].content + '\033[0m')
         messages = [message_dict]
 
-        return self.sales_conversation_utterance_chain.llm.completion_with_retry(messages=messages, stream=True, model='gpt-3.5-turbo',
+        return self.sales_conversation_utterance_chain.llm.completion_with_retry(messages=messages, stop="<END_OF_TURN>", stream=True, model='gpt-3.5-turbo',
 )
 
     def _call(self, inputs: Dict[str, Any]) -> None:
