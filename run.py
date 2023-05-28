@@ -31,7 +31,7 @@ if __name__ == "__main__":
     verbose = args.verbose
     max_num_turns = args.max_num_turns
 
-    llm = ChatOpenAI(temperature=0.9)
+    llm = ChatOpenAI(temperature=0.9, stop = "<END_OF_TURN>")
 
     if config_path=='':
         print('No agent config specified, using a standard config')
