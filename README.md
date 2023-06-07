@@ -14,8 +14,10 @@ We are building SalesGPT to power your best Autonomous Sales Agents. Hence, we w
 
 ## :red_circle: Latest News
 
-### Demo: SalesGPT Voice Calling: A New Way to Sell? 🤔
-https://github.com/filip-michalsky/SalesGPT/assets/31483888/ad426960-9b9f-41c1-8888-6b9cfa5afd3f
+### Demo: SalesGPT Outbound Prospecting: A New Way to Sell? 🤔
+
+https://github.com/filip-michalsky/SalesGPT/assets/31483888/2b13ba28-4e07-41dc-a8bf-4084d25247ca
+
 
 ### If you looking for help building your Autonomous Sales Agents
 
