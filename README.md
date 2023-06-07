@@ -6,6 +6,10 @@ SalesGPT is context-aware, which means it can understand what section of a sales
 
 We leverage the [`langchain`](https://github.com/hwchase17/langchain) library in this implementation and are inspired by [BabyAGI](https://github.com/yoheinakajima/babyagi) architecture .
 
+## SalesGPT Voice Calling: A New Way to Sell? 🤔
+https://github.com/filip-michalsky/SalesGPT/assets/31483888/ad426960-9b9f-41c1-8888-6b9cfa5afd3f
+
+
 ## Our Vision: Build the Best Open-Source Autonomous Sales Agent
 
 We are building SalesGPT to power your best Autonomous Sales Agents. Hence, we would love to learn more about use cases you are building towards which will fuel SalesGPT development roadmap.
