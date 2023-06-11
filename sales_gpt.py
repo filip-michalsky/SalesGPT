@@ -188,8 +188,55 @@ class SalesGPT(Chain, BaseModel):
         self.conversation_history.append(human_input)
 
     @time_logger
-    def step(self):
-        self._call(inputs={})
+    def step(self, return_streaming_generator: bool = False):
+        '''
+        Args:
+            return_streaming_generator (bool): whether or not return
+            streaming generator object to manipulate streaming chunks in downstream applications.
+        '''
+        if not return_streaming_generator:
+            self._call(inputs={})
+        else:
+            return self._streaming_generator()
+
+    # TO-DO change this override "run" override the "run method" in the SalesConversation chain!
+    @time_logger
+    def _streaming_generator(self):
+        '''
+        Sometimes, the sales agent wants to take an action before the full LLM output is available.
+        For instance, if we want to do text to speech on the partial LLM output.
+
+        This function returns a streaming generator which can manipulate partial output from an LLM
+        in-flight of the generation.
+
+        Example:
+
+        >> streaming_generator = self._streaming_generator()
+        # Now I can loop through the output in chunks:
+        >> for chunk in streaming_generator:
+        Out: Chunk 1, Chunk 2, ... etc.
+        See: https://github.com/openai/openai-cookbook/blob/main/examples/How_to_stream_completions.ipynb
+        '''
+        prompt = self.sales_conversation_utterance_chain.prep_prompts([dict(conversation_stage = self.current_conversation_stage,
+            conversation_history="\n".join(self.conversation_history),
+            salesperson_name = self.salesperson_name,
+            salesperson_role= self.salesperson_role,
+            company_name=self.company_name,
+            company_business=self.company_business,
+            company_values = self.company_values,
+            conversation_purpose = self.conversation_purpose,
+            conversation_type=self.conversation_type)])
+        
+        inception_messages = prompt[0][0].to_messages()
+
+        message_dict = {'role': 'system', 'content': inception_messages[0].content}
+
+        if self.sales_conversation_utterance_chain.verbose:
+            print('\033[92m' + inception_messages[0].content + '\033[0m')
+        messages = [message_dict]
+
+        return self.sales_conversation_utterance_chain.llm.completion_with_retry(messages=messages, stop="<END_OF_TURN>", stream=True, model='gpt-3.5-turbo',
+)
 
     def _call(self, inputs: Dict[str, Any]) -> None:
         """Run one step of the sales agent."""
