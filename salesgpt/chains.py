@@ -1,11 +1,7 @@
 from langchain import LLMChain, PromptTemplate
 from langchain.llms import BaseLLM
 
-
-import os, sys
-DIRNAME = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(DIRNAME)
-from logger import time_logger
+from salesgpt.logger import time_logger
 
 
 class StageAnalyzerChain(LLMChain):
