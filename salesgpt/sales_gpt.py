@@ -235,7 +235,7 @@ class SalesGPT(Chain, BaseModel):
             print('\033[92m' + inception_messages[0].content + '\033[0m')
         messages = [message_dict]
 
-        return self.sales_conversation_utterance_chain.llm.completion_with_retry(messages=messages, stop="<END_OF_TURN>", stream=True, model='gpt-3.5-turbo',
+        return self.sales_conversation_utterance_chain.llm.completion_with_retry(messages=messages, stop="<END_OF_TURN>", stream=True, model='gpt-3.5-turbo-0613',
 )
 
     def _call(self, inputs: Dict[str, Any]) -> None:
