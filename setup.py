@@ -24,7 +24,7 @@ def get_requirements(path):
         return [requirement.strip() for requirement in requirements]
 
 
-install_requires = get_requirements(os.path.join(base_dir, "requirements.txt"))
+install_requires = get_requirements("requirements.txt")
 
 setup(
     name="salesgpt",
@@ -36,15 +36,14 @@ setup(
     author="Filip Michalsky",
     url="https://github.com/filip-michalsky/SalesGPT",
     classifiers=[
-        "Development Status :: Beta",
+        "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
-        "License :: OSI Approved :: Apache 2.0 Software License",
+        "License :: OSI Approved :: Apache Software License",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3 :: Only",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Topic :: Scientific/Engineering :: Artificial Intelligence",
-        "Topic :: Scientific/Engineering :: Autonomous AI Agents"
     ],
     keywords="openai sales gpt autonomous agi",
     python_requires=">=3.10",
