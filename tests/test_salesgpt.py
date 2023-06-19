@@ -1,16 +1,13 @@
 import os
 import pytest
-from sales_gpt import SalesGPT
+from salesgpt.agents import SalesGPT
 from langchain.chat_models import ChatOpenAI
 
 
 class TestSalesGPT():
 
-    def test_valid_inference(self, test_data_dir, load_env):
+    def test_valid_inference(self, load_env):
         '''Test that the agent will start and generate the first utterance.'''
-
-        data_dir = test_data_dir()
-        load_env()
         
         llm = ChatOpenAI(temperature=0.9)
 
@@ -31,7 +28,9 @@ class TestSalesGPT():
         sales_agent.determine_conversation_stage() # optional for demonstration, built into the prompt
 
         # agent output sample
-        agent_output = sales_agent.step()
+        sales_agent.step()
+
+        agent_output = sales_agent.conversation_history[-1]
         assert agent_output is not None, "Agent output cannot be None."
         assert isinstance(agent_output, str), "Agent output needs to be of type str"
         assert len(agent_output) > 0, "Length of output needs to be greater than 0."

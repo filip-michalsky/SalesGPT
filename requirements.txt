@@ -1,1 +1,7 @@
 langchain>=0.0.205
+openai>=0.27.8 
+tqdm>=4.65.0
+black
+flake8
+isort
+pytest
