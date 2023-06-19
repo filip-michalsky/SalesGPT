@@ -4,7 +4,6 @@ from langchain import LLMChain, PromptTemplate
 from langchain.llms import BaseLLM
 from pydantic import BaseModel, Field
 from langchain.chains.base import Chain
-from langchain.chat_models import ChatOpenAI
 
 import os, sys
 DIRNAME = os.path.dirname(os.path.abspath(__file__))
