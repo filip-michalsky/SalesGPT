@@ -24,7 +24,7 @@ def get_requirements(path):
         return [requirement.strip() for requirement in requirements]
 
 
-install_requires = get_requirements("requirements.txt")
+install_requires = get_requirements(os.path.join(base_dir, "requirements.txt"))
 
 setup(
     name="salesgpt",
