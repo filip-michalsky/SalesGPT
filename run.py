@@ -3,7 +3,7 @@ import argparse
 import os
 import json
 
-from sales_gpt import SalesGPT
+from salesgpt.agents import SalesGPT
 from langchain.chat_models import ChatOpenAI
 
 

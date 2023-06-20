@@ -27,7 +27,7 @@ I am currently open to freelancing opps - please contact me through [my website]
 
 ```python
 import os
-from sales_gpt import SalesGPT
+from salesgpt.agents import SalesGPT
 from langchain.chat_models import ChatOpenAI
 
 os.environ['OPENAI_API_KEY'] = 'sk-xxx' # fill me in
@@ -103,6 +103,10 @@ Make sure your have a python 3.10+ and run:
 Create `.env` file and put your Open AI Key there by specifying a line: 
 
 `OPENAI_API_KEY=sk-xxx`
+
+Install with pip
+
+`pip install salesgpt`
 
 ## Try it out 
 
