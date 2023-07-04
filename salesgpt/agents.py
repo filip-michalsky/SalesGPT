@@ -71,7 +71,7 @@ class SalesGPT(Chain, BaseModel):
         self.conversation_history.append(human_input)
 
     @time_logger
-    def step(self, return_streaming_generator: bool = False):
+    def step(self, return_streaming_generator: bool = False, model_name="gpt-3.5-turbo-0613"):
         """
         Args:
             return_streaming_generator (bool): whether or not return
@@ -80,11 +80,11 @@ class SalesGPT(Chain, BaseModel):
         if not return_streaming_generator:
             self._call(inputs={})
         else:
-            return self._streaming_generator()
+            return self._streaming_generator(model_name=model_name)
 
     # TO-DO change this override "run" override the "run method" in the SalesConversation chain!
     @time_logger
-    def _streaming_generator(self):
+    def _streaming_generator(self, model_name="gpt-3.5-turbo-0613"):
         """
         Sometimes, the sales agent wants to take an action before the full LLM output is available.
         For instance, if we want to do text to speech on the partial LLM output.
@@ -128,7 +128,7 @@ class SalesGPT(Chain, BaseModel):
             messages=messages,
             stop="<END_OF_TURN>",
             stream=True,
-            model="gpt-3.5-turbo-0613",
+            model=model_name,
         )
 
     def _call(self, inputs: Dict[str, Any]) -> None:
