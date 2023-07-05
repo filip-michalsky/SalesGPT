@@ -36,3 +36,7 @@ class TestSalesGPT:
         assert agent_output is not None, "Agent output cannot be None."
         assert isinstance(agent_output, str), "Agent output needs to be of type str"
         assert len(agent_output) > 0, "Length of output needs to be greater than 0."
+    
+    
+    def test_valid_inference_stream(self, load_env):
+        pass
