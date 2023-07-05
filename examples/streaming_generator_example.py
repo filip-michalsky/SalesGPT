@@ -1,5 +1,6 @@
 import os
-from sales_gpt import SalesGPT
+from salesgpt.agents import SalesGPT
+
 from langchain.chat_models import ChatOpenAI
 
 with open('.env','r') as f:
@@ -25,7 +26,7 @@ sales_agent = SalesGPT.from_llm(llm, verbose=False,
 sales_agent.seed_agent()
 
 # get generator of the LLM output
-generator = sales_agent.step(return_streaming_generator=True)
+generator = sales_agent.step(return_streaming_generator=True, model_name="gpt-3.5-turbo-0613")
 
 # operate on streaming LLM output in near-real time
 # for instance, do something after each full sentence is generated
