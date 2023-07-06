@@ -112,7 +112,7 @@ Install with pip
 
 To get a feel for a conversation with the AI Sales agent, you can run:
 
-`python run.py`
+`python run.py --verbose True --config agent_setup.json`
 
 from your terminal.
 
