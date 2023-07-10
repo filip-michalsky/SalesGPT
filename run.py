@@ -5,7 +5,8 @@ import json
 
 from salesgpt.agents import SalesGPT
 from langchain.chat_models import ChatOpenAI
-
+from langchain.utilities.twilio import TwilioAPIWrapper
+from twilio.rest import Client
 
 if __name__ == "__main__":
 
@@ -14,6 +15,9 @@ if __name__ == "__main__":
         env_file = f.readlines()
     envs_dict = {key.strip("'") :value.strip("\n") for key, value in [(i.split('=')) for i in env_file]}
     os.environ['OPENAI_API_KEY'] = envs_dict['OPENAI_API_KEY']
+    os.environ['TWILIO_ACCOUNT_SID'] = envs_dict['TWILIO_ACCOUNT_SID']
+    os.environ['TWILIO_AUTH_TOKEN'] = envs_dict['TWILIO_AUTH_TOKEN']
+    os.environ['TWILIO_FROM_NUMBER'] = envs_dict['TWILIO_FROM_NUMBER']
 
     # Initialize argparse
     parser = argparse.ArgumentParser(description='Description of your program')
