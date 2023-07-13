@@ -2,6 +2,7 @@
 **.env
 .DS_Store
 **__pycache__
+/scratch
 
 # Distribution / packaging
 .Python
