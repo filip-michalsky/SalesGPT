@@ -65,7 +65,7 @@ To use a tool, please use the following format:
 ```
 Thought: Do I need to use a tool? Yes
 Action: the action to take, should be one of {tools}
-Action Input: the input to the action
+Action Input: the input to the action, always a simple string input
 Observation: the result of the action
 ```
 
