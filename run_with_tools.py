@@ -31,7 +31,7 @@ if __name__ == "__main__":
     verbose = args.verbose
     max_num_turns = args.max_num_turns
 
-    llm = ChatOpenAI(temperature=0.9, model='gpt-4')
+    llm = ChatOpenAI(temperature=0.2)
 
 
     sales_agent = SalesGPT.from_llm(llm, use_tools=True, 

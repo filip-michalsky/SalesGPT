@@ -67,13 +67,14 @@ Thought: Do I need to use a tool? Yes
 Action: the action to take, should be one of {tools}
 Action Input: the input to the action, always a simple string input
 Observation: the result of the action
+... (this Thought/Action/Action Input/Observation can repeat N times)
 ```
 
 When you have a response to say to the Human, or if you do not need to use a tool, you MUST use the format:
 
 ```
 Thought: Do I need to use a tool? No
-{salesperson_name}: [your response here, if previously used a tool, rephrase latest observation]
+{salesperson_name}: [your response here, if previously used a tool, rephrase latest observation, if unable to find the answer, say it]
 ```
 
 You must respond according to the previous conversation history and the stage of the conversation you are at.
