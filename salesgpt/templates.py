@@ -67,10 +67,10 @@ Thought: Do I need to use a tool? Yes
 Action: the action to take, should be one of {tools}
 Action Input: the input to the action, always a simple string input
 Observation: the result of the action
-... (this Thought/Action/Action Input/Observation can repeat N times)
 ```
 
-When you have a response to say to the Human, or if you do not need to use a tool, you MUST use the format:
+If the result of the action is "I don't know." or "Sorry I don't know", then you have to say that to the user as described in the next sentence.
+When you have a response to say to the Human, or if you do not need to use a tool, or if tool did not help, you MUST use the format:
 
 ```
 Thought: Do I need to use a tool? No

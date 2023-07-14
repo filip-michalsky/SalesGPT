@@ -225,7 +225,8 @@ class SalesGPT(Chain, BaseModel):
                 tools_getter=lambda x: tools,
                 # This omits the `agent_scratchpad`, `tools`, and `tool_names` variables because those are generated dynamically
                 # This includes the `intermediate_steps` variable because that is needed
-                input_variables=["input", "intermediate_steps", "salesperson_name",
+                input_variables=["input", "intermediate_steps", 
+                                 "salesperson_name",
                                 "salesperson_role",
                                 "company_name",
                                 "company_business",
@@ -238,6 +239,8 @@ class SalesGPT(Chain, BaseModel):
 
             tool_names = [tool.name for tool in tools]
 
+            # WARNING: this output parser is NOT reliable yet
+            ## It makes assumptions about output from LLM which can break and throw an error
             output_parser = ConvoOutputParser(ai_prefix=kwargs["salesperson_name"])
 
             sales_agent_with_tools = LLMSingleActionAgent(
@@ -262,3 +265,37 @@ class SalesGPT(Chain, BaseModel):
             verbose=verbose,
             **kwargs,
         )
+
+
+
+from langchain.agents.agent import AgentOutputParser
+from langchain.agents.conversational.prompt import FORMAT_INSTRUCTIONS
+from langchain.schema import AgentAction, AgentFinish, OutputParserException
+import re
+from typing import Union
+
+class SalesConvoOutputParser(AgentOutputParser):
+    ai_prefix: str = "AI" # change for salesperson_name
+
+    def get_format_instructions(self) -> str:
+        return FORMAT_INSTRUCTIONS
+
+    def parse(self, text: str) -> Union[AgentAction, AgentFinish]:
+        print('TEXT')
+        print(text)
+        print('-------')
+        if f"{self.ai_prefix}:" in text:
+            return AgentFinish(
+                {"output": text.split(f"{self.ai_prefix}:")[-1].strip()}, text
+            )
+        regex = r"Action: (.*?)[\n]*Action Input: (.*)"
+        match = re.search(regex, text)
+        if not match:
+            raise OutputParserException(f"Could not parse LLM output: `{text}`")
+        action = match.group(1)
+        action_input = match.group(2)
+        return AgentAction(action.strip(), action_input.strip(" ").strip('"'), text)
+
+    @property
+    def _type(self) -> str:
+        return "sales-agent"
