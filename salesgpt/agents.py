@@ -1,20 +1,20 @@
 from copy import deepcopy
 from typing import Any, Dict, List, Union
 
-from langchain.chains.base import Chain
-from langchain.chains import RetrievalQA
-from langchain.llms import BaseLLM
 from langchain import LLMChain
-from langchain.agents import LLMSingleActionAgent, AgentExecutor
+from langchain.agents import AgentExecutor, LLMSingleActionAgent
+from langchain.chains import RetrievalQA
+from langchain.chains.base import Chain
+from langchain.llms import BaseLLM
 from pydantic import BaseModel, Field
 
 from salesgpt.chains import SalesConversationChain, StageAnalyzerChain
 from salesgpt.logger import time_logger
-from salesgpt.stages import CONVERSATION_STAGES
-from salesgpt.tools import setup_knowledge_base, get_tools
-from salesgpt.templates import CustomPromptTemplateForTools
 from salesgpt.parsers import SalesConvoOutputParser
 from salesgpt.prompts import SALES_AGENT_TOOLS_PROMPT
+from salesgpt.stages import CONVERSATION_STAGES
+from salesgpt.templates import CustomPromptTemplateForTools
+from salesgpt.tools import get_tools, setup_knowledge_base
 
 
 class SalesGPT(Chain, BaseModel):
@@ -81,7 +81,9 @@ class SalesGPT(Chain, BaseModel):
         self.conversation_history.append(human_input)
 
     @time_logger
-    def step(self, return_streaming_generator: bool = False, model_name="gpt-3.5-turbo-0613"):
+    def step(
+        self, return_streaming_generator: bool = False, model_name="gpt-3.5-turbo-0613"
+    ):
         """
         Args:
             return_streaming_generator (bool): whether or not return
@@ -148,7 +150,7 @@ class SalesGPT(Chain, BaseModel):
         # if use tools
         if self.use_tools:
             ai_message = self.sales_agent_executor.run(
-                input='',
+                input="",
                 conversation_stage=self.current_conversation_stage,
                 conversation_history="\n".join(self.conversation_history),
                 salesperson_name=self.salesperson_name,
@@ -157,10 +159,10 @@ class SalesGPT(Chain, BaseModel):
                 company_business=self.company_business,
                 company_values=self.company_values,
                 conversation_purpose=self.conversation_purpose,
-                conversation_type=self.conversation_type
-                )
+                conversation_type=self.conversation_type,
+            )
 
-        else:    
+        else:
             # else
             ai_message = self.sales_conversation_utterance_chain.run(
                 conversation_stage=self.current_conversation_stage,
@@ -210,10 +212,7 @@ class SalesGPT(Chain, BaseModel):
                 llm, verbose=verbose
             )
 
-        if (
-        "use_tools" in kwargs.keys()
-        and kwargs["use_tools"] is True
-        ):  
+        if "use_tools" in kwargs.keys() and kwargs["use_tools"] is True:
             # set up agent with tools
             product_catalog = kwargs["product_catalog"]
             knowledge_base = setup_knowledge_base(product_catalog)
@@ -224,16 +223,19 @@ class SalesGPT(Chain, BaseModel):
                 tools_getter=lambda x: tools,
                 # This omits the `agent_scratchpad`, `tools`, and `tool_names` variables because those are generated dynamically
                 # This includes the `intermediate_steps` variable because that is needed
-                input_variables=["input", "intermediate_steps", 
-                                 "salesperson_name",
-                                "salesperson_role",
-                                "company_name",
-                                "company_business",
-                                "company_values",
-                                "conversation_purpose",
-                                "conversation_type",
-                                "conversation_history"],
-                )
+                input_variables=[
+                    "input",
+                    "intermediate_steps",
+                    "salesperson_name",
+                    "salesperson_role",
+                    "company_name",
+                    "company_business",
+                    "company_values",
+                    "conversation_purpose",
+                    "conversation_type",
+                    "conversation_history",
+                ],
+            )
             llm_chain = LLMChain(llm=llm, prompt=prompt, verbose=True)
 
             tool_names = [tool.name for tool in tools]
@@ -247,15 +249,14 @@ class SalesGPT(Chain, BaseModel):
                 output_parser=output_parser,
                 stop=["\nObservation:"],
                 allowed_tools=tool_names,
-                )
-            
+            )
+
             sales_agent_executor = AgentExecutor.from_agent_and_tools(
                 agent=sales_agent_with_tools, tools=tools, verbose=True
             )
         else:
-            sales_agent_executor=None
-            knowledge_base=None
-
+            sales_agent_executor = None
+            knowledge_base = None
 
         return cls(
             stage_analyzer_chain=stage_analyzer_chain,
@@ -265,5 +266,3 @@ class SalesGPT(Chain, BaseModel):
             verbose=verbose,
             **kwargs,
         )
-
-

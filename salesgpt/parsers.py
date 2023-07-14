@@ -1,12 +1,13 @@
-from langchain.agents.agent import AgentOutputParser
-from langchain.schema import AgentAction, AgentFinish #OutputParserException
-from langchain.agents.conversational.prompt import FORMAT_INSTRUCTIONS
 import re
 from typing import Union
 
+from langchain.agents.agent import AgentOutputParser
+from langchain.agents.conversational.prompt import FORMAT_INSTRUCTIONS
+from langchain.schema import AgentAction, AgentFinish  # OutputParserException
+
 
 class SalesConvoOutputParser(AgentOutputParser):
-    ai_prefix: str = "AI" # change for salesperson_name
+    ai_prefix: str = "AI"  # change for salesperson_name
     verbose: bool = False
 
     def get_format_instructions(self) -> str:
@@ -14,9 +15,9 @@ class SalesConvoOutputParser(AgentOutputParser):
 
     def parse(self, text: str) -> Union[AgentAction, AgentFinish]:
         if self.verbose:
-            print('TEXT')
+            print("TEXT")
             print(text)
-            print('-------')
+            print("-------")
         if f"{self.ai_prefix}:" in text:
             return AgentFinish(
                 {"output": text.split(f"{self.ai_prefix}:")[-1].strip()}, text
@@ -26,7 +27,10 @@ class SalesConvoOutputParser(AgentOutputParser):
         if not match:
             ## TODO - this is not entirely reliable, sometimes results in an error.
             return AgentFinish(
-                {"output": "I apologize, I was unable to find the answer to your question. Is there anything else I can help with?"}, text
+                {
+                    "output": "I apologize, I was unable to find the answer to your question. Is there anything else I can help with?"
+                },
+                text,
             )
             # raise OutputParserException(f"Could not parse LLM output: `{text}`")
         action = match.group(1)
