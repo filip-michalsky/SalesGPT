@@ -179,6 +179,8 @@ class SalesGPT(Chain, BaseModel):
         # Add agent's response to conversation history
         agent_name = self.salesperson_name
         ai_message = agent_name + ": " + ai_message
+        if '<END_OF_TURN>' not in ai_message:
+            ai_message += ' <END_OF_TURN>'
         self.conversation_history.append(ai_message)
         print(ai_message.replace("<END_OF_TURN>", ""))
         return {}
