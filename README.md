@@ -35,8 +35,9 @@ from langchain.chat_models import ChatOpenAI
 os.environ['OPENAI_API_KEY'] = 'sk-xxx' # fill me in
 
 llm = ChatOpenAI(temperature=0.4)
-
-sales_agent = SalesGPT.from_llm(llm, verbose=False,
+                            
+sales_agent = SalesGPT.from_llm(llm, use_tools=True, verbose=False,
+                            product_catalog = "examples/sample_product_catalog.txt",
                             salesperson_name="Ted Lasso",
                             salesperson_role="Sales Representative",
                             company_name="Sleep Haven",
@@ -47,8 +48,8 @@ sales_agent = SalesGPT.from_llm(llm, verbose=False,
                             We offer a range of high-quality mattresses,
                             pillows, and bedding accessories 
                             that are designed to meet the unique 
-                            needs of our customers.''')
-
+                            needs of our customers.'''
+                            )
 sales_agent.seed_agent()
 sales_agent.determine_conversation_stage() # optional for demonstration, built into the prompt
 
@@ -62,10 +63,19 @@ sales_agent.human_step(user_input)
 # agent
 sales_agent.determine_conversation_stage() # optional for demonstration, built into the prompt
 sales_agent.step()
+
+# user
+user_input = input('Your response: ') # What pricing do you have for your mattresses?
+sales_agent.human_step(user_input)
+
+# agent
+sales_agent.determine_conversation_stage() # optional for demonstration, built into the prompt
+sales_agent.step()
 ```
 > Conversation Stage: 
 > Introduction: Start the conversation by introducing yourself and your company. 
 
+> Thought: Do I need to use a tool? No <br>
 > Ted Lasso: Hello, my name is Ted Lasso and I'm calling on behalf of Sleep Haven. We are a premium mattress company that provides customers with the most comfortable and supportive sleeping experience possible. I was wondering if you would be interested in learning more about our products and how they can improve your sleep?
 
 > User: Yea, sure
@@ -73,7 +83,16 @@ sales_agent.step()
 > Conversation Stage: 
 > Value proposition: Briefly explain how your product/service can benefit the prospect. 
 
+> Thought: Do I need to use a tool? No <br>
 > Ted Lasso: Great to hear that! Our mattresses are specially designed to contour to your body shape, providing the perfect level of support and comfort for a better night's sleep. Plus, they're made with high-quality materials that are built to last. Would you like to hear more about our different mattress options?
+
+> User:  What pricing do you have for your mattresses?
+
+> Thought: Do I need to use a tool? Yes --> AI Agent uses tools here.<br>
+> Action: ProductSearch<br>
+> ActionInput pricing for mattresses<br>
+> Observation: Sleep Haven offers three mattresses: the Classic Harmony Spring Mattress for $1,299, the Plush Serenity Bamboo Mattress for $2,599, and the Luxury Cloud-Comfort Memory Foam Mattress for $999. The sizes available vary by mattress.<br>
+> Ted Lasso: Sleep Haven offers three mattresses at different price points. The Classic Harmony Spring Mattress is priced at $1,299, the Plush Serenity Bamboo Mattress is priced at $2,599, and the Luxury Cloud-Comfort Memory Foam Mattress is priced at $999. The prices may vary depending on the size you choose. Would you like more information about the specific sizes and features of each mattress? 
 
 ## Product Knowledge Base
 
@@ -118,7 +137,7 @@ Install with pip
 
 To get a feel for a conversation with the AI Sales agent, you can run:
 
-`python run.py --verbose True --config agent_setup.json`
+`python run.py --verbose True --config examples/example_agent_setup.json`
 
 from your terminal.
 
