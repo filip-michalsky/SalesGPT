@@ -6,15 +6,15 @@ from langchain.chains import RetrievalQA
 from langchain.llms import BaseLLM
 from langchain import LLMChain
 from langchain.agents import LLMSingleActionAgent, AgentExecutor
-from langchain.agents.conversational.output_parser import ConvoOutputParser
-from langchain.agents import Tool
 from pydantic import BaseModel, Field
 
 from salesgpt.chains import SalesConversationChain, StageAnalyzerChain
 from salesgpt.logger import time_logger
 from salesgpt.stages import CONVERSATION_STAGES
 from salesgpt.tools import setup_knowledge_base, get_tools
-from salesgpt.templates import SALES_AGENT_TOOLS_PROMPT, CustomPromptTemplateForTools
+from salesgpt.templates import CustomPromptTemplateForTools
+from salesgpt.parsers import SalesConvoOutputParser
+from salesgpt.prompts import SALES_AGENT_TOOLS_PROMPT
 
 
 class SalesGPT(Chain, BaseModel):
@@ -214,7 +214,6 @@ class SalesGPT(Chain, BaseModel):
         "use_tools" in kwargs.keys()
         and kwargs["use_tools"] is True
         ):  
-            print('setting up an agent with tools')
             # set up agent with tools
             product_catalog = kwargs["product_catalog"]
             knowledge_base = setup_knowledge_base(product_catalog)
@@ -241,7 +240,7 @@ class SalesGPT(Chain, BaseModel):
 
             # WARNING: this output parser is NOT reliable yet
             ## It makes assumptions about output from LLM which can break and throw an error
-            output_parser = ConvoOutputParser(ai_prefix=kwargs["salesperson_name"])
+            output_parser = SalesConvoOutputParser(ai_prefix=kwargs["salesperson_name"])
 
             sales_agent_with_tools = LLMSingleActionAgent(
                 llm_chain=llm_chain,
@@ -249,6 +248,7 @@ class SalesGPT(Chain, BaseModel):
                 stop=["\nObservation:"],
                 allowed_tools=tool_names,
                 )
+            
             sales_agent_executor = AgentExecutor.from_agent_and_tools(
                 agent=sales_agent_with_tools, tools=tools, verbose=True
             )
@@ -267,35 +267,3 @@ class SalesGPT(Chain, BaseModel):
         )
 
 
-
-from langchain.agents.agent import AgentOutputParser
-from langchain.agents.conversational.prompt import FORMAT_INSTRUCTIONS
-from langchain.schema import AgentAction, AgentFinish, OutputParserException
-import re
-from typing import Union
-
-class SalesConvoOutputParser(AgentOutputParser):
-    ai_prefix: str = "AI" # change for salesperson_name
-
-    def get_format_instructions(self) -> str:
-        return FORMAT_INSTRUCTIONS
-
-    def parse(self, text: str) -> Union[AgentAction, AgentFinish]:
-        print('TEXT')
-        print(text)
-        print('-------')
-        if f"{self.ai_prefix}:" in text:
-            return AgentFinish(
-                {"output": text.split(f"{self.ai_prefix}:")[-1].strip()}, text
-            )
-        regex = r"Action: (.*?)[\n]*Action Input: (.*)"
-        match = re.search(regex, text)
-        if not match:
-            raise OutputParserException(f"Could not parse LLM output: `{text}`")
-        action = match.group(1)
-        action_input = match.group(2)
-        return AgentAction(action.strip(), action_input.strip(" ").strip('"'), text)
-
-    @property
-    def _type(self) -> str:
-        return "sales-agent"

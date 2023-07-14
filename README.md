@@ -3,8 +3,9 @@
 This repo demonstrates an implementation of a **context-aware** AI Sales Assistant using LLMs.
 
 SalesGPT is context-aware, which means it can understand what section of a sales conversation it is in and act accordingly.
+Morever, SalesGPT has access to tools, such as your own pre-defined product knowledge base, significantly reducing hallucinations!
 
-We leverage the [`langchain`](https://github.com/hwchase17/langchain) library in this implementation and are inspired by [BabyAGI](https://github.com/yoheinakajima/babyagi) architecture .
+We leverage the [`langchain`](https://github.com/hwchase17/langchain) library in this implementation, specifically [Custom Agent Configuration](https://langchain-langchain.vercel.app/docs/modules/agents/how_to/custom_agent_with_tool_retrieval) and are inspired by [BabyAGI](https://github.com/yoheinakajima/babyagi) architecture.
 
 ## Our Vision: Build the Best Open-Source Autonomous Sales Agent
 
@@ -12,16 +13,17 @@ We are building SalesGPT to power your best Autonomous Sales Agents. Hence, we w
 
 **If you want us to build better towards your needs, please fill out our 45 seconds [SalesGPT Use Case Survey](https://5b7mfhwiany.typeform.com/to/xmJbWIjG)**
 
+### If you looking for help building your Autonomous Sales Agents
+
+I am currently open to freelancing opps - please contact me through [my website](https://odysseypartners.ai?utm_source=SalesGPT) if you think I can help  you.
+
 ## :red_circle: Latest News
+
+- Sales Agent can now take advantage of **tools**, such as look up products in a product catalog!
 
 ### Demo: SalesGPT Outbound Prospecting: A New Way to Sell? 🤔
 
 https://github.com/filip-michalsky/SalesGPT/assets/31483888/2b13ba28-4e07-41dc-a8bf-4084d25247ca
-
-
-### If you looking for help building your Autonomous Sales Agents
-
-I am currently open to freelancing opps - please contact me through [my website](https://odysseypartners.ai?utm_source=SalesGPT) if you think I can help  you.
 
 ## Quickstart
 
@@ -32,7 +34,7 @@ from langchain.chat_models import ChatOpenAI
 
 os.environ['OPENAI_API_KEY'] = 'sk-xxx' # fill me in
 
-llm = ChatOpenAI(temperature=0.9)
+llm = ChatOpenAI(temperature=0.4)
 
 sales_agent = SalesGPT.from_llm(llm, verbose=False,
                             salesperson_name="Ted Lasso",
@@ -73,10 +75,14 @@ sales_agent.step()
 
 > Ted Lasso: Great to hear that! Our mattresses are specially designed to contour to your body shape, providing the perfect level of support and comfort for a better night's sleep. Plus, they're made with high-quality materials that are built to last. Would you like to hear more about our different mattress options?
 
+## Product Knowledge Base
+
+The AI Sales Agent has access to tools, such as your internal Product Knowledge base.
+This allows the agent to only talk about your own products and significantly reduces hallucinations.
 
 ## Understanding Context
 
-The bot understands the conversation stage (you can define your own stages fitting your needs):
+The AI Sales Agent understands the conversation stage (you can define your own stages fitting your needs):
 
 - Introduction: Start the conversation by introducing yourself and your company. 
 - Qualification: Qualify the prospect by confirming if they are the right person to talk to regarding your product/service.

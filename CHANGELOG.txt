@@ -1,0 +1,11 @@
+Updates to the SalesGPT project: Building the world's best AI Sales Agents.
+
+
+July 14, 2023
+-------------
+
+Version 0.0.4
+- Added tools to SalesGPT, creating a true agent.
+- Added product knowledge base as an example tool
+
+-------------

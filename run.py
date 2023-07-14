@@ -31,16 +31,24 @@ if __name__ == "__main__":
     verbose = args.verbose
     max_num_turns = args.max_num_turns
 
-    llm = ChatOpenAI(temperature=0.9, stop = "<END_OF_TURN>")
-
+    llm = ChatOpenAI(temperature=0.2)
+    
     if config_path=='':
         print('No agent config specified, using a standard config')
-        sales_agent = SalesGPT.from_llm(llm, verbose=verbose)
+        USE_TOOLS=True
+        if USE_TOOLS:
+            sales_agent = SalesGPT.from_llm(llm, use_tools=True, 
+                                    product_catalog = "sample_product_catalog.txt",
+                                    salesperson_name="Ted Lasso",
+                                    verbose=verbose)
+        else:
+            sales_agent = SalesGPT.from_llm(llm, verbose=verbose)
     else:
         with open(config_path,'r') as f:
             config = json.load(f)
         print(f'Agent config {config}')
         sales_agent = SalesGPT.from_llm(llm, verbose=verbose, **config)
+
 
     sales_agent.seed_agent()
     print('='*10)
