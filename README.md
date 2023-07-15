@@ -150,15 +150,22 @@ Follow me at [@FilipMichalsky](https://twitter.com/FilipMichalsky)
 
 ## SalesGPT Roadmap
 
-- Knowledge base for products/services a Sales Agent can offer (so that LLM does not make it up)
-- Convert LLM Chains (linear workflow) to an Agent (decides what to do based on user's input)
-    - What tools should the agent have? (e.g., the ability to search the internet)
-    - Add the ability of Sales Agent to interact with AI plugins on your website (.well-known/ai-plugin.json)
-    
+
+- Add the ability of Sales Agent to interact with AI plugins on your website (.well-known/ai-plugin.json)
+
+- What tools should the agent have? (e.g., the ability to search the internet)
+
 ~~-
  Add the ability to stop generation when user interupts the agent~~
-- Add a vectorstore to incorporate a real product knowledge base vs. the LLM making it up.
+
+~~- Add a vectorstore to incorporate a real product knowledge base vs. the LLM making it up.~~
+
+~~- Knowledge base for products/services a Sales Agent can offer (so that LLM does not make it up)~~
+
+~~- Convert LLM Chains (linear workflow) to an Agent (decides what to do based on user's input)~~
+
+
 
 ## Contributing
 
-Contributions are highly encouraged!
+Contributions are highly encouraged! Please fork and submit a PR.
