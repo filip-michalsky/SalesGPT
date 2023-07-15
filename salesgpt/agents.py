@@ -238,7 +238,7 @@ class SalesGPT(Chain, BaseModel):
                     "conversation_history",
                 ],
             )
-            llm_chain = LLMChain(llm=llm, prompt=prompt, verbose=True)
+            llm_chain = LLMChain(llm=llm, prompt=prompt, verbose=verbose)
 
             tool_names = [tool.name for tool in tools]
 
@@ -254,7 +254,7 @@ class SalesGPT(Chain, BaseModel):
             )
 
             sales_agent_executor = AgentExecutor.from_agent_and_tools(
-                agent=sales_agent_with_tools, tools=tools, verbose=True
+                agent=sales_agent_with_tools, tools=tools, verbose=verbose
             )
         else:
             sales_agent_executor = None
