@@ -117,7 +117,7 @@ As such, this agent can have a natural sales conversation with a prospect and be
 
 ## Architecture
 
-<img src="https://images-genai.s3.us-east-1.amazonaws.com/architecture2.png"  width="800" height="400">
+<img src="https://singularity-assets-public.s3.amazonaws.com/new_flow.png"  width="800" height="440">
 
 ## Installation
 
