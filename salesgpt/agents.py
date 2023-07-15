@@ -1,13 +1,20 @@
 from copy import deepcopy
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Union
 
+from langchain import LLMChain
+from langchain.agents import AgentExecutor, LLMSingleActionAgent
+from langchain.chains import RetrievalQA
 from langchain.chains.base import Chain
 from langchain.llms import BaseLLM
 from pydantic import BaseModel, Field
 
 from salesgpt.chains import SalesConversationChain, StageAnalyzerChain
 from salesgpt.logger import time_logger
+from salesgpt.parsers import SalesConvoOutputParser
+from salesgpt.prompts import SALES_AGENT_TOOLS_PROMPT
 from salesgpt.stages import CONVERSATION_STAGES
+from salesgpt.templates import CustomPromptTemplateForTools
+from salesgpt.tools import get_tools, setup_knowledge_base
 
 
 class SalesGPT(Chain, BaseModel):
@@ -17,9 +24,12 @@ class SalesGPT(Chain, BaseModel):
     conversation_stage_id: str = "1"
     current_conversation_stage: str = CONVERSATION_STAGES.get("1")
     stage_analyzer_chain: StageAnalyzerChain = Field(...)
+    sales_agent_executor: Union[AgentExecutor, None] = Field(...)
+    knowledge_base: Union[RetrievalQA, None] = Field(...)
     sales_conversation_utterance_chain: SalesConversationChain = Field(...)
     conversation_stage_dict: Dict = CONVERSATION_STAGES
 
+    use_tools: bool = False
     salesperson_name: str = "Ted Lasso"
     salesperson_role: str = "Business Development Representative"
     company_name: str = "Sleep Haven"
@@ -71,7 +81,9 @@ class SalesGPT(Chain, BaseModel):
         self.conversation_history.append(human_input)
 
     @time_logger
-    def step(self, return_streaming_generator: bool = False, model_name="gpt-3.5-turbo-0613"):
+    def step(
+        self, return_streaming_generator: bool = False, model_name="gpt-3.5-turbo-0613"
+    ):
         """
         Args:
             return_streaming_generator (bool): whether or not return
@@ -135,21 +147,40 @@ class SalesGPT(Chain, BaseModel):
         """Run one step of the sales agent."""
 
         # Generate agent's utterance
-        ai_message = self.sales_conversation_utterance_chain.run(
-            conversation_stage=self.current_conversation_stage,
-            conversation_history="\n".join(self.conversation_history),
-            salesperson_name=self.salesperson_name,
-            salesperson_role=self.salesperson_role,
-            company_name=self.company_name,
-            company_business=self.company_business,
-            company_values=self.company_values,
-            conversation_purpose=self.conversation_purpose,
-            conversation_type=self.conversation_type,
-        )
+        # if use tools
+        if self.use_tools:
+            ai_message = self.sales_agent_executor.run(
+                input="",
+                conversation_stage=self.current_conversation_stage,
+                conversation_history="\n".join(self.conversation_history),
+                salesperson_name=self.salesperson_name,
+                salesperson_role=self.salesperson_role,
+                company_name=self.company_name,
+                company_business=self.company_business,
+                company_values=self.company_values,
+                conversation_purpose=self.conversation_purpose,
+                conversation_type=self.conversation_type,
+            )
+
+        else:
+            # else
+            ai_message = self.sales_conversation_utterance_chain.run(
+                conversation_stage=self.current_conversation_stage,
+                conversation_history="\n".join(self.conversation_history),
+                salesperson_name=self.salesperson_name,
+                salesperson_role=self.salesperson_role,
+                company_name=self.company_name,
+                company_business=self.company_business,
+                company_values=self.company_values,
+                conversation_purpose=self.conversation_purpose,
+                conversation_type=self.conversation_type,
+            )
 
         # Add agent's response to conversation history
         agent_name = self.salesperson_name
         ai_message = agent_name + ": " + ai_message
+        if '<END_OF_TURN>' not in ai_message:
+            ai_message += ' <END_OF_TURN>'
         self.conversation_history.append(ai_message)
         print(ai_message.replace("<END_OF_TURN>", ""))
         return {}
@@ -159,7 +190,7 @@ class SalesGPT(Chain, BaseModel):
     def from_llm(cls, llm: BaseLLM, verbose: bool = False, **kwargs) -> "SalesGPT":
         """Initialize the SalesGPT Controller."""
         stage_analyzer_chain = StageAnalyzerChain.from_llm(llm, verbose=verbose)
-
+        print(kwargs)
         if (
             "use_custom_prompt" in kwargs.keys()
             and kwargs["use_custom_prompt"] == "True"
@@ -183,9 +214,57 @@ class SalesGPT(Chain, BaseModel):
                 llm, verbose=verbose
             )
 
+        if "use_tools" in kwargs.keys() and kwargs["use_tools"] is True:
+            # set up agent with tools
+            product_catalog = kwargs["product_catalog"]
+            knowledge_base = setup_knowledge_base(product_catalog)
+            tools = get_tools(knowledge_base)
+
+            prompt = CustomPromptTemplateForTools(
+                template=SALES_AGENT_TOOLS_PROMPT,
+                tools_getter=lambda x: tools,
+                # This omits the `agent_scratchpad`, `tools`, and `tool_names` variables because those are generated dynamically
+                # This includes the `intermediate_steps` variable because that is needed
+                input_variables=[
+                    "input",
+                    "intermediate_steps",
+                    "salesperson_name",
+                    "salesperson_role",
+                    "company_name",
+                    "company_business",
+                    "company_values",
+                    "conversation_purpose",
+                    "conversation_type",
+                    "conversation_history",
+                ],
+            )
+            llm_chain = LLMChain(llm=llm, prompt=prompt, verbose=verbose)
+
+            tool_names = [tool.name for tool in tools]
+
+            # WARNING: this output parser is NOT reliable yet
+            ## It makes assumptions about output from LLM which can break and throw an error
+            output_parser = SalesConvoOutputParser(ai_prefix=kwargs["salesperson_name"])
+
+            sales_agent_with_tools = LLMSingleActionAgent(
+                llm_chain=llm_chain,
+                output_parser=output_parser,
+                stop=["\nObservation:"],
+                allowed_tools=tool_names,
+            )
+
+            sales_agent_executor = AgentExecutor.from_agent_and_tools(
+                agent=sales_agent_with_tools, tools=tools, verbose=verbose
+            )
+        else:
+            sales_agent_executor = None
+            knowledge_base = None
+
         return cls(
             stage_analyzer_chain=stage_analyzer_chain,
             sales_conversation_utterance_chain=sales_conversation_utterance_chain,
+            sales_agent_executor=sales_agent_executor,
+            knowledge_base=knowledge_base,
             verbose=verbose,
             **kwargs,
         )
