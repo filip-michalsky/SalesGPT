@@ -15,7 +15,7 @@ We are building SalesGPT to power your best Autonomous Sales Agents. Hence, we w
 
 ### If you looking for help building your Autonomous Sales Agents
 
-I am currently open to freelancing opps - please contact me through [my website](https://odysseypartners.ai?utm_source=SalesGPT) if you think I can help  you.
+Please send an email to [the repo author](mailto:filipmichalsky@gmail.com).
 
 ## :red_circle: Latest News
 
