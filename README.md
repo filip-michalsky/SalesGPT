@@ -21,9 +21,16 @@ Please send an email to [the repo author](mailto:filipmichalsky@gmail.com).
 
 - Sales Agent can now take advantage of **tools**, such as look up products in a product catalog!
 
-### Demo: SalesGPT Outbound Prospecting: A New Way to Sell? 🤔
+### Demo: Outbound Prospecting from Crusty AI: A New Way to Sell? 🤔
 
-https://github.com/filip-michalsky/SalesGPT/assets/31483888/2b13ba28-4e07-41dc-a8bf-4084d25247ca
+<i>Crusty AI Sales Agent Phone Call Demo - Powered by SalesGPT</i>
+
+<div>
+    <a href="https://www.loom.com/share/f0fac42954904471b266980e4948b07d">
+      <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/f0fac42954904471b266980e4948b07d-with-play.gif">
+    </a>
+  </div>
+
 
 ## Quickstart
 
