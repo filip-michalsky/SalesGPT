@@ -190,7 +190,6 @@ class SalesGPT(Chain, BaseModel):
     def from_llm(cls, llm: BaseLLM, verbose: bool = False, **kwargs) -> "SalesGPT":
         """Initialize the SalesGPT Controller."""
         stage_analyzer_chain = StageAnalyzerChain.from_llm(llm, verbose=verbose)
-        print(kwargs)
         if (
             "use_custom_prompt" in kwargs.keys()
             and kwargs["use_custom_prompt"] == "True"
