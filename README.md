@@ -158,10 +158,15 @@ Follow me at [@FilipMichalsky](https://twitter.com/FilipMichalsky)
 ## SalesGPT Roadmap
 
 
-- Add the ability of Sales Agent to interact with AI plugins on your website (.well-known/ai-plugin.json)
 
+
+- [high priority] Improve reliability of the parser [issue here](https://github.com/filip-michalsky/SalesGPT/issues/26) and [here](https://github.com/filip-michalsky/SalesGPT/issues/25)
+- Add example implementation of OpenAI functions agent[issue here](https://github.com/filip-michalsky/SalesGPT/issues/17)
+- Add support for multiple tools [issue here](https://github.com/filip-michalsky/SalesGPT/issues/10)
+- Add an agent controller for whne stages need to be traversed linearly without skips [issue here](https://github.com/filip-michalsky/SalesGPT/issues/19)
+- Add `too_getter` to choose a tool based on vector distance to the taks needed to be done
 - What tools should the agent have? (e.g., the ability to search the internet)
-
+- Add the ability of Sales Agent to interact with AI plugins on your website (.well-known/ai-plugin.json)
 ~~-
  Add the ability to stop generation when user interupts the agent~~
 
