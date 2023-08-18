@@ -150,7 +150,7 @@ from your terminal.
 
 ## Deployment
 
-We have a deployment demo via FastAPI.
+We have a SalesGPT deployment demo via FastAPI.
 
 Please refer to [READMEa-pi.md](https://github.com/filip-michalsky/SalesGPT/blob/main/README-api.md) for instructions!
 
