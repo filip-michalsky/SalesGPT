@@ -4,7 +4,7 @@ import os
 import json
 
 from salesgpt.agents import SalesGPT
-from langchain.chat_models import ChatOpenAI
+from langchain.chat_models import ChatLiteLLM
 
 
 if __name__ == "__main__":
@@ -31,7 +31,7 @@ if __name__ == "__main__":
     verbose = args.verbose
     max_num_turns = args.max_num_turns
 
-    llm = ChatOpenAI(temperature=0.2)
+    llm = ChatLiteLLM(temperature=0.2)
     
     if config_path=='':
         print('No agent config specified, using a standard config')
