@@ -25,24 +25,24 @@ class MessageList(BaseModel):
 
 @app.post("/chat")
 async def chat_with_sales_agent(req: MessageList):
-    sales_api = SalesGPTAPI(config_path='examples/example_agent_setup.json', verbose=True)
+    sales_api = SalesGPTAPI(
+        config_path="examples/example_agent_setup.json", verbose=True
+    )
     name, reply = sales_api.do(req.conversation_history, req.human_say)
-    res = {
-        "name": name,
-        "say": reply
-    }
+    res = {"name": name, "say": reply}
     return res
 
 
 def _set_env():
-    with open('.env', 'r') as f:
+    with open(".env", "r") as f:
         env_file = f.readlines()
-    envs_dict = {key.strip("'"): value.strip("\n") for key, value in [(i.split('=')) for i in env_file]}
-    os.environ['OPENAI_API_KEY'] = envs_dict['OPENAI_API_KEY']
+    envs_dict = {
+        key.strip("'"): value.strip("\n")
+        for key, value in [(i.split("=")) for i in env_file]
+    }
+    os.environ["OPENAI_API_KEY"] = envs_dict["OPENAI_API_KEY"]
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     _set_env()
-    uvicorn.run(app, host='127.0.0.1', port=8000)
-
-
+    uvicorn.run(app, host="127.0.0.1", port=8000)
