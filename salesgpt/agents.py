@@ -1,11 +1,12 @@
 from copy import deepcopy
-from typing import Any, Dict, List, Union
+from typing import Any, Callable, Dict, List, Union
 
 from langchain import LLMChain
 from langchain.agents import AgentExecutor, LLMSingleActionAgent
 from langchain.chains import RetrievalQA
 from langchain.chains.base import Chain
 from langchain.llms import BaseLLM
+from langchain.llms.base import create_base_retry_decorator
 from pydantic import BaseModel, Field
 
 from salesgpt.chains import SalesConversationChain, StageAnalyzerChain
@@ -15,6 +16,19 @@ from salesgpt.prompts import SALES_AGENT_TOOLS_PROMPT
 from salesgpt.stages import CONVERSATION_STAGES
 from salesgpt.templates import CustomPromptTemplateForTools
 from salesgpt.tools import get_tools, setup_knowledge_base
+
+
+def _create_retry_decorator(llm: Any) -> Callable[[Any], Any]:
+    import openai
+
+    errors = [
+        openai.error.Timeout,
+        openai.error.APIError,
+        openai.error.APIConnectionError,
+        openai.error.RateLimitError,
+        openai.error.ServiceUnavailableError,
+    ]
+    return create_base_retry_decorator(error_types=errors, max_retries=llm.max_retries)
 
 
 class SalesGPT(Chain, BaseModel):
@@ -82,7 +96,7 @@ class SalesGPT(Chain, BaseModel):
 
     @time_logger
     def step(
-        self, return_streaming_generator: bool = False, async_method: bool = False, model_name="gpt-3.5-turbo-0613"
+        self, return_streaming_generator: bool = False, model_name="gpt-3.5-turbo-0613"
     ):
         """
         Args:
@@ -92,16 +106,31 @@ class SalesGPT(Chain, BaseModel):
         if not return_streaming_generator:
             self._call(inputs={})
         else:
-            if not async_method:
-                return self._streaming_generator(model_name=model_name)
-            else:
-                return self._astreaming_generator(model_name=model_name)
-    
+            return self._streaming_generator(model_name=model_name)
+
+    @time_logger
+    def astep(
+        self, return_streaming_generator: bool = False, model_name="gpt-3.5-turbo-0613"
+    ):
+        """
+        Args:
+            return_streaming_generator (bool): whether or not return
+            streaming generator object to manipulate streaming chunks in downstream applications.
+        """
+        if not return_streaming_generator:
+            self._acall(inputs={})
+        else:
+            return self._astreaming_generator(model_name=model_name)
+
+    @time_logger
+    def acall(self, *args, **kwargs):
+        raise NotImplementedError("This method has not been implemented yet.")
+
     @time_logger
     def _prep_messages(self):
-        '''
+        """
         Helper function to prepare messages to be passed to a streaming generator.
-        '''
+        """
         prompt = self.sales_conversation_utterance_chain.prep_prompts(
             [
                 dict(
@@ -143,7 +172,7 @@ class SalesGPT(Chain, BaseModel):
         Out: Chunk 1, Chunk 2, ... etc.
         See: https://github.com/openai/openai-cookbook/blob/main/examples/How_to_stream_completions.ipynb
         """
-        
+
         messages = self._prep_messages()
 
         return self.sales_conversation_utterance_chain.llm.completion_with_retry(
@@ -153,9 +182,20 @@ class SalesGPT(Chain, BaseModel):
             model=model_name,
         )
 
+    async def acompletion_with_retry(self, llm: Any, **kwargs: Any) -> Any:
+        """Use tenacity to retry the async completion call."""
+        retry_decorator = _create_retry_decorator(llm)
+
+        @retry_decorator
+        async def _completion_with_retry(**kwargs: Any) -> Any:
+            # Use OpenAI's async api https://github.com/openai/openai-python#async-api
+            return await llm.client.acreate(**kwargs)
+
+        return await _completion_with_retry(**kwargs)
+
     async def _astreaming_generator(self, model_name="gpt-3.5-turbo-0613"):
         """
-        Asynchronous generator to reduce I/O blocking when dealing with multiple 
+        Asynchronous generator to reduce I/O blocking when dealing with multiple
         clients simultaneously.
 
         Sometimes, the sales agent wants to take an action before the full LLM output is available.
@@ -173,10 +213,11 @@ class SalesGPT(Chain, BaseModel):
         Out: Chunk 1, Chunk 2, ... etc.
         See: https://github.com/openai/openai-cookbook/blob/main/examples/How_to_stream_completions.ipynb
         """
-        
+
         messages = self._prep_messages()
 
-        return self.sales_conversation_utterance_chain.llm.acompletion_with_retry(
+        return await self.acompletion_with_retry(
+            llm=self.sales_conversation_utterance_chain.llm,
             messages=messages,
             stop="<END_OF_TURN>",
             stream=True,
@@ -219,8 +260,8 @@ class SalesGPT(Chain, BaseModel):
         # Add agent's response to conversation history
         agent_name = self.salesperson_name
         ai_message = agent_name + ": " + ai_message
-        if '<END_OF_TURN>' not in ai_message:
-            ai_message += ' <END_OF_TURN>'
+        if "<END_OF_TURN>" not in ai_message:
+            ai_message += " <END_OF_TURN>"
         self.conversation_history.append(ai_message)
         print(ai_message.replace("<END_OF_TURN>", ""))
         return {}
