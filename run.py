@@ -35,9 +35,9 @@ if __name__ == "__main__":
     
     if config_path=='':
         print('No agent config specified, using a standard config')
-        USE_TOOLS=True
-        if USE_TOOLS:
-            sales_agent = SalesGPT.from_llm(llm, use_tools=True, 
+        USE_TOOLS="True" # keep boolean as string to be consistent with JSON configs.
+        if USE_TOOLS == "True":
+            sales_agent = SalesGPT.from_llm(llm, use_tools=USE_TOOLS, 
                                     product_catalog = "examples/sample_product_catalog.txt",
                                     salesperson_name="Ted Lasso",
                                     verbose=verbose)
