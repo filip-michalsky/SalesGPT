@@ -4,6 +4,7 @@ August 23 2023
 ---------------
 - "use_tools" as a keyword argument (kwarg) is treated as STRING i.e., agent_config["use_tools"]="True"
 to be consistent with JSON payloads.
+- add asynchronous streaming generator.
 
 August 18, 2023
 ---------------

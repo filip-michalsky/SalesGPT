@@ -82,7 +82,7 @@ class SalesGPT(Chain, BaseModel):
 
     @time_logger
     def step(
-        self, return_streaming_generator: bool = False, model_name="gpt-3.5-turbo-0613"
+        self, return_streaming_generator: bool = False, async_method: bool = False, model_name="gpt-3.5-turbo-0613"
     ):
         """
         Args:
@@ -92,26 +92,16 @@ class SalesGPT(Chain, BaseModel):
         if not return_streaming_generator:
             self._call(inputs={})
         else:
-            return self._streaming_generator(model_name=model_name)
-
-    # TO-DO change this override "run" override the "run method" in the SalesConversation chain!
+            if not async_method:
+                return self._streaming_generator(model_name=model_name)
+            else:
+                return self._astreaming_generator(model_name=model_name)
+    
     @time_logger
-    def _streaming_generator(self, model_name="gpt-3.5-turbo-0613"):
-        """
-        Sometimes, the sales agent wants to take an action before the full LLM output is available.
-        For instance, if we want to do text to speech on the partial LLM output.
-
-        This function returns a streaming generator which can manipulate partial output from an LLM
-        in-flight of the generation.
-
-        Example:
-
-        >> streaming_generator = self._streaming_generator()
-        # Now I can loop through the output in chunks:
-        >> for chunk in streaming_generator:
-        Out: Chunk 1, Chunk 2, ... etc.
-        See: https://github.com/openai/openai-cookbook/blob/main/examples/How_to_stream_completions.ipynb
-        """
+    def _prep_messages(self):
+        '''
+        Helper function to prepare messages to be passed to a streaming generator.
+        '''
         prompt = self.sales_conversation_utterance_chain.prep_prompts(
             [
                 dict(
@@ -134,9 +124,59 @@ class SalesGPT(Chain, BaseModel):
 
         if self.sales_conversation_utterance_chain.verbose:
             print("\033[92m" + inception_messages[0].content + "\033[0m")
-        messages = [message_dict]
+        return [message_dict]
+
+    @time_logger
+    def _streaming_generator(self, model_name="gpt-3.5-turbo-0613"):
+        """
+        Sometimes, the sales agent wants to take an action before the full LLM output is available.
+        For instance, if we want to do text to speech on the partial LLM output.
+
+        This function returns a streaming generator which can manipulate partial output from an LLM
+        in-flight of the generation.
+
+        Example:
+
+        >> streaming_generator = self._streaming_generator()
+        # Now I can loop through the output in chunks:
+        >> for chunk in streaming_generator:
+        Out: Chunk 1, Chunk 2, ... etc.
+        See: https://github.com/openai/openai-cookbook/blob/main/examples/How_to_stream_completions.ipynb
+        """
+        
+        messages = self._prep_messages()
 
         return self.sales_conversation_utterance_chain.llm.completion_with_retry(
+            messages=messages,
+            stop="<END_OF_TURN>",
+            stream=True,
+            model=model_name,
+        )
+
+    async def _astreaming_generator(self, model_name="gpt-3.5-turbo-0613"):
+        """
+        Asynchronous generator to reduce I/O blocking when dealing with multiple 
+        clients simultaneously.
+
+        Sometimes, the sales agent wants to take an action before the full LLM output is available.
+        For instance, if we want to do text to speech on the partial LLM output.
+
+        This function returns a streaming generator which can manipulate partial output from an LLM
+        in-flight of the generation.
+
+        Example:
+
+        >> streaming_generator = self._astreaming_generator()
+        # Now I can loop through the output in chunks:
+        >> async for chunk in streaming_generator:
+            await chunk ...
+        Out: Chunk 1, Chunk 2, ... etc.
+        See: https://github.com/openai/openai-cookbook/blob/main/examples/How_to_stream_completions.ipynb
+        """
+        
+        messages = self._prep_messages()
+
+        return self.sales_conversation_utterance_chain.llm.acompletion_with_retry(
             messages=messages,
             stop="<END_OF_TURN>",
             stream=True,
