@@ -152,7 +152,7 @@ from your terminal.
 
 We have a SalesGPT deployment demo via FastAPI.
 
-Please refer to [READMEa-pi.md](https://github.com/filip-michalsky/SalesGPT/blob/main/README-api.md) for instructions!
+Please refer to [README-api.md](https://github.com/filip-michalsky/SalesGPT/blob/main/README-api.md) for instructions!
 
 
 ## Contact Us
@@ -164,14 +164,13 @@ Follow me at [@FilipMichalsky](https://twitter.com/FilipMichalsky)
 
 ## SalesGPT Roadmap
 
-
-
-
+- [high priority] Sell your soul.
+- [high priority] Add support for multiple LLMs backends [PR in progress here](https://github.com/filip-michalsky/SalesGPT/pull/36)
 - [high priority] Improve reliability of the parser [issue here](https://github.com/filip-michalsky/SalesGPT/issues/26) and [here](https://github.com/filip-michalsky/SalesGPT/issues/25)
 - Add example implementation of OpenAI functions agent[issue here](https://github.com/filip-michalsky/SalesGPT/issues/17)
 - Add support for multiple tools [issue here](https://github.com/filip-michalsky/SalesGPT/issues/10)
 - Add an agent controller for whne stages need to be traversed linearly without skips [issue here](https://github.com/filip-michalsky/SalesGPT/issues/19)
-- Add `too_getter` to choose a tool based on vector distance to the taks needed to be done
+- Add `tool_getter` to choose a tool based on vector distance to the taks needed to be done
 - What tools should the agent have? (e.g., the ability to search the internet)
 - Add the ability of Sales Agent to interact with AI plugins on your website (.well-known/ai-plugin.json)
 ~~-
