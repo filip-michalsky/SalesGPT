@@ -1,5 +1,11 @@
 Updates to the SalesGPT project: Building the world's best AI Sales Agents.
 
+August 18, 2023
+---------------
+Version 0.0.6
+
+- SalesGPT API - added chat as a service and Chinese language SalesGPT prompt, huge thanks to @janewu77!
+
 July 29, 2023
 -------------
 Version 0.0.5

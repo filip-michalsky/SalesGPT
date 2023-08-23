@@ -148,6 +148,13 @@ To get a feel for a conversation with the AI Sales agent, you can run:
 
 from your terminal.
 
+## Deployment
+
+We have a SalesGPT deployment demo via FastAPI.
+
+Please refer to [READMEa-pi.md](https://github.com/filip-michalsky/SalesGPT/blob/main/README-api.md) for instructions!
+
+
 ## Contact Us
 
 For questions, you can [contact the repo author](mailto:filipmichalsky@gmail.com).

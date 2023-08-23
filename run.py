@@ -44,7 +44,7 @@ if __name__ == "__main__":
         else:
             sales_agent = SalesGPT.from_llm(llm, verbose=verbose)
     else:
-        with open(config_path,'r') as f:
+        with open(config_path,'r', encoding='UTF-8') as f:
             config = json.load(f)
         print(f'Agent config {config}')
         sales_agent = SalesGPT.from_llm(llm, verbose=verbose, **config)
