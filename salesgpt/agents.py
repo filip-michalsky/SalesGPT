@@ -213,7 +213,7 @@ class SalesGPT(Chain, BaseModel):
                 llm, verbose=verbose
             )
 
-        if "use_tools" in kwargs.keys() and kwargs["use_tools"] is True:
+        if "use_tools" in kwargs.keys() and kwargs["use_tools"] == "True":
             # set up agent with tools
             product_catalog = kwargs["product_catalog"]
             knowledge_base = setup_knowledge_base(product_catalog)
