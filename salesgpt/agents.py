@@ -8,6 +8,7 @@ from langchain.chains.base import Chain
 from langchain.llms import BaseLLM
 from langchain.llms.base import create_base_retry_decorator
 from pydantic import BaseModel, Field
+from litellm import acompletion
 
 from salesgpt.chains import SalesConversationChain, StageAnalyzerChain
 from salesgpt.logger import time_logger
@@ -189,7 +190,7 @@ class SalesGPT(Chain, BaseModel):
         @retry_decorator
         async def _completion_with_retry(**kwargs: Any) -> Any:
             # Use OpenAI's async api https://github.com/openai/openai-python#async-api
-            return await llm.client.acreate(**kwargs)
+            return await acompletion(**kwargs)
 
         return await _completion_with_retry(**kwargs)
 
