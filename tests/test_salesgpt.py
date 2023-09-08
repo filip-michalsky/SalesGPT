@@ -2,7 +2,8 @@ import os
 import json
 
 import pytest
-from langchain.chat_models import ChatOpenAI
+from langchain.chat_models import ChatOpenAI, ChatLiteLLM
+
 
 from salesgpt.agents import SalesGPT
 
@@ -11,7 +12,7 @@ class TestSalesGPT:
     def test_valid_inference_no_tools(self, load_env):
         """Test that the agent will start and generate the first utterance."""
 
-        llm = ChatOpenAI(temperature=0.9)
+        llm = ChatLiteLLM(temperature=0.9)
 
         sales_agent = SalesGPT.from_llm(
             llm,
@@ -44,7 +45,7 @@ class TestSalesGPT:
     def test_valid_inference_with_tools(self, load_env):
         """Test that the agent will start and generate the first utterance."""
 
-        llm = ChatOpenAI(temperature=0.9)
+        llm = ChatLiteLLM(temperature=0.9)
 
         data_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "test_data")
 
@@ -80,8 +81,9 @@ class TestSalesGPT:
     def test_valid_inference_stream(self, load_env):
         """Test that the agent will start and generate the first utterance when streaming."""
 
-        llm = ChatOpenAI(temperature=0.9)
-        model_name = "gpt-3.5-turbo"
+        llm = ChatLiteLLM(temperature=0.9)
+        model_name = 'gpt-3.5-turbo'
+
 
         sales_agent = SalesGPT.from_llm(
             llm,

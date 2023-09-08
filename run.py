@@ -2,18 +2,14 @@ import argparse
 import json
 import os
 
-from langchain.chat_models import ChatOpenAI
+from salesgpt.agents import SalesGPT
+from langchain.chat_models import ChatLiteLLM
+from dotenv import load_dotenv
+load_dotenv() # loads .env file 
 
 from salesgpt.agents import SalesGPT
 
-from dotenv import load_dotenv
-
-load_dotenv()
-
 if __name__ == "__main__":
-    # import your OpenAI key (put in your .env file)
-    os.environ["OPENAI_API_KEY"]
-
     # Initialize argparse
     parser = argparse.ArgumentParser(description="Description of your program")
 
@@ -37,7 +33,7 @@ if __name__ == "__main__":
     verbose = args.verbose
     max_num_turns = args.max_num_turns
 
-    llm = ChatOpenAI(temperature=0.2)
+    llm = ChatLiteLLM(temperature=0.2)
 
     if config_path == "":
         print("No agent config specified, using a standard config")

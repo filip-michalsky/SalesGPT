@@ -1,6 +1,6 @@
 import json
 
-from langchain.chat_models import ChatOpenAI
+from langchain.chat_models import ChatOpenAI, ChatLiteLLM
 
 from salesgpt.agents import SalesGPT
 
@@ -17,7 +17,7 @@ class SalesGPTAPI:
         self.config_path = config_path
         self.verbose = verbose
         self.max_num_turns = max_num_turns
-        self.llm = ChatOpenAI(temperature=0.2, model_name=GPT_MODEL)
+        self.llm = ChatLiteLLM(temperature=0.2, model_name=GPT_MODEL)
 
     def do(self, conversation_history: [str], human_input=None):
         if self.config_path == "":

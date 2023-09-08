@@ -37,11 +37,11 @@ Please send an email to [the repo author](mailto:filipmichalsky@gmail.com).
 ```python
 import os
 from salesgpt.agents import SalesGPT
-from langchain.chat_models import ChatOpenAI
+from langchain.chat_models import ChatOpenAI, ChatLiteLLM
 
 os.environ['OPENAI_API_KEY'] = 'sk-xxx' # fill me in
 
-llm = ChatOpenAI(temperature=0.4)
+llm = ChatLiteLLM(temperature=0.4, model_name="gpt-3.5-turbo") # select your model
                             
 sales_agent = SalesGPT.from_llm(llm, use_tools=True, verbose=False,
                             product_catalog = "examples/sample_product_catalog.txt",
