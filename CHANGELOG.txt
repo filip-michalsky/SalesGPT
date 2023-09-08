@@ -1,5 +1,11 @@
 Updates to the SalesGPT project: Building the world's best AI Sales Agents.
 
+September 8 2023
+---------------
+Version 0.0.7
+- SalesGPT is now compatible with LiteLLM - choose any closed/open-sourced LLM 
+to work with SalesGPT.
+
 August 23 2023
 ---------------
 Version 0.0.6

@@ -1,6 +1,6 @@
 import json
 
-from langchain.chat_models import ChatOpenAI, ChatLiteLLM
+from langchain.chat_models import ChatLiteLLM
 
 from salesgpt.agents import SalesGPT
 
