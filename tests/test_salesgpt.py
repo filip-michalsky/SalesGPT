@@ -119,7 +119,7 @@ class TestSalesGPT:
 
     @pytest.mark.asyncio
     async def test_valid_async_inference_stream(self, load_env):
-        # llm = ChatOpenAI(temperature=0.9)
+
         llm = ChatLiteLLM(temperature=0.9)
         model_name = "gpt-3.5-turbo"
 
