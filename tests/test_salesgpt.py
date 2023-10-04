@@ -160,7 +160,7 @@ class TestSalesGPT:
         assert len(agent_output) > 0, "Length of output needs to be greater than 0."
 
     def test_accept_json_or_args_config(self, load_env):
-        llm = ChatOpenAI()
+        llm = ChatLiteLLM()
 
         sales_agent_passing_str = SalesGPT.from_llm(
             llm,

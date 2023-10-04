@@ -1,7 +1,7 @@
 from copy import deepcopy
 from typing import Any, Callable, Dict, List, Union
 
-from langchain import LLMChain
+from langchain.chains import LLMChain
 from langchain.agents import AgentExecutor, LLMSingleActionAgent
 from langchain.chains import RetrievalQA
 from langchain.chains.base import Chain
