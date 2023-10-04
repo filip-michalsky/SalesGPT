@@ -153,11 +153,14 @@ class TestSalesGPT:
 
     def test_accept_json_or_args_config(self, load_env):
         llm = ChatLiteLLM()
-
+        # Passing default prompt just to test if SalesGPT.from_llm accepts both "True" and True
+        from salesgpt.prompts import SALES_AGENT_INCEPTION_PROMPT
         sales_agent_passing_str = SalesGPT.from_llm(
             llm,
             verbose=False,
             use_tools="True",
+            use_custom_prompt="True",
+            custom_prompt=SALES_AGENT_INCEPTION_PROMPT,
             product_catalog="tests/test_data/sample_product_catalog.txt",
             salesperson_name="Ted Lasso",
             salesperson_role="Sales Representative",
@@ -179,6 +182,7 @@ class TestSalesGPT:
             llm,
             verbose=False,
             use_tools=True,
+            use_custom_prompt=SALES_AGENT_INCEPTION_PROMPT,
             product_catalog="tests/test_data/sample_product_catalog.txt",
             salesperson_name="Ted Lasso",
             salesperson_role="Sales Representative",
