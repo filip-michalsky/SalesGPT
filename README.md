@@ -1,6 +1,6 @@
 # :robot: SalesGPT - Your Context-Aware AI Sales Assistant
 
-This repo demonstrates an implementation of a **context-aware** AI Sales Assistant using LLMs.
+This repo demonstrates an implementation of a **context-aware** AI Sales Assistant using LLMs. Use any of closed/open-source LLMs via integration with [`litellm`](https://docs.litellm.ai/docs/providers)!
 
 SalesGPT is context-aware, which means it can understand what section of a sales conversation it is in and act accordingly.
 Morever, SalesGPT has access to tools, such as your own pre-defined product knowledge base, significantly reducing hallucinations!
@@ -40,9 +40,11 @@ import os
 from salesgpt.agents import SalesGPT
 from langchain.chat_models import ChatLiteLLM
 
-os.environ['OPENAI_API_KEY'] = 'sk-xxx' # fill me in
+from dotenv import load_dotenv
+load_dotenv() # make sure you have .env file with your API keys, eg., OPENAI_API_KEY=sk-xxx
 
-llm = ChatLiteLLM(temperature=0.4, model_name="gpt-3.5-turbo") # select your model
+# select your model - we support 50+ LLMs via LiteLLM https://docs.litellm.ai/docs/providers
+llm = ChatLiteLLM(temperature=0.4, model_name="gpt-3.5-turbo") 
                             
 sales_agent = SalesGPT.from_llm(llm, use_tools=True, verbose=False,
                             product_catalog = "examples/sample_product_catalog.txt",
@@ -133,7 +135,7 @@ Make sure your have a **python 3.10+** and run:
 
 `pip install -r requirements.txt`
 
-Create `.env` file and put your Open AI Key there by specifying a line: 
+Create `.env` file and put your API keys there by specifying a line, for instance: 
 
 `OPENAI_API_KEY=sk-xxx`
 

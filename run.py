@@ -5,9 +5,11 @@ import os
 from salesgpt.agents import SalesGPT
 from langchain.chat_models import ChatLiteLLM
 from dotenv import load_dotenv
+
 load_dotenv() # loads .env file 
 
 from salesgpt.agents import SalesGPT
+
 
 if __name__ == "__main__":
     # Initialize argparse
@@ -33,7 +35,7 @@ if __name__ == "__main__":
     verbose = args.verbose
     max_num_turns = args.max_num_turns
 
-    llm = ChatLiteLLM(temperature=0.2)
+    llm = ChatLiteLLM(temperature=0.2, model_name = "gpt-3.5-instruct")
 
     if config_path == "":
         print("No agent config specified, using a standard config")

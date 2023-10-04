@@ -1,5 +1,5 @@
 from langchain import LLMChain, PromptTemplate
-from langchain.llms import BaseLLM
+from langchain.chat_models import ChatLiteLLM
 
 from salesgpt.logger import time_logger
 from salesgpt.prompts import (SALES_AGENT_INCEPTION_PROMPT,
@@ -11,7 +11,7 @@ class StageAnalyzerChain(LLMChain):
 
     @classmethod
     @time_logger
-    def from_llm(cls, llm: BaseLLM, verbose: bool = True) -> LLMChain:
+    def from_llm(cls, llm: ChatLiteLLM, verbose: bool = True) -> LLMChain:
         """Get the response parser."""
         stage_analyzer_inception_prompt_template = STAGE_ANALYZER_INCEPTION_PROMPT
         prompt = PromptTemplate(
@@ -32,7 +32,7 @@ class SalesConversationChain(LLMChain):
     @time_logger
     def from_llm(
         cls,
-        llm: BaseLLM,
+        llm: ChatLiteLLM,
         verbose: bool = True,
         use_custom_prompt: bool = False,
         custom_prompt: str = "You are an AI Sales agent, sell me this pencil",

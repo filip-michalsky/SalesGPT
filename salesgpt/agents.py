@@ -5,8 +5,9 @@ from langchain.chains import LLMChain
 from langchain.agents import AgentExecutor, LLMSingleActionAgent
 from langchain.chains import RetrievalQA
 from langchain.chains.base import Chain
-from langchain.llms import BaseLLM
-from pydantic import BaseModel, Field
+from langchain.chat_models import ChatLiteLLM
+from langchain.llms.base import create_base_retry_decorator
+from pydantic import Field
 from litellm import acompletion
 
 from salesgpt.chains import SalesConversationChain, StageAnalyzerChain
@@ -42,6 +43,8 @@ class SalesGPT(Chain):
     knowledge_base: Union[RetrievalQA, None] = Field(...)
     sales_conversation_utterance_chain: SalesConversationChain = Field(...)
     conversation_stage_dict: Dict = CONVERSATION_STAGES
+
+    model_name: str = "gpt-3.5-turbo-0613"
 
     use_tools: bool = False
     salesperson_name: str = "Ted Lasso"
@@ -96,31 +99,31 @@ class SalesGPT(Chain):
 
     @time_logger
     def step(
-        self, return_streaming_generator: bool = False, model_name="gpt-3.5-turbo-0613"
+        self, stream: bool = False
     ):
         """
         Args:
             return_streaming_generator (bool): whether or not return
             streaming generator object to manipulate streaming chunks in downstream applications.
         """
-        if not return_streaming_generator:
+        if not stream:
             self._call(inputs={})
         else:
-            return self._streaming_generator(model_name=model_name)
+            return self._streaming_generator()
 
     @time_logger
     def astep(
-        self, return_streaming_generator: bool = False, model_name="gpt-3.5-turbo-0613"
+        self, stream: bool = False
     ):
         """
         Args:
-            return_streaming_generator (bool): whether or not return
+            stream (bool): whether or not return
             streaming generator object to manipulate streaming chunks in downstream applications.
         """
-        if not return_streaming_generator:
+        if not stream:
             self._acall(inputs={})
         else:
-            return self._astreaming_generator(model_name=model_name)
+            return self._astreaming_generator()
 
     @time_logger
     def acall(self, *args, **kwargs):
@@ -156,7 +159,7 @@ class SalesGPT(Chain):
         return [message_dict]
 
     @time_logger
-    def _streaming_generator(self, model_name="gpt-3.5-turbo-0613"):
+    def _streaming_generator(self):
         """
         Sometimes, the sales agent wants to take an action before the full LLM output is available.
         For instance, if we want to do text to speech on the partial LLM output.
@@ -179,7 +182,7 @@ class SalesGPT(Chain):
             messages=messages,
             stop="<END_OF_TURN>",
             stream=True,
-            model=model_name,
+            model=self.model_name,
         )
 
     async def acompletion_with_retry(self, llm: Any, **kwargs: Any) -> Any:
@@ -193,7 +196,7 @@ class SalesGPT(Chain):
 
         return await _completion_with_retry(**kwargs)
 
-    async def _astreaming_generator(self, model_name="gpt-3.5-turbo-0613"):
+    async def _astreaming_generator(self):
         """
         Asynchronous generator to reduce I/O blocking when dealing with multiple
         clients simultaneously.
@@ -221,7 +224,7 @@ class SalesGPT(Chain):
             messages=messages,
             stop="<END_OF_TURN>",
             stream=True,
-            model=model_name,
+            model=self.model_name,
         )
 
     def _call(self, inputs: Dict[str, Any]) -> None:
@@ -268,7 +271,7 @@ class SalesGPT(Chain):
 
     @classmethod
     @time_logger
-    def from_llm(cls, llm: BaseLLM, verbose: bool = False, **kwargs) -> "SalesGPT":
+    def from_llm(cls, llm: ChatLiteLLM, verbose: bool = False, **kwargs) -> "SalesGPT":
         """Initialize the SalesGPT Controller."""
         stage_analyzer_chain = StageAnalyzerChain.from_llm(llm, verbose=verbose)
         if (
@@ -346,6 +349,7 @@ class SalesGPT(Chain):
             sales_conversation_utterance_chain=sales_conversation_utterance_chain,
             sales_agent_executor=sales_agent_executor,
             knowledge_base=knowledge_base,
+            model_name=llm.model,
             verbose=verbose,
             **kwargs,
         )

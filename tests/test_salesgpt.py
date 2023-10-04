@@ -2,7 +2,7 @@ import os
 import json
 
 import pytest
-from langchain.chat_models import ChatOpenAI, ChatLiteLLM
+from langchain.chat_models import ChatLiteLLM
 
 
 from salesgpt.agents import SalesGPT
@@ -81,9 +81,7 @@ class TestSalesGPT:
     def test_valid_inference_stream(self, load_env):
         """Test that the agent will start and generate the first utterance when streaming."""
 
-        llm = ChatLiteLLM(temperature=0.9)
-        model_name = 'gpt-3.5-turbo'
-
+        llm = ChatLiteLLM(temperature=0.9, model_name = 'gpt-3.5-turbo')
 
         sales_agent = SalesGPT.from_llm(
             llm,
@@ -105,9 +103,7 @@ class TestSalesGPT:
         sales_agent.determine_conversation_stage()  # optional for demonstration, built into the prompt
 
         # agent output sample
-        stream_generator = sales_agent.step(
-            return_streaming_generator=True, model_name=model_name
-        )
+        stream_generator = sales_agent.step(stream=True)
         agent_output = ""
         for chunk in stream_generator:
             token = chunk["choices"][0]["delta"].get("content", "")
@@ -143,9 +139,7 @@ class TestSalesGPT:
         sales_agent.determine_conversation_stage()  # optional for demonstration, built into the prompt
 
         # agent output sample
-        astream_generator = await sales_agent.astep(
-            return_streaming_generator=True, model_name=model_name
-        )
+        astream_generator = await sales_agent.astep(stream=True)
         import inspect
 
         is_async_generator = inspect.isasyncgen(astream_generator)
