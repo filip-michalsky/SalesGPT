@@ -6,7 +6,6 @@ from langchain.agents import AgentExecutor, LLMSingleActionAgent
 from langchain.chains import RetrievalQA
 from langchain.chains.base import Chain
 from langchain.llms import BaseLLM
-from langchain.llms.base import create_base_retry_decorator
 from pydantic import BaseModel, Field
 from litellm import acompletion
 
@@ -32,7 +31,7 @@ def _create_retry_decorator(llm: Any) -> Callable[[Any], Any]:
     return create_base_retry_decorator(error_types=errors, max_retries=llm.max_retries)
 
 
-class SalesGPT(Chain, BaseModel):
+class SalesGPT(Chain):
     """Controller model for the Sales Agent."""
 
     conversation_history: List[str] = []
