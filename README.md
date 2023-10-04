@@ -1,6 +1,6 @@
 # :robot: SalesGPT - Your Context-Aware AI Sales Assistant
 
-This repo demonstrates an implementation of a **context-aware** AI Sales Assistant using LLMs. Use any of closed/open-source LLMs via integration with [`litellm`](https://docs.litellm.ai/docs/providers)!
+This repo demonstrates an implementation of a **context-aware** AI Sales Assistant using LLMs.
 
 SalesGPT is context-aware, which means it can understand what section of a sales conversation it is in and act accordingly.
 Morever, SalesGPT has access to tools, such as your own pre-defined product knowledge base, significantly reducing hallucinations!
@@ -20,7 +20,9 @@ Please send an email to [the repo author](mailto:filipmichalsky@gmail.com).
 ## :red_circle: Latest News
 
 - Sales Agent can now take advantage of **tools**, such as look up products in a product catalog!
-- SalesGPT is now compatible with [LiteLLM](https://github.com/BerriAI/litellm), choose any closed/open-sourced LLM to work with SalesGPT! Thanks to LiteLLM maintainers for this contribution!
+- SalesGPT is now compatible with [LiteLLM](https://github.com/BerriAI/litellm), choose *any closed/open-sourced LLM* to work with SalesGPT! Thanks to LiteLLM maintainers for this contribution!
+- SalesGPT works with synchronous and asynchronous completion, as well as synchronous/asynchronous streaming. Scale your Sales Agents up!
+
 
 ### Demo: Outbound Prospecting from Crusty AI: A New Way to Sell? 🤔
 
@@ -157,6 +159,12 @@ We have a SalesGPT deployment demo via FastAPI.
 
 Please refer to [README-api.md](https://github.com/filip-michalsky/SalesGPT/blob/main/README-api.md) for instructions!
 
+## Test your set up
+
+1. `pip install -r requirements.txt`
+2. `pytest`
+
+All tests should pass.
 
 ## Contact Us
 

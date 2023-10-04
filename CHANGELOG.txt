@@ -1,5 +1,14 @@
 Updates to the SalesGPT project: Building the world's best AI Sales Agents.
 
+September October 4 2023
+---------------
+Version 0.0.8
+- Improved streaming endpoint, now accessible with simple `stream=True` kwarg.
+- Fixed dependency issues with `pydantic` version.
+- Removed the duplicate calling of `model_name`.
+- Improved docstrings.
+-  Split `requirements.txt` into dev and production requirements.
+
 September 8 2023
 ---------------
 Version 0.0.7

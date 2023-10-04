@@ -1,9 +1,8 @@
-import os
 import json
+import os
 
 import pytest
 from langchain.chat_models import ChatLiteLLM
-
 
 from salesgpt.agents import SalesGPT
 
@@ -81,7 +80,7 @@ class TestSalesGPT:
     def test_valid_inference_stream(self, load_env):
         """Test that the agent will start and generate the first utterance when streaming."""
 
-        llm = ChatLiteLLM(temperature=0.9, model_name = 'gpt-3.5-turbo')
+        llm = ChatLiteLLM(temperature=0.9, model_name="gpt-3.5-turbo")
 
         sales_agent = SalesGPT.from_llm(
             llm,
@@ -115,7 +114,6 @@ class TestSalesGPT:
 
     @pytest.mark.asyncio
     async def test_valid_async_inference_stream(self, load_env):
-
         llm = ChatLiteLLM(temperature=0.9)
         model_name = "gpt-3.5-turbo"
 

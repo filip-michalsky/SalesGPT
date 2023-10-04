@@ -1,14 +1,13 @@
 from copy import deepcopy
 from typing import Any, Callable, Dict, List, Union
 
-from langchain.chains import LLMChain
 from langchain.agents import AgentExecutor, LLMSingleActionAgent
-from langchain.chains import RetrievalQA
+from langchain.chains import LLMChain, RetrievalQA
 from langchain.chains.base import Chain
 from langchain.chat_models import ChatLiteLLM
 from langchain.llms.base import create_base_retry_decorator
-from pydantic import Field
 from litellm import acompletion
+from pydantic import Field
 
 from salesgpt.chains import SalesConversationChain, StageAnalyzerChain
 from salesgpt.logger import time_logger
@@ -98,12 +97,10 @@ class SalesGPT(Chain):
         self.conversation_history.append(human_input)
 
     @time_logger
-    def step(
-        self, stream: bool = False
-    ):
+    def step(self, stream: bool = False):
         """
         Args:
-            return_streaming_generator (bool): whether or not return
+            stream (bool): whether or not return
             streaming generator object to manipulate streaming chunks in downstream applications.
         """
         if not stream:
@@ -112,9 +109,7 @@ class SalesGPT(Chain):
             return self._streaming_generator()
 
     @time_logger
-    def astep(
-        self, stream: bool = False
-    ):
+    def astep(self, stream: bool = False):
         """
         Args:
             stream (bool): whether or not return
@@ -297,8 +292,9 @@ class SalesGPT(Chain):
                 llm, verbose=verbose
             )
 
-        if "use_tools" in kwargs.keys() and (kwargs["use_tools"] == "True"
-                                             or kwargs["use_tools"] == True):
+        if "use_tools" in kwargs.keys() and (
+            kwargs["use_tools"] == "True" or kwargs["use_tools"] == True
+        ):
             # set up agent with tools
             product_catalog = kwargs["product_catalog"]
             knowledge_base = setup_knowledge_base(product_catalog)

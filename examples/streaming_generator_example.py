@@ -1,10 +1,10 @@
 import os
 
+from dotenv import load_dotenv
 from langchain.chat_models import ChatLiteLLM
 
 from salesgpt.agents import SalesGPT
 
-from dotenv import load_dotenv
 load_dotenv()
 
 llm = ChatLiteLLM(temperature=0.9, model_name="gpt-3.5-turbo-0613")
