@@ -1,9 +1,8 @@
-import os
 import json
+import os
 
 import pytest
-from langchain.chat_models import ChatOpenAI, ChatLiteLLM
-
+from langchain.chat_models import ChatLiteLLM
 
 from salesgpt.agents import SalesGPT
 
@@ -81,9 +80,7 @@ class TestSalesGPT:
     def test_valid_inference_stream(self, load_env):
         """Test that the agent will start and generate the first utterance when streaming."""
 
-        llm = ChatLiteLLM(temperature=0.9)
-        model_name = 'gpt-3.5-turbo'
-
+        llm = ChatLiteLLM(temperature=0.9, model_name="gpt-3.5-turbo")
 
         sales_agent = SalesGPT.from_llm(
             llm,
@@ -105,9 +102,7 @@ class TestSalesGPT:
         sales_agent.determine_conversation_stage()  # optional for demonstration, built into the prompt
 
         # agent output sample
-        stream_generator = sales_agent.step(
-            return_streaming_generator=True, model_name=model_name
-        )
+        stream_generator = sales_agent.step(stream=True)
         agent_output = ""
         for chunk in stream_generator:
             token = chunk["choices"][0]["delta"].get("content", "")
@@ -119,7 +114,6 @@ class TestSalesGPT:
 
     @pytest.mark.asyncio
     async def test_valid_async_inference_stream(self, load_env):
-
         llm = ChatLiteLLM(temperature=0.9)
         model_name = "gpt-3.5-turbo"
 
@@ -143,9 +137,7 @@ class TestSalesGPT:
         sales_agent.determine_conversation_stage()  # optional for demonstration, built into the prompt
 
         # agent output sample
-        astream_generator = await sales_agent.astep(
-            return_streaming_generator=True, model_name=model_name
-        )
+        astream_generator = await sales_agent.astep(stream=True)
         import inspect
 
         is_async_generator = inspect.isasyncgen(astream_generator)
@@ -160,7 +152,7 @@ class TestSalesGPT:
         assert len(agent_output) > 0, "Length of output needs to be greater than 0."
 
     def test_accept_json_or_args_config(self, load_env):
-        llm = ChatOpenAI()
+        llm = ChatLiteLLM()
 
         sales_agent_passing_str = SalesGPT.from_llm(
             llm,

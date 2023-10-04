@@ -1,14 +1,13 @@
 from copy import deepcopy
 from typing import Any, Callable, Dict, List, Union
 
-from langchain import LLMChain
 from langchain.agents import AgentExecutor, LLMSingleActionAgent
-from langchain.chains import RetrievalQA
+from langchain.chains import LLMChain, RetrievalQA
 from langchain.chains.base import Chain
-from langchain.llms import BaseLLM
+from langchain.chat_models import ChatLiteLLM
 from langchain.llms.base import create_base_retry_decorator
-from pydantic import BaseModel, Field
 from litellm import acompletion
+from pydantic import Field
 
 from salesgpt.chains import SalesConversationChain, StageAnalyzerChain
 from salesgpt.logger import time_logger
@@ -32,7 +31,7 @@ def _create_retry_decorator(llm: Any) -> Callable[[Any], Any]:
     return create_base_retry_decorator(error_types=errors, max_retries=llm.max_retries)
 
 
-class SalesGPT(Chain, BaseModel):
+class SalesGPT(Chain):
     """Controller model for the Sales Agent."""
 
     conversation_history: List[str] = []
@@ -43,6 +42,8 @@ class SalesGPT(Chain, BaseModel):
     knowledge_base: Union[RetrievalQA, None] = Field(...)
     sales_conversation_utterance_chain: SalesConversationChain = Field(...)
     conversation_stage_dict: Dict = CONVERSATION_STAGES
+
+    model_name: str = "gpt-3.5-turbo-0613"
 
     use_tools: bool = False
     salesperson_name: str = "Ted Lasso"
@@ -96,32 +97,28 @@ class SalesGPT(Chain, BaseModel):
         self.conversation_history.append(human_input)
 
     @time_logger
-    def step(
-        self, return_streaming_generator: bool = False, model_name="gpt-3.5-turbo-0613"
-    ):
+    def step(self, stream: bool = False):
         """
         Args:
-            return_streaming_generator (bool): whether or not return
+            stream (bool): whether or not return
             streaming generator object to manipulate streaming chunks in downstream applications.
         """
-        if not return_streaming_generator:
+        if not stream:
             self._call(inputs={})
         else:
-            return self._streaming_generator(model_name=model_name)
+            return self._streaming_generator()
 
     @time_logger
-    def astep(
-        self, return_streaming_generator: bool = False, model_name="gpt-3.5-turbo-0613"
-    ):
+    def astep(self, stream: bool = False):
         """
         Args:
-            return_streaming_generator (bool): whether or not return
+            stream (bool): whether or not return
             streaming generator object to manipulate streaming chunks in downstream applications.
         """
-        if not return_streaming_generator:
+        if not stream:
             self._acall(inputs={})
         else:
-            return self._astreaming_generator(model_name=model_name)
+            return self._astreaming_generator()
 
     @time_logger
     def acall(self, *args, **kwargs):
@@ -157,7 +154,7 @@ class SalesGPT(Chain, BaseModel):
         return [message_dict]
 
     @time_logger
-    def _streaming_generator(self, model_name="gpt-3.5-turbo-0613"):
+    def _streaming_generator(self):
         """
         Sometimes, the sales agent wants to take an action before the full LLM output is available.
         For instance, if we want to do text to speech on the partial LLM output.
@@ -180,7 +177,7 @@ class SalesGPT(Chain, BaseModel):
             messages=messages,
             stop="<END_OF_TURN>",
             stream=True,
-            model=model_name,
+            model=self.model_name,
         )
 
     async def acompletion_with_retry(self, llm: Any, **kwargs: Any) -> Any:
@@ -194,7 +191,7 @@ class SalesGPT(Chain, BaseModel):
 
         return await _completion_with_retry(**kwargs)
 
-    async def _astreaming_generator(self, model_name="gpt-3.5-turbo-0613"):
+    async def _astreaming_generator(self):
         """
         Asynchronous generator to reduce I/O blocking when dealing with multiple
         clients simultaneously.
@@ -222,7 +219,7 @@ class SalesGPT(Chain, BaseModel):
             messages=messages,
             stop="<END_OF_TURN>",
             stream=True,
-            model=model_name,
+            model=self.model_name,
         )
 
     def _call(self, inputs: Dict[str, Any]) -> None:
@@ -269,7 +266,7 @@ class SalesGPT(Chain, BaseModel):
 
     @classmethod
     @time_logger
-    def from_llm(cls, llm: BaseLLM, verbose: bool = False, **kwargs) -> "SalesGPT":
+    def from_llm(cls, llm: ChatLiteLLM, verbose: bool = False, **kwargs) -> "SalesGPT":
         """Initialize the SalesGPT Controller."""
         stage_analyzer_chain = StageAnalyzerChain.from_llm(llm, verbose=verbose)
         if (
@@ -295,8 +292,9 @@ class SalesGPT(Chain, BaseModel):
                 llm, verbose=verbose
             )
 
-        if "use_tools" in kwargs.keys() and (kwargs["use_tools"] == "True"
-                                             or kwargs["use_tools"] == True):
+        if "use_tools" in kwargs.keys() and (
+            kwargs["use_tools"] == "True" or kwargs["use_tools"] == True
+        ):
             # set up agent with tools
             product_catalog = kwargs["product_catalog"]
             knowledge_base = setup_knowledge_base(product_catalog)
@@ -347,6 +345,7 @@ class SalesGPT(Chain, BaseModel):
             sales_conversation_utterance_chain=sales_conversation_utterance_chain,
             sales_agent_executor=sales_agent_executor,
             knowledge_base=knowledge_base,
+            model_name=llm.model,
             verbose=verbose,
             **kwargs,
         )

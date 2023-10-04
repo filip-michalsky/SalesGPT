@@ -1,13 +1,13 @@
 import os
 
+from dotenv import load_dotenv
 from langchain.chat_models import ChatLiteLLM
 
 from salesgpt.agents import SalesGPT
 
-from dotenv import load_dotenv
 load_dotenv()
 
-llm = ChatLiteLLM(temperature=0.9)
+llm = ChatLiteLLM(temperature=0.9, model_name="gpt-3.5-turbo-0613")
 
 sales_agent = SalesGPT.from_llm(
     llm,
@@ -28,9 +28,7 @@ sales_agent = SalesGPT.from_llm(
 sales_agent.seed_agent()
 
 # get generator of the LLM output
-generator = sales_agent.step(
-    return_streaming_generator=True, model_name="gpt-3.5-turbo-0613"
-)
+generator = sales_agent.step(stream=True)
 
 # operate on streaming LLM output in near-real time
 # for instance, do something after each full sentence is generated

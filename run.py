@@ -1,13 +1,13 @@
 import argparse
 import json
-import os
 
-from salesgpt.agents import SalesGPT
-from langchain.chat_models import ChatLiteLLM
 from dotenv import load_dotenv
-load_dotenv() # loads .env file 
+from langchain.chat_models import ChatLiteLLM
 
 from salesgpt.agents import SalesGPT
+
+load_dotenv()  # loads .env file
+
 
 if __name__ == "__main__":
     # Initialize argparse
@@ -17,7 +17,8 @@ if __name__ == "__main__":
     parser.add_argument(
         "--config", type=str, help="Path to agent config file", default=""
     )
-    parser.add_argument("--verbose", type=bool, help="Verbosity", default=False)
+    parser.add_argument("--verbose", type=bool, help="Verbosity",
+                        default=False)
     parser.add_argument(
         "--max_num_turns",
         type=int,
@@ -33,11 +34,12 @@ if __name__ == "__main__":
     verbose = args.verbose
     max_num_turns = args.max_num_turns
 
-    llm = ChatLiteLLM(temperature=0.2)
+    llm = ChatLiteLLM(temperature=0.2, model_name="gpt-3.5-turbo-instruct")
 
     if config_path == "":
         print("No agent config specified, using a standard config")
-        USE_TOOLS = "True"  # keep boolean as string to be consistent with JSON configs.
+        # keep boolean as string to be consistent with JSON configs.
+        USE_TOOLS = "True"
         if USE_TOOLS == "True":
             sales_agent = SalesGPT.from_llm(
                 llm,
