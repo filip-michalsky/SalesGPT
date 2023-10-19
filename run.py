@@ -1,5 +1,6 @@
 import argparse
 import json
+import os
 
 from dotenv import load_dotenv
 from langchain.chat_models import ChatLiteLLM
@@ -7,6 +8,11 @@ from langchain.chat_models import ChatLiteLLM
 from salesgpt.agents import SalesGPT
 
 load_dotenv()  # loads .env file
+
+os.environ["LANGCHAIN_TRACING_V2"] = "true"
+os.environ["LANGCHAIN_ENDPOINT"] = "https://api.smith.langchain.com"
+os.environ["LANGCHAIN_API_KEY"] = os.getenv("LANGCHAIN_SMITH_API_KEY")
+os.environ["LANGCHAIN_PROJECT"] = 'pt-pertinent-discount-40'
 
 
 if __name__ == "__main__":
@@ -45,7 +51,7 @@ if __name__ == "__main__":
                 llm,
                 use_tools=USE_TOOLS,
                 product_catalog="examples/sample_product_catalog.txt",
-                salesperson_name="Ted Lasso",
+                salesperson_name="Octavio Arroyo",
                 verbose=verbose,
             )
         else:

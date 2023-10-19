@@ -25,3 +25,7 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+
+# environmental
+**venv
+litellm_uuid.txt
