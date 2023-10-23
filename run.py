@@ -25,7 +25,9 @@ if __name__ == "__main__":
     parser.add_argument(
         "--config", type=str, help="Path to agent config file", default=""
     )
-    parser.add_argument("--verbose", type=bool, help="Verbosity", default=False)
+    parser.add_argument(
+        "--verbose", type=bool, help="Verbosity", default=False
+    )
     parser.add_argument(
         "--max_num_turns",
         type=int,
@@ -52,7 +54,7 @@ if __name__ == "__main__":
                 llm,
                 use_tools=USE_TOOLS,
                 product_catalog="examples/sample_product_catalog.txt",
-                salesperson_name="Octavio Arroyo",
+                salesperson_name="Ted Lasso",
                 verbose=verbose,
             )
         else:

@@ -46,12 +46,12 @@ class SalesGPT(Chain):
     model_name: str = "gpt-3.5-turbo-0613"
 
     use_tools: bool = False
-    salesperson_name: str = "Octavio Arroyo"
-    salesperson_role: str = "Friendly and well-known figure in Peru, subtly guiding the Human to purchase a course of Cardiox"
-    company_name: str = "HeartGuard Solutions"
-    company_business: str = "HeartGuard Solutions is a leading health supplement company specializing in natural products designed to support heart health. With our flagship product, Cardiox, we aim to provide a natural remedy for those suffering from hypertension and those who wish to maintain a healthy heart."
-    company_values: str = "At HeartGuard Solutions, our mission is to empower individuals to take control of their heart health. We believe that with the right natural supplements, everyone can lead a life free from the worries of heart-related ailments. We're committed to rigorous research and ensuring that our customers receive only the highest quality products to support their well-being."
-    conversation_purpose: str = "Educate about the benefits of Cardiox, discuss any heart-related concerns, and guide them towards making an informed decision about their heart health."
+    salesperson_name: str = "Ted Lasso"
+    salesperson_role: str = "Business Development Representative"
+    company_name: str = "Sleep Haven"
+    company_business: str = "Sleep Haven is a premium mattress company that provides customers with the most comfortable and supportive sleeping experience possible. We offer a range of high-quality mattresses, pillows, and bedding accessories that are designed to meet the unique needs of our customers."
+    company_values: str = "Our mission at Sleep Haven is to help people achieve a better night's sleep by providing them with the best possible sleep solutions. We believe that quality sleep is essential to overall health and well-being, and we are committed to helping our customers achieve optimal sleep by offering exceptional products and customer service."
+    conversation_purpose: str = "find out whether they are looking to achieve better sleep via buying a premier mattress."
     conversation_type: str = "call"
 
     def retrieve_conversation_stage(self, key):

@@ -28,4 +28,6 @@ MANIFEST
 
 # environmental
 **venv
+
+# generated 
 litellm_uuid.txt
