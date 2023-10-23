@@ -9,10 +9,12 @@ from salesgpt.agents import SalesGPT
 
 load_dotenv()  # loads .env file
 
-os.environ["LANGCHAIN_TRACING_V2"] = "true"
+# LangSmith settings section, set TRACING_V2 to "true" to enable it
+# or leave it as it is, if you don't need tracing (more info in README)
+os.environ["LANGCHAIN_TRACING_V2"] = "false"
 os.environ["LANGCHAIN_ENDPOINT"] = "https://api.smith.langchain.com"
 os.environ["LANGCHAIN_API_KEY"] = os.getenv("LANGCHAIN_SMITH_API_KEY")
-os.environ["LANGCHAIN_PROJECT"] = 'pt-pertinent-discount-40'
+os.environ["LANGCHAIN_PROJECT"] = ""  # insert you project name here
 
 
 if __name__ == "__main__":
@@ -23,8 +25,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--config", type=str, help="Path to agent config file", default=""
     )
-    parser.add_argument("--verbose", type=bool, help="Verbosity",
-                        default=False)
+    parser.add_argument("--verbose", type=bool, help="Verbosity", default=False)
     parser.add_argument(
         "--max_num_turns",
         type=int,

@@ -166,6 +166,24 @@ Please refer to [README-api.md](https://github.com/filip-michalsky/SalesGPT/blob
 
 All tests should pass.
 
+## LangSmith tracing
+
+LangSmith is a platform for building production-grade LLM applications.
+
+It lets you debug, test, evaluate, and monitor chains and intelligent agents built on any LLM framework and seamlessly integrates with LangChain, the go-to open source framework for building with LLMs.
+
+LangSmith is developed by LangChain, the company behind the open source LangChain framework.
+
+To switch on the LangSmith tracing you have to do the following steps:
+
+1. [Create a LangSmith account](https://smith.langchain.com/)
+2. [Create an API key in settings](https://smith.langchain.com/settings)
+3. Add you API key and Project name from LangSmith account to .env file or run.py module
+4. Switch on the "LANGCHAIN_TRACING_V2" setting in run.py to "true"
+5. That's it. You'll get better understanding of your agents and chaing performance in LangChain admin panel. 
+
+For futher reading take a look at the [docs](https://docs.smith.langchain.com/)
+
 ## Contact Us
 
 For questions, you can [contact the repo author](mailto:filipmichalsky@gmail.com).
