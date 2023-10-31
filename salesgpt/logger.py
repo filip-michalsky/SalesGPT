@@ -1,11 +1,14 @@
 import logging
-import time
+import time,os
 from functools import wraps
 
 logger = logging.getLogger(__name__)
 
 stream_handler = logging.StreamHandler()
-log_filename = "output.log"
+working_dir = os.path.dirname(os.path.abspath(__file__))
+logging_dir = os.path.join(os.path.dirname(working_dir), 'logs')
+os.makedirs(logging_dir, exist_ok=True)
+log_filename = os.path.join(logging_dir, 'log.out')
 file_handler = logging.FileHandler(filename=log_filename)
 handlers = [stream_handler, file_handler]
 

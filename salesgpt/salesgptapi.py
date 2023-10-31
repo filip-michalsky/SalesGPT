@@ -1,15 +1,11 @@
-import json
+import os, json
 
 from langchain.chat_models import ChatLiteLLM
-
 from salesgpt.agents import SalesGPT
-
-GPT_MODEL = "gpt-3.5-turbo-0613"
-# GPT_MODEL_16K = "gpt-3.5-turbo-16k-0613"
 
 
 class SalesGPTAPI:
-    USE_TOOLS = False
+    use_tools = False
 
     def __init__(
         self, config_path: str, verbose: bool = False, max_num_turns: int = 10
@@ -17,13 +13,12 @@ class SalesGPTAPI:
         self.config_path = config_path
         self.verbose = verbose
         self.max_num_turns = max_num_turns
-        self.llm = ChatLiteLLM(temperature=0.2, model_name=GPT_MODEL)
+        self.llm = ChatLiteLLM(temperature=0.2, model_name=os.environ.get('MODEL_NAME'))
 
     def do(self, conversation_history: [str], human_input=None):
         if self.config_path == "":
             print("No agent config specified, using a standard config")
-            # USE_TOOLS = True
-            if self.USE_TOOLS:
+            if self.use_tools:
                 sales_agent = SalesGPT.from_llm(
                     self.llm,
                     use_tools=True,

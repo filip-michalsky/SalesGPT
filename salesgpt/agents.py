@@ -1,8 +1,10 @@
+import os
 from copy import deepcopy
 from typing import Any, Callable, Dict, List, Union
 
 from langchain.agents import AgentExecutor, LLMSingleActionAgent
 from langchain.chains import LLMChain, RetrievalQA
+from langchain_experimental.sql import SQLDatabaseChain
 from langchain.chains.base import Chain
 from langchain.chat_models import ChatLiteLLM
 from langchain.llms.base import create_base_retry_decorator
@@ -39,11 +41,11 @@ class SalesGPT(Chain):
     current_conversation_stage: str = CONVERSATION_STAGES.get("1")
     stage_analyzer_chain: StageAnalyzerChain = Field(...)
     sales_agent_executor: Union[AgentExecutor, None] = Field(...)
-    knowledge_base: Union[RetrievalQA, None] = Field(...)
+    knowledge_base: Union[RetrievalQA, SQLDatabaseChain, None] = Field(...)
     sales_conversation_utterance_chain: SalesConversationChain = Field(...)
     conversation_stage_dict: Dict = CONVERSATION_STAGES
 
-    model_name: str = "gpt-3.5-turbo-0613"
+    model_name: str = os.environ.get('MODEL_NAME')
 
     use_tools: bool = False
     salesperson_name: str = "Ted Lasso"
@@ -100,7 +102,7 @@ class SalesGPT(Chain):
     def step(self, stream: bool = False):
         """
         Args:
-            stream (bool): whether or not return
+            stream (bool): whether to return
             streaming generator object to manipulate streaming chunks in downstream applications.
         """
         if not stream:
@@ -112,7 +114,7 @@ class SalesGPT(Chain):
     def astep(self, stream: bool = False):
         """
         Args:
-            stream (bool): whether or not return
+            stream (bool): whether to return
             streaming generator object to manipulate streaming chunks in downstream applications.
         """
         if not stream:
@@ -226,7 +228,7 @@ class SalesGPT(Chain):
         """Run one step of the sales agent."""
 
         # Generate agent's utterance
-        # if use tools
+        # whether to use tools
         if self.use_tools:
             ai_message = self.sales_agent_executor.run(
                 input="",
@@ -293,7 +295,7 @@ class SalesGPT(Chain):
             )
 
         if "use_tools" in kwargs.keys() and (
-            kwargs["use_tools"] == "True" or kwargs["use_tools"] == True
+            kwargs["use_tools"] == "True" or kwargs["use_tools"]
         ):
             # set up agent with tools
             product_catalog = kwargs["product_catalog"]
@@ -322,8 +324,8 @@ class SalesGPT(Chain):
 
             tool_names = [tool.name for tool in tools]
 
-            # WARNING: this output parser is NOT reliable yet
-            ## It makes assumptions about output from LLM which can break and throw an error
+            # WARNING: this output parser is NOT reliable
+            # It makes assumptions about output from LLM which can break and throw an error
             output_parser = SalesConvoOutputParser(ai_prefix=kwargs["salesperson_name"])
 
             sales_agent_with_tools = LLMSingleActionAgent(
