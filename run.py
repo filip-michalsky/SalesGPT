@@ -21,6 +21,8 @@ if __name__ == "__main__":
     )
     parser.add_argument("--verbose", type=bool,
                         help="Verbosity", default=False)
+    parser.add_argument("--salesperson_name", type=str,
+                        help="The salesperson name", default="Ted Lasso")
     parser.add_argument("--use_tools", type=bool,
                         help="Use tools or not", default=False)
     parser.add_argument("--product_catalog", type=str,
@@ -36,6 +38,7 @@ if __name__ == "__main__":
     # Access arguments
     config_path = args.config
     verbose = args.verbose
+    salesperson_name = args.salesperson_name
     use_tools = args.use_tools
     max_num_turns = args.max_num_turns
     product_catalog = args.product_catalog
@@ -48,7 +51,7 @@ if __name__ == "__main__":
         sales_agent = SalesGPT.from_llm(
             llm, use_tools=use_tools,
             product_catalog=product_catalog,
-            salesperson_name="Ted Lasso",
+            salesperson_name=salesperson_name,
             verbose=verbose,
         )
     else:
