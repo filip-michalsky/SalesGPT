@@ -7,6 +7,7 @@ from langchain.schema import AgentAction, AgentFinish  # OutputParserException
 
 
 class SalesConvoOutputParser(AgentOutputParser):
+    react_regex = r"Action: (.*?)[\n]*Action Input: (.*)"
     ai_prefix: str = "AI"  # change for salesperson_name
     verbose: bool = False
 
@@ -23,8 +24,7 @@ class SalesConvoOutputParser(AgentOutputParser):
             return AgentFinish(
                 {"output": pure_text}, text
             )
-        regex = r"Action: (.*?)[\n]*Action Input: (.*)"
-        match = re.search(regex, text)
+        match = re.search(self.react_regex, text)
         if not match:
             return AgentFinish(
                 {"output": text}, text,

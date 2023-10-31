@@ -1,11 +1,11 @@
+import os
 import argparse
 import json
 
-from dotenv import load_dotenv
 from langchain.chat_models import ChatLiteLLM
-
 from salesgpt.agents import SalesGPT
 
+from dotenv import load_dotenv
 load_dotenv()  # loads .env file
 
 
@@ -15,16 +15,20 @@ if __name__ == "__main__":
 
     # Add arguments
     parser.add_argument(
-        "--config", type=str, help="Path to agent config file", default=""
+        "--config", type=str,
+        help="Path to agent config file",
+        default=""
     )
-    parser.add_argument("--verbose", type=bool, help="Verbosity",
-                        default=False)
-    parser.add_argument(
-        "--max_num_turns",
-        type=int,
-        help="Maximum number of turns in the sales conversation",
-        default=10,
-    )
+    parser.add_argument("--verbose", type=bool,
+                        help="Verbosity", default=False)
+    parser.add_argument("--use_tools", type=bool,
+                        help="Use tools or not", default=False)
+    parser.add_argument("--product_catalog", type=str,
+                        help="Product catalog location (examples/sample_product_catalog.txt)",
+                        default=None)
+    parser.add_argument("--max_num_turns", type=int,
+                        help="Maximum number of turns in the sales conversation",
+                        default=10)
 
     # Parse arguments
     args = parser.parse_args()
@@ -32,26 +36,23 @@ if __name__ == "__main__":
     # Access arguments
     config_path = args.config
     verbose = args.verbose
+    use_tools = args.use_tools
     max_num_turns = args.max_num_turns
+    product_catalog = args.product_catalog
 
-    llm = ChatLiteLLM(temperature=0.2, model_name="gpt-3.5-turbo-instruct")
+    llm = ChatLiteLLM(temperature=0, model_name=os.environ.get('MODEL_NAME'))
 
     if config_path == "":
         print("No agent config specified, using a standard config")
         # keep boolean as string to be consistent with JSON configs.
-        USE_TOOLS = "True"
-        if USE_TOOLS == "True":
-            sales_agent = SalesGPT.from_llm(
-                llm,
-                use_tools=USE_TOOLS,
-                product_catalog="examples/sample_product_catalog.txt",
-                salesperson_name="Ted Lasso",
-                verbose=verbose,
-            )
-        else:
-            sales_agent = SalesGPT.from_llm(llm, verbose=verbose)
+        sales_agent = SalesGPT.from_llm(
+            llm, use_tools=use_tools,
+            product_catalog=product_catalog,
+            salesperson_name="Ted Lasso",
+            verbose=verbose,
+        )
     else:
-        with open(config_path, "r", encoding="UTF-8") as f:
+        with open(config_path, "r", encoding=os.environ.get('ENCODING')) as f:
             config = json.load(f)
         print(f"Agent config {config}")
         sales_agent = SalesGPT.from_llm(llm, verbose=verbose, **config)
