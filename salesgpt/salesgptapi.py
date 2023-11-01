@@ -46,7 +46,7 @@ class SalesGPTAPI:
 
         # seed
         sales_agent.seed_agent()
-        sales_agent.conversation_history = conversation_history
+        sales_agent.sales_chat = conversation_history
 
         if human_input is not None:
             sales_agent.human_step(human_input)
@@ -57,11 +57,11 @@ class SalesGPTAPI:
         sales_agent.step()
 
         # end conversation
-        if "<END_OF_CALL>" in sales_agent.conversation_history[-1]:
+        if "<END_OF_CALL>" in sales_agent.sales_chat[-1]:
             print("Sales Agent determined it is time to end the conversation.")
             return "<END_OF_CALL>"
 
-        reply = sales_agent.conversation_history[-1]
+        reply = sales_agent.sales_chat[-1]
 
         if self.verbose:
             print("=" * 10)

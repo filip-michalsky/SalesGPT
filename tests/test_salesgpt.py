@@ -36,7 +36,7 @@ class TestSalesGPT:
         # agent output sample
         sales_agent.step()
 
-        agent_output = sales_agent.conversation_history[-1]
+        agent_output = sales_agent.sales_chat[-1]
         assert agent_output is not None, "Agent output cannot be None."
         assert isinstance(agent_output, str), "Agent output needs to be of type str"
         assert len(agent_output) > 0, "Length of output needs to be greater than 0."
@@ -72,7 +72,7 @@ class TestSalesGPT:
         # agent output sample
         sales_agent.step()
 
-        agent_output = sales_agent.conversation_history[-1]
+        agent_output = sales_agent.sales_chat[-1]
         assert agent_output is not None, "Agent output cannot be None."
         assert isinstance(agent_output, str), "Agent output needs to be of type str"
         assert len(agent_output) > 0, "Length of output needs to be greater than 0."

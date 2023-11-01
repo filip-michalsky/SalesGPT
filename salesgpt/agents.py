@@ -1,4 +1,4 @@
-import os
+import os, uuid
 from copy import deepcopy
 from typing import Any, Callable, Dict, List, Union
 
@@ -11,6 +11,7 @@ from langchain.llms.base import create_base_retry_decorator
 from litellm import acompletion
 from pydantic import Field
 
+from salesgpt.chats import SalesChat
 from salesgpt.chains import SalesConversationChain, StageAnalyzerChain
 from salesgpt.logger import time_logger
 from salesgpt.parsers import SalesConvoOutputParser
@@ -36,18 +37,21 @@ def _create_retry_decorator(llm: Any) -> Callable[[Any], Any]:
 class SalesGPT(Chain):
     """Controller model for the Sales Agent."""
 
-    conversation_history: List[str] = []
+    conversation_id: str = None
+    sales_chat: SalesChat = None
+
+    conversation_stage_dict: Dict = CONVERSATION_STAGES
     conversation_stage_id: str = "1"
     current_conversation_stage: str = CONVERSATION_STAGES.get("1")
     stage_analyzer_chain: StageAnalyzerChain = Field(...)
     sales_agent_executor: Union[AgentExecutor, None] = Field(...)
-    knowledge_base: Union[RetrievalQA, SQLDatabaseChain, None] = Field(...)
     sales_conversation_utterance_chain: SalesConversationChain = Field(...)
-    conversation_stage_dict: Dict = CONVERSATION_STAGES
+    knowledge_base: Union[RetrievalQA, SQLDatabaseChain, None] = Field(...)
 
     model_name: str = os.environ.get('MODEL_NAME')
 
     use_tools: bool = False
+
     salesperson_name: str = "Ted Lasso"
     salesperson_role: str = "Business Development Representative"
     company_name: str = "Sleep Haven"
@@ -55,6 +59,10 @@ class SalesGPT(Chain):
     company_values: str = "Our mission at Sleep Haven is to help people achieve a better night's sleep by providing them with the best possible sleep solutions. We believe that quality sleep is essential to overall health and well-being, and we are committed to helping our customers achieve optimal sleep by offering exceptional products and customer service."
     conversation_purpose: str = "find out whether they are looking to achieve better sleep via buying a premier mattress."
     conversation_type: str = "call"
+
+    customer_name: str = "Alice Yu"
+
+    sales_chat: SalesChat = None
 
     def retrieve_conversation_stage(self, key):
         return self.conversation_stage_dict.get(key, "1")
@@ -71,12 +79,13 @@ class SalesGPT(Chain):
     def seed_agent(self):
         # Step 1: seed the conversation
         self.current_conversation_stage = self.retrieve_conversation_stage("1")
-        self.conversation_history = []
+        self.sales_chat = SalesChat(salesperson_name=self.salesperson_name, customer_name=self.customer_name)
+
 
     @time_logger
     def determine_conversation_stage(self):
         self.conversation_stage_id = self.stage_analyzer_chain.run(
-            conversation_history="\n".join(self.conversation_history).rstrip("\n"),
+            conversation_history="\n".join(self.sales_chat.get_history()).rstrip("\n"),
             conversation_stage_id=self.conversation_stage_id,
             conversation_stages="\n".join(
                 [
@@ -95,8 +104,7 @@ class SalesGPT(Chain):
 
     def human_step(self, human_input):
         # process human input
-        human_input = "User: " + human_input + " <END_OF_TURN>"
-        self.conversation_history.append(human_input)
+        self.sales_chat.append(name=self.customer_name, content=human_input)
 
     @time_logger
     def step(self, stream: bool = False):
@@ -135,7 +143,7 @@ class SalesGPT(Chain):
             [
                 dict(
                     conversation_stage=self.current_conversation_stage,
-                    conversation_history="\n".join(self.conversation_history),
+                    conversation_history="\n".join(self.sales_chat.get_history()),
                     salesperson_name=self.salesperson_name,
                     salesperson_role=self.salesperson_role,
                     company_name=self.company_name,
@@ -233,7 +241,7 @@ class SalesGPT(Chain):
             ai_message = self.sales_agent_executor.run(
                 input="",
                 conversation_stage=self.current_conversation_stage,
-                conversation_history="\n".join(self.conversation_history),
+                conversation_history="\n".join(self.sales_chat.get_history()),
                 salesperson_name=self.salesperson_name,
                 salesperson_role=self.salesperson_role,
                 company_name=self.company_name,
@@ -247,7 +255,7 @@ class SalesGPT(Chain):
             # else
             ai_message = self.sales_conversation_utterance_chain.run(
                 conversation_stage=self.current_conversation_stage,
-                conversation_history="\n".join(self.conversation_history),
+                conversation_history="\n".join(self.sales_chat.get_history()),
                 salesperson_name=self.salesperson_name,
                 salesperson_role=self.salesperson_role,
                 company_name=self.company_name,
@@ -258,11 +266,7 @@ class SalesGPT(Chain):
             )
 
         # Add agent's response to conversation history
-        agent_name = self.salesperson_name
-        ai_message = agent_name + ": " + ai_message
-        if "<END_OF_TURN>" not in ai_message:
-            ai_message += " <END_OF_TURN>"
-        self.conversation_history.append(ai_message)
+        self.sales_chat.append(name=self.salesperson_name, content=ai_message)
         print(ai_message.replace("<END_OF_TURN>", ""))
         return {}
 

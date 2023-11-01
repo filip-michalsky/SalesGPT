@@ -6,7 +6,8 @@ from dotenv import load_dotenv
 load_dotenv()  # loads .env file
 
 
-async def init():
+async def init_db():
+
     await Tortoise.init(
         db_url=os.environ.get('DB_URL'),
         modules={'models': ['models']},
@@ -18,6 +19,7 @@ async def init():
         db_url=os.environ.get('DB_URL'),
         modules={'models': ['__main__']},
     )
+
     await ProductCatalog.create(
         name='Luxury Cloud-Comfort Memory Foam Mattress',
         type='Twin, Queen, King',
@@ -45,4 +47,4 @@ async def init():
 
 
 if __name__ == "__main__":
-    run_async(init())
+    run_async(init_db())

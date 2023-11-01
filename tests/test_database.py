@@ -13,7 +13,7 @@ from salesgpt.models import ChatMessage
 import pytest
 
 
-async def db_init():
+async def init_db():
     await Tortoise.init(
         db_url=os.environ.get('DB_URL'),
         modules={'models': ['__main__']},
@@ -37,7 +37,7 @@ class TestDatabase:
     async def test_product_catalog_async(self, load_env):
         """Async Test Hello World"""
         try:
-            await db_init()
+            await init_db()
             conn = Tortoise.get_connection('default')
             values = await conn.execute_query('select * from product_catalog')
             print(values)
