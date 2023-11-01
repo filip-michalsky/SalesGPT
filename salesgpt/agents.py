@@ -37,8 +37,7 @@ def _create_retry_decorator(llm: Any) -> Callable[[Any], Any]:
 class SalesGPT(Chain):
     """Controller model for the Sales Agent."""
 
-    conversation_id: str = None
-    sales_chat: SalesChat = None
+    sales_chat: SalesChat = Field(...)
 
     conversation_stage_dict: Dict = CONVERSATION_STAGES
     conversation_stage_id: str = "1"
@@ -62,8 +61,6 @@ class SalesGPT(Chain):
 
     customer_name: str = "Alice Yu"
 
-    sales_chat: SalesChat = None
-
     def retrieve_conversation_stage(self, key):
         return self.conversation_stage_dict.get(key, "1")
 
@@ -81,11 +78,10 @@ class SalesGPT(Chain):
         self.current_conversation_stage = self.retrieve_conversation_stage("1")
         self.sales_chat = SalesChat(salesperson_name=self.salesperson_name, customer_name=self.customer_name)
 
-
     @time_logger
     def determine_conversation_stage(self):
         self.conversation_stage_id = self.stage_analyzer_chain.run(
-            conversation_history="\n".join(self.sales_chat.get_history()).rstrip("\n"),
+            conversation_history="\n".join(self.sales_chat.get_live_history()).rstrip("\n"),
             conversation_stage_id=self.conversation_stage_id,
             conversation_stages="\n".join(
                 [
@@ -143,7 +139,7 @@ class SalesGPT(Chain):
             [
                 dict(
                     conversation_stage=self.current_conversation_stage,
-                    conversation_history="\n".join(self.sales_chat.get_history()),
+                    conversation_history="\n".join(self.sales_chat.get_live_history()),
                     salesperson_name=self.salesperson_name,
                     salesperson_role=self.salesperson_role,
                     company_name=self.company_name,
@@ -151,6 +147,7 @@ class SalesGPT(Chain):
                     company_values=self.company_values,
                     conversation_purpose=self.conversation_purpose,
                     conversation_type=self.conversation_type,
+                    customer_name=self.customer_name,
                 )
             ]
         )
@@ -241,7 +238,7 @@ class SalesGPT(Chain):
             ai_message = self.sales_agent_executor.run(
                 input="",
                 conversation_stage=self.current_conversation_stage,
-                conversation_history="\n".join(self.sales_chat.get_history()),
+                conversation_history="\n".join(self.sales_chat.get_live_history()),
                 salesperson_name=self.salesperson_name,
                 salesperson_role=self.salesperson_role,
                 company_name=self.company_name,
@@ -249,13 +246,14 @@ class SalesGPT(Chain):
                 company_values=self.company_values,
                 conversation_purpose=self.conversation_purpose,
                 conversation_type=self.conversation_type,
+                customer_name=self.customer_name,
             )
 
         else:
             # else
             ai_message = self.sales_conversation_utterance_chain.run(
                 conversation_stage=self.current_conversation_stage,
-                conversation_history="\n".join(self.sales_chat.get_history()),
+                conversation_history="\n".join(self.sales_chat.get_live_history()),
                 salesperson_name=self.salesperson_name,
                 salesperson_role=self.salesperson_role,
                 company_name=self.company_name,
@@ -263,6 +261,7 @@ class SalesGPT(Chain):
                 company_values=self.company_values,
                 conversation_purpose=self.conversation_purpose,
                 conversation_type=self.conversation_type,
+                customer_name=self.customer_name,
             )
 
         # Add agent's response to conversation history
@@ -276,8 +275,8 @@ class SalesGPT(Chain):
         """Initialize the SalesGPT Controller."""
         stage_analyzer_chain = StageAnalyzerChain.from_llm(llm, verbose=verbose)
         if (
-            "use_custom_prompt" in kwargs.keys()
-            and kwargs["use_custom_prompt"] == "True"
+                "use_custom_prompt" in kwargs.keys()
+                and kwargs["use_custom_prompt"] == "True"
         ):
             use_custom_prompt = deepcopy(kwargs["use_custom_prompt"])
             custom_prompt = deepcopy(kwargs["custom_prompt"])
@@ -299,7 +298,7 @@ class SalesGPT(Chain):
             )
 
         if "use_tools" in kwargs.keys() and (
-            kwargs["use_tools"] == "True" or kwargs["use_tools"]
+                kwargs["use_tools"] == "True" or kwargs["use_tools"]
         ):
             # set up agent with tools
             product_catalog = kwargs["product_catalog"]
@@ -322,6 +321,7 @@ class SalesGPT(Chain):
                     "conversation_purpose",
                     "conversation_type",
                     "conversation_history",
+                    "customer_name",
                 ],
             )
             llm_chain = LLMChain(llm=llm, prompt=prompt, verbose=verbose)

@@ -10,10 +10,11 @@ from langchain_experimental.sql import SQLDatabaseChain
 
 
 def setup_knowledge_base(product_catalog: str = None):
-    if product_catalog is None or product_catalog == os.environ.get('DB_SQL_URL'):
-        return setup_knowledge_base_from_db()
-    else:
+
+    if os.path.exists(product_catalog):
         return setup_knowledge_base_from_text(product_catalog)
+    else:
+        return setup_knowledge_base_from_db()
 
 
 def setup_knowledge_base_from_text(product_catalog: str):

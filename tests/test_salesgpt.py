@@ -28,6 +28,7 @@ class TestSalesGPT:
                                     pillows, and bedding accessories 
                                     that are designed to meet the unique 
                                     needs of our customers.""",
+            customer_name="Alice Yu",
         )
 
         sales_agent.seed_agent()
@@ -36,7 +37,7 @@ class TestSalesGPT:
         # agent output sample
         sales_agent.step()
 
-        agent_output = sales_agent.sales_chat[-1]
+        agent_output = sales_agent.sales_chat.get_live_history()[-1]
         assert agent_output is not None, "Agent output cannot be None."
         assert isinstance(agent_output, str), "Agent output needs to be of type str"
         assert len(agent_output) > 0, "Length of output needs to be greater than 0."
@@ -64,6 +65,7 @@ class TestSalesGPT:
                                     pillows, and bedding accessories 
                                     that are designed to meet the unique 
                                     needs of our customers.""",
+            customer_name="Alice Yu",
         )
 
         sales_agent.seed_agent()
@@ -72,7 +74,7 @@ class TestSalesGPT:
         # agent output sample
         sales_agent.step()
 
-        agent_output = sales_agent.sales_chat[-1]
+        agent_output = sales_agent.sales_chat.get_live_history()[-1]
         assert agent_output is not None, "Agent output cannot be None."
         assert isinstance(agent_output, str), "Agent output needs to be of type str"
         assert len(agent_output) > 0, "Length of output needs to be greater than 0."
@@ -80,7 +82,7 @@ class TestSalesGPT:
     def test_valid_inference_stream(self, load_env):
         """Test that the agent will start and generate the first utterance when streaming."""
 
-        llm = ChatLiteLLM(temperature=0.9, model_name="gpt-3.5-turbo")
+        llm = ChatLiteLLM(temperature=0.9, model_name=os.environ.get('MODEL_NAME'))
 
         sales_agent = SalesGPT.from_llm(
             llm,
@@ -96,6 +98,7 @@ class TestSalesGPT:
                                     pillows, and bedding accessories 
                                     that are designed to meet the unique 
                                     needs of our customers.""",
+            customer_name="Alice Yu",
         )
 
         sales_agent.seed_agent()
@@ -114,8 +117,7 @@ class TestSalesGPT:
 
     @pytest.mark.asyncio
     async def test_valid_async_inference_stream(self, load_env):
-        llm = ChatLiteLLM(temperature=0.9)
-        model_name = "gpt-3.5-turbo"
+        llm = ChatLiteLLM(temperature=0.9, model_name=os.environ.get('MODEL_NAME'))
 
         sales_agent = SalesGPT.from_llm(
             llm,
@@ -131,6 +133,7 @@ class TestSalesGPT:
                                     pillows, and bedding accessories 
                                     that are designed to meet the unique 
                                     needs of our customers.""",
+            customer_name="Alice Yu",
         )
 
         sales_agent.seed_agent()
@@ -170,6 +173,7 @@ class TestSalesGPT:
                                     pillows, and bedding accessories
                                     that are designed to meet the unique
                                     needs of our customers.""",
+            customer_name="Alice Yu",
         )  # Passing use_tools="True" as arg
         assert isinstance(sales_agent_passing_str, SalesGPT)
         assert sales_agent_passing_str.seed_agent() is None
@@ -191,6 +195,7 @@ class TestSalesGPT:
                                     pillows, and bedding accessories
                                     that are designed to meet the unique
                                     needs of our customers.""",
+            customer_name="Alice Yu",
         )  # Passing use_tools=True as arg
         assert isinstance(sales_agent_passing_bool, SalesGPT)
         assert sales_agent_passing_bool.seed_agent() is None

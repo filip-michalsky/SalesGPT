@@ -52,6 +52,7 @@ class SalesConversationChain(LLMChain):
                     "conversation_purpose",
                     "conversation_type",
                     "conversation_history",
+                    "customer_name",
                 ],
             )
         else:
@@ -67,6 +68,7 @@ class SalesConversationChain(LLMChain):
                     "conversation_purpose",
                     "conversation_type",
                     "conversation_history",
+                    "customer_name",
                 ],
             )
         return cls(prompt=prompt, llm=llm, verbose=verbose)
