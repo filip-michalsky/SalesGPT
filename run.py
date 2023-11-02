@@ -80,7 +80,7 @@ if __name__ == "__main__":
         sales_agent.step()
 
         # end conversation
-        if sales_agent.sales_chat.end():
+        if sales_agent.sales_chat.is_live_ended():
             print("Sales Agent determined it is time to end the conversation.")
             break
         human_input = input("Your response: ")

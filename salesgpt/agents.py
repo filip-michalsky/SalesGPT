@@ -81,7 +81,7 @@ class SalesGPT(Chain):
     @time_logger
     def determine_conversation_stage(self):
         self.conversation_stage_id = self.stage_analyzer_chain.run(
-            conversation_history="\n".join(self.sales_chat.get_live_history()).rstrip("\n"),
+            conversation_history="\n".join(self.sales_chat.query_last_history()).rstrip("\n"),
             conversation_stage_id=self.conversation_stage_id,
             conversation_stages="\n".join(
                 [
@@ -308,7 +308,8 @@ class SalesGPT(Chain):
             prompt = CustomPromptTemplateForTools(
                 template=SALES_AGENT_TOOLS_PROMPT,
                 tools_getter=lambda x: tools,
-                # This omits the `agent_scratchpad`, `tools`, and `tool_names` variables because those are generated dynamically
+                # This omits the `agent_scratchpad`, `tools`, and `tool_names` variables
+                # because those are generated dynamically
                 # This includes the `intermediate_steps` variable because that is needed
                 input_variables=[
                     "input",
