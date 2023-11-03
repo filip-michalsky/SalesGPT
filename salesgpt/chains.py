@@ -75,4 +75,4 @@ class SalesConversationChain(LLMChain):
             )
         return cls(prompt=prompt,
                    llm=llm,
-                   memory=memory, verbose=verbose)
+                   verbose=verbose)
