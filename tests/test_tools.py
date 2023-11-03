@@ -1,5 +1,4 @@
 import os, json
-from tortoise import Tortoise
 from sqlalchemy import make_url
 from langchain.chat_models import ChatOpenAI
 from langchain.utilities import SQLDatabase
@@ -18,6 +17,13 @@ class TestTools:
         llm = ChatOpenAI(temperature=0, model_name=os.environ.get('MODEL_NAME'))
         db_chain = SQLDatabaseChain.from_llm(llm, db, verbose=True)
         response = db_chain.run('which product has the highest price and give me its description')
+        assert response is not None, "Agent output cannot be None."
+
+    def test_chat_message(self, load_env):
+        db = SQLDatabase.from_uri(os.environ.get('DB_SQL_URL'))
+        llm = ChatOpenAI(temperature=0, model_name=os.environ.get('MODEL_NAME'))
+        db_chain = SQLDatabaseChain.from_llm(llm, db, verbose=True)
+        response = db_chain.run('get all chat messages with chat_id: 3c6722a74d2a420f96658963a9f11512')
         assert response is not None, "Agent output cannot be None."
 
     def test_document_load(self, load_env):

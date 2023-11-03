@@ -37,7 +37,9 @@ class SalesConversationChain(LLMChain):
         verbose: bool = True,
         use_custom_prompt: bool = False,
         custom_prompt: str = "You are an AI Sales agent, sell me this pencil",
+
     ) -> LLMChain:
+
         """Get the response parser."""
         if use_custom_prompt:
             sales_agent_inception_prompt = custom_prompt
@@ -71,4 +73,6 @@ class SalesConversationChain(LLMChain):
                     "customer_name",
                 ],
             )
-        return cls(prompt=prompt, llm=llm, verbose=verbose)
+        return cls(prompt=prompt,
+                   llm=llm,
+                   memory=memory, verbose=verbose)

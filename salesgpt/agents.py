@@ -75,8 +75,8 @@ class SalesGPT(Chain):
     @time_logger
     def seed_agent(self):
         # Step 1: seed the conversation
-        self.current_conversation_stage = self.retrieve_conversation_stage("1")
         self.sales_chat = SalesChat(salesperson_name=self.salesperson_name, customer_name=self.customer_name)
+        self.determine_conversation_stage()
 
     @time_logger
     def determine_conversation_stage(self):
@@ -329,8 +329,6 @@ class SalesGPT(Chain):
 
             tool_names = [tool.name for tool in tools]
 
-            # WARNING: this output parser is NOT reliable
-            # It makes assumptions about output from LLM which can break and throw an error
             output_parser = SalesConvoOutputParser(ai_prefix=kwargs["salesperson_name"])
 
             sales_agent_with_tools = LLMSingleActionAgent(
