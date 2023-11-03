@@ -12,11 +12,11 @@ class StageAnalyzerChain(LLMChain):
 
     @classmethod
     @time_logger
-    def from_llm(cls, llm: ChatLiteLLM, verbose: bool = True) -> LLMChain:
+    def from_llm(cls, llm: ChatLiteLLM, custom_template: str = None, verbose: bool = True) -> LLMChain:
         """Get the response parser."""
-        stage_analyzer_inception_prompt_template = STAGE_ANALYZER_INCEPTION_PROMPT
+        template = STAGE_ANALYZER_INCEPTION_PROMPT if custom_template is None else custom_template
         prompt = PromptTemplate(
-            template=stage_analyzer_inception_prompt_template,
+            template=template,
             input_variables=[
                 "conversation_history",
                 "conversation_stage_id",

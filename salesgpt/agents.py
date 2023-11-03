@@ -267,7 +267,7 @@ class SalesGPT(Chain):
         # Add agent's response to conversation history
         self.sales_chat.append(name=self.salesperson_name, content=ai_message)
         print(ai_message.replace("<END_OF_TURN>", ""))
-        return {}
+
 
     @classmethod
     @time_logger
