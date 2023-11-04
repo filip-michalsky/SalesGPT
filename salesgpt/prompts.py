@@ -112,16 +112,16 @@ The answer needs to be one number only, no words.
 Do not answer anything else nor add anything to you answer."""
 
 
-STAGE_ANALYZER_INCEPTION_PROMPT_V2 = """You are a professional sales expert helping your sales agent to determine which stage of a sales conversation should the agent stay at or move to when talking to a customer.
-Please progressively analyze provide turns of conversation, think carefully and determine what should be the next immediate conversation stage for the agent in the sales conversation by selecting only from the following options:
+STAGE_ANALYZER_INCEPTION_PROMPT_MULTIPLE_STEPS = """You are a professional sales expert helping your sales agent to determine which stage of a sales conversation should the agent stay at or move to when talking to a customer.
+Please progressively analyze provided snippets of conversation, think step by step and determine what should be the next immediate conversation stage for the agent in the sales conversation by selecting only from the following options:
 {conversation_stages}. 
 
-The output of new stage MUST be one number only, no words. Do not answer anything else nor add anything to you answer.
+The output of next stage MUST be one number only, no words. Do not answer anything else nor add anything to you answer.
 
 EXAMPLE:
 
 Current stage: 1
-New lines of conversation delimited by triple backticks:
+Next lines of conversation delimited by triple backticks:
 ```
 Ted Lasso: Hello Alice, this is Ted Lasso from Sleep Haven. How are you doing today? <END_OF_TURN>
 Alice Yu: Fine <END_OF_TURN>
@@ -129,15 +129,15 @@ Ted Lasso: That's great to hear, Alice. I'm reaching out to you because I notice
 Alice Yu: Yes, do you have a product list? <END_OF_TURN>
 Ted Lasso: We have a variety of mattresses to suit different needs, Alice. For instance, we have the Luxury Cloud-Comfort Memory Foam Mattress which is designed with a temperature-sensitive memory foam layer for personalized support. We also have the Classic Harmony Spring Mattress, which is a blend of traditional craftsmanship and modern comfort. If you're looking for something eco-friendly, we have the EcoGreen Hybrid Latex Mattress made from 100% natural latex. Lastly, we have the Plush Serenity Bamboo Mattress that provides tailored support for each sleeper. Would you like to know more about any specific product? <END_OF_TURN>
 ```
-New stage: 3
+Next stage: 3
 ----
 
 Current stage: {conversation_stage_id}
-New lines of conversation delimited by triple backticks:
+Next lines of conversation delimited by triple backticks:
 ```
 {conversation_history}
 ```
-New stage:
+Next stage:
 
 
 """

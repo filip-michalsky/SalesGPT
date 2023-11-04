@@ -1,7 +1,7 @@
 import os
 from salesgpt.chains import StageAnalyzerChain
 from langchain.chat_models import ChatLiteLLM
-from salesgpt.prompts import STAGE_ANALYZER_INCEPTION_PROMPT_V2
+from salesgpt.prompts import STAGE_ANALYZER_INCEPTION_PROMPT_MULTIPLE_STEPS
 from salesgpt.stages import CONVERSATION_STAGES
 from salesgpt.chats import SalesChat
 
@@ -38,17 +38,19 @@ class TestChains:
         salesperson_name = 'Ted Lasso'
         customer_name = 'Alice Yu'
         sales_chat = SalesChat(salesperson_name=salesperson_name, customer_name=customer_name)
-        chat_msgs = sales_chat.query_history(chat_id='de8afffa0d554d05ac14b608535f8b8e')
+        chat_msgs = sales_chat.query_history(chat_id='3c6722a74d2a420f96658963a9f11512')
 
         llm = ChatLiteLLM(temperature=0)
         stage_analyzer_chain = StageAnalyzerChain.from_llm(
-            llm=llm, custom_template=STAGE_ANALYZER_INCEPTION_PROMPT_V2, verbose=False)
+            llm=llm, custom_template=STAGE_ANALYZER_INCEPTION_PROMPT_MULTIPLE_STEPS, verbose=True)
         chat_step = 6
         next_stage = 1
-        print('\n'.join(chat_msgs))
+        stages = [str(next_stage)]
         for i in range(0, len(chat_msgs), chat_step):
+            cur_history = "\n".join(chat_msgs[i: i+chat_step]).rstrip("\n")
+            print(cur_history)
             next_stage = stage_analyzer_chain.run(
-                conversation_history="\n".join(chat_msgs[i: i+chat_step]).rstrip("\n"),
+                conversation_history=cur_history,
                 conversation_stage_id=next_stage,
                 conversation_stages="\n".join(
                     [
@@ -57,7 +59,9 @@ class TestChains:
                     ]
                 ),
             )
-            print(f'next_stage = {next_stage}')
+            stages.append(str(next_stage))
+        stages_route = '->'.join(stages)
+        print(f'stages_route = {stages_route}')
 
 
 
