@@ -16,7 +16,7 @@ from salesgpt.chains import SalesConversationChain, StageAnalyzerChain
 from salesgpt.logger import time_logger
 from salesgpt.parsers import SalesConvoOutputParser
 from salesgpt.prompts import SALES_AGENT_TOOLS_PROMPT
-from salesgpt.stages import CONVERSATION_STAGES
+from salesgpt.stages import StagesManager
 from salesgpt.templates import CustomPromptTemplateForTools
 from salesgpt.tools import get_tools, setup_knowledge_base
 
@@ -39,9 +39,8 @@ class SalesGPT(Chain):
 
     sales_chat: SalesChat = Field(...)
 
-    conversation_stage_dict: Dict = CONVERSATION_STAGES
     conversation_stage_id: str = "1"
-    current_conversation_stage: str = CONVERSATION_STAGES.get("1")
+    current_conversation_stage: str = StagesManager.get_stage_by_id("1")
     stage_analyzer_chain: StageAnalyzerChain = Field(...)
     sales_agent_executor: Union[AgentExecutor, None] = Field(...)
     sales_conversation_utterance_chain: SalesConversationChain = Field(...)
@@ -60,9 +59,6 @@ class SalesGPT(Chain):
     conversation_type: str = "call"
 
     customer_name: str = "Alice Yu"
-
-    def retrieve_conversation_stage(self, key):
-        return self.conversation_stage_dict.get(key, "1")
 
     @property
     def input_keys(self) -> List[str]:
@@ -83,18 +79,11 @@ class SalesGPT(Chain):
         self.conversation_stage_id = self.stage_analyzer_chain.run(
             conversation_history="\n".join(self.sales_chat.query_last_history()).rstrip("\n"),
             conversation_stage_id=self.conversation_stage_id,
-            conversation_stages="\n".join(
-                [
-                    str(key) + ": " + str(value)
-                    for key, value in CONVERSATION_STAGES.items()
-                ]
-            ),
+            conversation_stages=StagesManager.get_stages_as_string(),
         )
 
         print(f"Conversation Stage ID: {self.conversation_stage_id}")
-        self.current_conversation_stage = self.retrieve_conversation_stage(
-            self.conversation_stage_id
-        )
+        self.current_conversation_stage = StagesManager.get_stage_by_id(self.conversation_stage_id)
 
         print(f"Conversation Stage: {self.current_conversation_stage}")
 
@@ -147,6 +136,7 @@ class SalesGPT(Chain):
                     company_values=self.company_values,
                     conversation_purpose=self.conversation_purpose,
                     conversation_type=self.conversation_type,
+                    conversation_stages=StagesManager.get_stages_as_string(),
                     customer_name=self.customer_name,
                 )
             ]
@@ -246,6 +236,7 @@ class SalesGPT(Chain):
                 company_values=self.company_values,
                 conversation_purpose=self.conversation_purpose,
                 conversation_type=self.conversation_type,
+                conversation_stages=StagesManager.get_stages_as_string(),
                 customer_name=self.customer_name,
             )
 
@@ -261,6 +252,7 @@ class SalesGPT(Chain):
                 company_values=self.company_values,
                 conversation_purpose=self.conversation_purpose,
                 conversation_type=self.conversation_type,
+                conversation_stages=StagesManager.get_stages_as_string(),
                 customer_name=self.customer_name,
             )
 
@@ -321,6 +313,7 @@ class SalesGPT(Chain):
                     "company_values",
                     "conversation_purpose",
                     "conversation_type",
+                    "conversation_stages",
                     "conversation_history",
                     "customer_name",
                 ],

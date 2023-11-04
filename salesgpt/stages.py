@@ -1,5 +1,4 @@
-# Example conversation stages for the Sales Agent
-# Feel free to modify, add/drop stages based on the use case.
+from typing import Union
 
 CONVERSATION_STAGES = {
     "1": "Introduction: Start the conversation by introducing yourself and your company. Be polite and respectful while keeping the tone of the conversation professional. Your greeting should be welcoming. Always clarify in your greeting the reason why you are calling.",
@@ -11,3 +10,15 @@ CONVERSATION_STAGES = {
     "7": "Close: Ask for the sale by proposing a next step. This could be a demo, a trial or a meeting with decision-makers. Ensure to summarize what has been discussed and reiterate the benefits.",
     "8": "End conversation: It's time to end the call as there is nothing else to be said.",
 }
+
+
+class StagesManager:
+    @staticmethod
+    def get_stages_as_string() -> str:
+        return "\n".join(
+            [f"{key}: {value}" for key, value in CONVERSATION_STAGES.items()]
+        )
+
+    @staticmethod
+    def get_stage_by_id(stage_id: Union[str, int]) -> Union[str, None]:
+        return CONVERSATION_STAGES.get(str(stage_id))
