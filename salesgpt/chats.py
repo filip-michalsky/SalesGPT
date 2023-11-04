@@ -55,22 +55,27 @@ class SalesChat:
     def query_last_history(self) -> List[str]:
         loop = asyncio.get_event_loop()
         last_msg = loop.run_until_complete(ChatMessage.filter(name=self.customer_name).order_by('-id').first())
-        last_chat_msgs = loop.run_until_complete(ChatMessage.filter(chat_id=last_msg.chat_id).order_by('id').all())
-        last_chat_history = [f"{msg.name}: {msg.content}" for msg in last_chat_msgs]
+        last_chat_history = []
+        if last_msg is not None:
+            last_chat_msgs = loop.run_until_complete(ChatMessage.filter(chat_id=last_msg.chat_id).order_by('id').all())
+            last_chat_history = [f"{msg.name}: {msg.content}" for msg in last_chat_msgs]
         return last_chat_history
 
     def query_all_history(self) -> List[str]:
         loop = asyncio.get_event_loop()
         chat_id_list = loop.run_until_complete(ChatMessage.filter(name=self.customer_name)
                                                .order_by('id').values_list("chat_id"))
-        chat_id_list = [t[0] for t in list(dict.fromkeys(chat_id_list))]
-        all_chat_msgs = loop.run_until_complete(ChatMessage.filter(chat_id__in=chat_id_list).order_by('id').all())
-        all_chat_history = [f"{msg.name}: {msg.content}" for msg in all_chat_msgs]
+        all_chat_history = []
+        if chat_id_list is not None:
+            chat_id_list = [t[0] for t in list(dict.fromkeys(chat_id_list))]
+            all_chat_msgs = loop.run_until_complete(ChatMessage.filter(chat_id__in=chat_id_list).order_by('id').all())
+            all_chat_history = [f"{msg.name}: {msg.content}" for msg in all_chat_msgs]
         return all_chat_history
 
     def delete_all_history(self):
         loop = asyncio.get_event_loop()
         chat_id_list = loop.run_until_complete(ChatMessage.filter(name=self.customer_name)
                                                .order_by('id').values_list("chat_id"))
-        chat_id_list = [t[0] for t in list(dict.fromkeys(chat_id_list))]
-        loop.run_until_complete(ChatMessage.filter(chat_id__in=chat_id_list).delete())
+        if chat_id_list is not None:
+            chat_id_list = [t[0] for t in list(dict.fromkeys(chat_id_list))]
+            loop.run_until_complete(ChatMessage.filter(chat_id__in=chat_id_list).delete())
