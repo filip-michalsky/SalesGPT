@@ -1,8 +1,7 @@
 import asyncio, uuid
 from tortoise.queryset import Q
 from typing import Any, List
-from salesgpt_beta.models import ChatMessage
-from salesgpt_beta.models import Customer
+from salesgpt_beta.models import ChatMessage, Customer, ProductCatalog
 
 
 def get_or_create_eventloop():
@@ -114,3 +113,24 @@ class ChatDao:
         if chat_id_list is not None:
             chat_id_list = [t[0] for t in list(dict.fromkeys(chat_id_list))]
             loop.run_until_complete(ChatMessage.filter(chat_id__in=chat_id_list).delete())
+
+
+class ProductDao:
+    name: str
+
+    def __init__(self, name: str):
+        self.name = name
+
+    def load(self) -> ProductCatalog:
+        loop = get_or_create_eventloop()
+        return loop.run_until_complete(ProductCatalog.filter(name=self.name).first())
+
+    def get_name(self) -> str:
+        return self.name
+
+    def save(self, desc: str):
+        loop = get_or_create_eventloop()
+        return loop.run_until_complete(
+            ProductCatalog.update_or_create(name=self.name, type='[REF]', price=0, desc=desc))
+
+

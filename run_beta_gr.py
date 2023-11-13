@@ -14,6 +14,7 @@ async def init_db():
         modules={'models': ['salesgpt_beta.models']},
     )
 
+
 if __name__ == "__main__":
     # Initialize argparse
     parser = argparse.ArgumentParser(description="Description of your program")
@@ -71,6 +72,7 @@ if __name__ == "__main__":
         sales_agent = SalesGPT.from_llm(llm=openAI, verbose=verbose, **config)
 
     sales_agent.seed_agent()
+    on_close = False
 
     with gr.Blocks() as app:
         chatbot = gr.Chatbot(
@@ -82,10 +84,15 @@ if __name__ == "__main__":
 
         def respond(message, chat_history):
             sales_agent.human_step(message)
-            chat_history.append((message, sales_agent.step()))
+            response = sales_agent.step()
+            chat_history.append((message, response))
+            if sales_agent.chatDao.is_live_ended():
+                on_close = True
             return "", chat_history
 
 
         msg.submit(respond, [msg, chatbot], [msg, chatbot])
+        if on_close:
+            app.close(verbose=True)
 
     app.launch()

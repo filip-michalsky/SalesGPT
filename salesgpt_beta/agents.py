@@ -9,7 +9,7 @@ from langchain.chains.base import Chain
 from langchain.prompts import PromptTemplate
 from pydantic import Field
 from salesgpt_beta.logger import time_logger, logger
-from salesgpt_beta.daos import ChatDao, CustomerDao
+from salesgpt_beta.daos import ChatDao, CustomerDao, ProductDao
 from salesgpt_beta.prompts import SALES_AGENT_PROMPT
 from salesgpt_beta.stages import StagesManager
 from salesgpt_beta.tools import get_tools_list, find_tool_by_name
@@ -48,6 +48,7 @@ class SalesGPT(Chain):
                 customer_name=self.customerDao.get_name(),
                 conversation_stages=StagesManager.get_stages_as_string()
             )
+            logger.info(f'generated prompt: {prompt}')
             self.assistant = self.llm.beta.assistants.create(
                 name=self.salesperson_name,
                 instructions=prompt,
@@ -157,20 +158,40 @@ class SalesGPT(Chain):
                  salesperson_name: str, product_catalog: str,
                  verbose: bool = False, **kwargs) -> "SalesGPT":
         customerDao = CustomerDao(name=customer_name, phone=customer_phone)
+        file_ref = None
         product_files = []
 
-        if os.path.exists(product_catalog):
-            file = llm.files.create(
-                file=open(product_catalog, 'rb'),
-                purpose='assistants'
-            )
-            product_files.append(file.id)
+        if os.path.isfile(product_catalog):
+            product_files.append(product_catalog)
+            file_ref = product_catalog
+        elif os.path.isdir(product_catalog):
+            files = os.listdir(product_catalog)
+            product_files = [os.sep.join([product_catalog, f]) for f in files]
+            file_ref = product_catalog.split(os.sep)[-1]
+
+        existed_file_map = {}
+        if file_ref is not None:
+            productDao = ProductDao(name=file_ref)
+            products = productDao.load()
+
+            if products is not None:
+                existed_file_map = json.loads(str(products.desc))
+
+            for pf in product_files:
+                if existed_file_map.get(pf, None) is None:
+                    file = llm.files.create(
+                        file=open(pf, 'rb'),
+                        purpose='assistants'
+                    )
+                    existed_file_map[pf] = file.id
+                    logger.info(f'{pf} finished uploading: {file.id}')
+            productDao.save(desc=json.dumps(existed_file_map, ensure_ascii=False))
 
         return cls(
             llm=llm,
             salesperson_name=salesperson_name,
             customerDao=customerDao,
-            product_files=product_files,
+            product_files=list(existed_file_map.values()),
             verbose=verbose,
             **kwargs,
         )
