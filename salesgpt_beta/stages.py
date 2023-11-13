@@ -1,6 +1,5 @@
 from typing import Union
 
-
 DEFAULT_SALE_STAGES = {
     "1": "Introduction: Start the conversation by introducing yourself and your company. Be polite and respectful while keeping the tone of the conversation professional. Your greeting should be welcoming. Always clarify in your greeting the reason why you are calling.",
     "2": "Qualification: Qualify the prospect by confirming if they are the right person to talk to regarding your product/service. Ensure that they have the authority to make purchasing decisions.",
@@ -21,16 +20,25 @@ INSURANCE_SALES_STAGES = {
     "6": "**售后稳单**: 售后服务介绍，包括保单获取和回访，以及转介绍其他保险产品",
 }
 
-CONVERSATION_STAGES = INSURANCE_SALES_STAGES
+STAGES_TEMPLATE_MAP = {
+    'insurance_broker_prompt': INSURANCE_SALES_STAGES,
+    'default': DEFAULT_SALE_STAGES,
+}
 
 
 class StagesManager:
     @staticmethod
-    def get_stages_as_string() -> str:
+    def get_stages_as_string(template_id: str = None) -> str:
+        stages = STAGES_TEMPLATE_MAP.get(template_id)
+        if stages is None:
+            stages = DEFAULT_SALE_STAGES
         return "\n".join(
-            [f"{key}: {value}" for key, value in CONVERSATION_STAGES.items()]
+            [f"{key}: {value}" for key, value in stages.items()]
         )
 
     @staticmethod
-    def get_stage_by_id(stage_id: Union[str, int]) -> Union[str, None]:
-        return CONVERSATION_STAGES.get(str(stage_id))
+    def get_stage_by_id(stage_id: Union[str, int], template_id: str = None) -> Union[str, None]:
+        stages = STAGES_TEMPLATE_MAP.get(template_id)
+        if stages is None:
+            stages = DEFAULT_SALE_STAGES
+        return stages.get(str(stage_id))

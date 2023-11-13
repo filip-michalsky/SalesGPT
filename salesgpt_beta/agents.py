@@ -10,8 +10,8 @@ from langchain.prompts import PromptTemplate
 from pydantic import Field
 from salesgpt_beta.logger import time_logger, logger
 from salesgpt_beta.daos import ChatDao, CustomerDao, ProductDao
-from salesgpt_beta.prompts import SALES_AGENT_PROMPT
-from salesgpt_beta.stages import StagesManager
+from salesgpt_beta.prompts import PromptTemplateManager, DEFAULT_SALES_AGENT_PROMPT
+from salesgpt_beta.stages import StagesManager, DEFAULT_SALE_STAGES
 from salesgpt_beta.tools import get_tools_list, find_tool_by_name
 
 
@@ -20,6 +20,8 @@ class SalesGPT(Chain):
     customerDao: CustomerDao = Field(...)
     llm: OpenAI = Field(...)
 
+    prompt_template: str = DEFAULT_SALES_AGENT_PROMPT
+    conversation_stages: str = DEFAULT_SALE_STAGES
     salesperson_name: str = "Ted Lasso"
     salesperson_role: str = "Business Development Representative"
     company_name: str = "Sleep Haven"
@@ -36,8 +38,8 @@ class SalesGPT(Chain):
     def seed_agent(self):
         customer = self.customerDao.load()
         if customer is None:
-            prompt_template = PromptTemplate.from_template(SALES_AGENT_PROMPT)
-            prompt = prompt_template.format(
+            pt = PromptTemplate.from_template(self.prompt_template)
+            prompt = pt.format(
                 salesperson_name=self.salesperson_name,
                 salesperson_role=self.salesperson_role,
                 company_name=self.company_name,
@@ -46,7 +48,7 @@ class SalesGPT(Chain):
                 conversation_purpose=self.conversation_purpose,
                 conversation_type=self.conversation_type,
                 customer_name=self.customerDao.get_name(),
-                conversation_stages=StagesManager.get_stages_as_string()
+                conversation_stages=self.conversation_stages
             )
             logger.info(f'generated prompt: {prompt}')
             self.assistant = self.llm.beta.assistants.create(
@@ -187,10 +189,15 @@ class SalesGPT(Chain):
                     logger.info(f'{pf} finished uploading: {file.id}')
             productDao.save(desc=json.dumps(existed_file_map, ensure_ascii=False))
 
+        prompt_template = PromptTemplateManager.get_prompt_template(template_id=kwargs.get('prompt_template_id'))
+        conversation_stages = StagesManager.get_stages_as_string(template_id=kwargs.get('prompt_template_id'))
+
         return cls(
             llm=llm,
             salesperson_name=salesperson_name,
             customerDao=customerDao,
+            prompt_template=prompt_template,
+            conversation_stages=conversation_stages,
             product_files=list(existed_file_map.values()),
             verbose=verbose,
             **kwargs,

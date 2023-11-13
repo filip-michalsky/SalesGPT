@@ -7,10 +7,16 @@ load_dotenv()  # loads .env file
 
 
 async def init_db():
+    await Tortoise.init(
+        db_url=os.environ.get('DB_URL'),
+        modules={'models': ['models']},
+    )
+    await Tortoise.generate_schemas()
+    await Tortoise.close_connections()
 
     await Tortoise.init(
         db_url=os.environ.get('DB_URL'),
-        modules={'models': ['models', '__main__']},
+        modules={'models': ['__main__']},
     )
 
     await ProductCatalog.create(
