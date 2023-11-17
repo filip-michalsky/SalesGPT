@@ -1,5 +1,6 @@
 # :robot: SalesGPT - Open Source AI Agent for Sales
-[Features](#features) [Performance Statistics](#performance-statistics) [Demos and Use Cases](#demos-and-use-cases)
+[Features](#features) [Performance Statistics](#performance-statistics) [Demos & Use Cases](#demos-and-use-cases) [Contact Us](#contact-us-for-suggestions,-questions-or-help) [Quick Start](#quick-start) 
+[Install, Test & Deploy](#install,-test-&-deploy) [Documentation](#documentation) [Roadmap](#roadmap) [How to Contribute](#how-to-contribute) [About the Team](#about-the-team)
 
 This repo demonstrates an implementation of a **context-aware** AI Agent for Sales using LLMs and can work across voice, email and texting. SalesGPT is context-aware, which means it can understand what stage of a sales conversation it is in and act accordingly.
 Morever, SalesGPT has access to tools, such as your own pre-defined product knowledge base, significantly reducing hallucinations!
