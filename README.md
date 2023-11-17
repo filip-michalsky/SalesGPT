@@ -1,6 +1,10 @@
 # :robot: SalesGPT - Open Source AI Agent for Sales
-[Features](#features) [Performance Statistics](#performance-statistics) [Demos & Use Cases](#demos-and-use-cases) [Contact Us](#contact-us-for-suggestions,-questions-or-help) [Quick Start](#quick-start) 
-[Install, Test & Deploy](#install,-test-&-deploy) [Documentation](#documentation) [Roadmap](#roadmap) [How to Contribute](#how-to-contribute) [About the Team](#about-the-team)
+
+<div align="center">
+       
+[Features](#features) [Performance Statistics](#performance-statistics) [Demos and Use Cases](#demos-and-use-cases) [Contact Us](#contact-us-for-suggestions-questions-or-help)
+
+</div>
 
 This repo demonstrates an implementation of a **context-aware** AI Agent for Sales using LLMs and can work across voice, email and texting. SalesGPT is context-aware, which means it can understand what stage of a sales conversation it is in and act accordingly.
 Morever, SalesGPT has access to tools, such as your own pre-defined product knowledge base, significantly reducing hallucinations!
@@ -43,7 +47,7 @@ Morever, SalesGPT has access to tools, such as your own pre-defined product know
 
 from your terminal.
 
-# Contact Us for Suggestions, Questions or Help
+# Contact Us for Suggestions Questions or Help
 
 More than happy to help with further development as well as understand your use case.
 
@@ -120,7 +124,7 @@ sales_agent.step()
 > Observation: Sleep Haven offers three mattresses: the Classic Harmony Spring Mattress for $1,299, the Plush Serenity Bamboo Mattress for $2,599, and the Luxury Cloud-Comfort Memory Foam Mattress for $999. The sizes available vary by mattress.<br>
 > Ted Lasso: Sleep Haven offers three mattresses at different price points. The Classic Harmony Spring Mattress is priced at $1,299, the Plush Serenity Bamboo Mattress is priced at $2,599, and the Luxury Cloud-Comfort Memory Foam Mattress is priced at $999. The prices may vary depending on the size you choose. Would you like more information about the specific sizes and features of each mattress? 
 
-# Install, Test & Deploy
+# Install Test and Deploy
 
 ### Install
 
