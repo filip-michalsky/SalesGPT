@@ -49,9 +49,7 @@ from your terminal.
 
 # Contact Us for Suggestions Questions or Help
 
-More than happy to help with further development as well as understand your use case.
-
-Please contact us or schedule time to chat <a href="https://docs.google.com/forms/d/e/1FAIpQLSebN17aNh-HlkGu2wOKiPzhFlQuorNk_7Mk6LQO3_vFsbuOZQ/viewform?usp=sharing">here</a> 
+Please reach out here to chat with us: <a href="https://docs.google.com/forms/d/e/1FAIpQLSebN17aNh-HlkGu2wOKiPzhFlQuorNk_7Mk6LQO3_vFsbuOZQ/viewform?usp=sharing">Contact Form</a> 
 
 # Quick Start
 
