@@ -1,30 +1,32 @@
-# :robot: SalesGPT - Your Context-Aware AI Sales Assistant
+# :robot: SalesGPT - Open Source AI Agent for Sales
+[Features](#features) [Performance Statistics](#performance-statistics) [Demos and Use Cases](#demos-and-use-cases)
 
-This repo demonstrates an implementation of a **context-aware** AI Sales Assistant using LLMs.
-
-SalesGPT is context-aware, which means it can understand what section of a sales conversation it is in and act accordingly.
+This repo demonstrates an implementation of a **context-aware** AI Agent for Sales using LLMs and can work across voice, email and texting. SalesGPT is context-aware, which means it can understand what stage of a sales conversation it is in and act accordingly.
 Morever, SalesGPT has access to tools, such as your own pre-defined product knowledge base, significantly reducing hallucinations!
 
-We leverage the [`langchain`](https://github.com/hwchase17/langchain) library in this implementation, specifically [Custom Agent Configuration](https://langchain-langchain.vercel.app/docs/modules/agents/how_to/custom_agent_with_tool_retrieval) and are inspired by [BabyAGI](https://github.com/yoheinakajima/babyagi) architecture.
+# Features
 
-## Our Vision: Build the Best Open-Source Autonomous Sales Agent
+- Business & Product Knowledge: Reference only your business information & products and significantly reduce hallucinations
+- Contextual Understanding: Sales Stage Awareness
+       - Introduction: Start the conversation by introducing yourself and your company. 
+       - Qualification: Qualify the prospect by confirming if they are the right person to talk to regarding your product/service.
+       - Value Proposition: Briefly explain how your product/service can benefit the prospect. 
+       - Needs Analysis: Ask open-ended questions to uncover the prospect's needs and pain points. 
+       - Solution Presentation: Based on the prospect's needs, present your product/service as the solution that can address their pain points.
+       - Objection Handling: Address any objections that the prospect may have regarding your product/service. 
+       - Close: Ask for the sale by proposing a next step. 
+       - End Conversation: The user does not want to continue the conversation, so end the call.
+- Synchronous & Asynchronous Completion
+- Synchronous & Asynchronous Streaming
 
-We are building SalesGPT to power your best Autonomous Sales Agents. Hence, we would love to learn more about use cases you are building towards which will fuel SalesGPT development roadmap.
+# Performance Statistics
 
-**If you want us to build better towards your needs, please fill out our 45 seconds [SalesGPT Use Case Survey](https://5b7mfhwiany.typeform.com/to/xmJbWIjG)**
+- Latency
+- ...
+- ...
+- ...
 
-### If you looking for help building your Autonomous Sales Agents
-
-Please send an email to [the repo author](mailto:filipmichalsky@gmail.com).
-
-## :red_circle: Latest News
-
-- Sales Agent can now take advantage of **tools**, such as look up products in a product catalog!
-- SalesGPT is now compatible with [LiteLLM](https://github.com/BerriAI/litellm), choose *any closed/open-sourced LLM* to work with SalesGPT! Thanks to LiteLLM maintainers for this contribution!
-- SalesGPT works with synchronous and asynchronous completion, as well as synchronous/asynchronous streaming. Scale your Sales Agents up!
-
-
-### Demo: Outbound Prospecting from Crusty AI: A New Way to Sell? 🤔
+# Demos and Use Cases
 
 <i>Crusty AI Sales Agent Phone Call Demo - Powered by SalesGPT</i>
 
@@ -34,8 +36,19 @@ Please send an email to [the repo author](mailto:filipmichalsky@gmail.com).
     </a>
   </div>
 
+### To get a feel for a conversation with the AI Sales agent, you can run:
 
-## Quickstart
+`python run.py --verbose True --config examples/example_agent_setup.json`
+
+from your terminal.
+
+# Contact Us for Suggestions, Questions or Help
+
+More than happy to help with further development as well as understand your use case.
+
+Please contact us or schedule time to chat here:
+
+# Quick Start
 
 ```python
 import os
@@ -64,7 +77,6 @@ sales_agent = SalesGPT.from_llm(llm, use_tools=True, verbose=False,
                             )
 sales_agent.seed_agent()
 sales_agent.determine_conversation_stage() # optional for demonstration, built into the prompt
-
 # agent 
 sales_agent.step()
 
@@ -84,6 +96,7 @@ sales_agent.human_step(user_input)
 sales_agent.determine_conversation_stage() # optional for demonstration, built into the prompt
 sales_agent.step()
 ```
+
 > Conversation Stage: 
 > Introduction: Start the conversation by introducing yourself and your company. 
 
@@ -106,32 +119,9 @@ sales_agent.step()
 > Observation: Sleep Haven offers three mattresses: the Classic Harmony Spring Mattress for $1,299, the Plush Serenity Bamboo Mattress for $2,599, and the Luxury Cloud-Comfort Memory Foam Mattress for $999. The sizes available vary by mattress.<br>
 > Ted Lasso: Sleep Haven offers three mattresses at different price points. The Classic Harmony Spring Mattress is priced at $1,299, the Plush Serenity Bamboo Mattress is priced at $2,599, and the Luxury Cloud-Comfort Memory Foam Mattress is priced at $999. The prices may vary depending on the size you choose. Would you like more information about the specific sizes and features of each mattress? 
 
-## Product Knowledge Base
+# Install, Test & Deploy
 
-The AI Sales Agent has access to tools, such as your internal Product Knowledge base.
-This allows the agent to only talk about your own products and significantly reduces hallucinations.
-
-## Understanding Context
-
-The AI Sales Agent understands the conversation stage (you can define your own stages fitting your needs):
-
-- Introduction: Start the conversation by introducing yourself and your company. 
-- Qualification: Qualify the prospect by confirming if they are the right person to talk to regarding your product/service.
-- Value proposition: Briefly explain how your product/service can benefit the prospect. 
-- Needs analysis: Ask open-ended questions to uncover the prospect's needs and pain points. 
-- Solution presentation: Based on the prospect's needs, present your product/service as the solution that can address their pain points.
-- Objection handling: Address any objections that the prospect may have regarding your product/service. 
-- Close: Ask for the sale by proposing a next step. 
-- End Conversation: The user does not want to continue the conversation, so end the call.
- 
-As such, this agent can have a natural sales conversation with a prospect and behaves based on the conversation stage. Hence, this notebook demonstrates how we can use AI to automate sales development representatives activites, such as outbound sales calls. 
-
-
-## Architecture
-
-<img src="https://singularity-assets-public.s3.amazonaws.com/new_flow.png"  width="800" height="440">
-
-## Installation
+### Install
 
 Make sure your have a **python 3.10+** and run:
 
@@ -145,35 +135,24 @@ Install with pip
 
 `pip install salesgpt`
 
-## Try it out 
-
-To get a feel for a conversation with the AI Sales agent, you can run:
-
-`python run.py --verbose True --config examples/example_agent_setup.json`
-
-from your terminal.
-
-## Deployment
-
-We have a SalesGPT deployment demo via FastAPI.
-
-Please refer to [README-api.md](https://github.com/filip-michalsky/SalesGPT/blob/main/README-api.md) for instructions!
-
-## Test your set up
+### Test
 
 1. `pip install -r requirements.txt`
 2. `pytest`
 
 All tests should pass.
 
-## Contact Us
+### Deploy
 
-For questions, you can [contact the repo author](mailto:filipmichalsky@gmail.com).
+We have a SalesGPT deployment demo via FastAPI.
 
-Follow me at [@FilipMichalsky](https://twitter.com/FilipMichalsky)
+Please refer to [README-api.md](https://github.com/filip-michalsky/SalesGPT/blob/main/README-api.md) for instructions!
 
+# Documentation
 
-## SalesGPT Roadmap
+We leverage the [`langchain`](https://github.com/hwchase17/langchain) library in this implementation, specifically [Custom Agent Configuration](https://langchain-langchain.vercel.app/docs/modules/agents/how_to/custom_agent_with_tool_retrieval) and are inspired by [BabyAGI](https://github.com/yoheinakajima/babyagi) architecture.
+
+# Roadmap
 
 - [high priority] Sell your soul.
 - [high priority] Improve reliability of the parser [issue here](https://github.com/filip-michalsky/SalesGPT/issues/26) and [here](https://github.com/filip-michalsky/SalesGPT/issues/25)
@@ -194,8 +173,12 @@ Follow me at [@FilipMichalsky](https://twitter.com/FilipMichalsky)
 
 ~~- Convert LLM Chains (linear workflow) to an Agent (decides what to do based on user's input)~~
 
-
-
-## Contributing
+# How to Contribute
 
 Contributions are highly encouraged! Please fork and submit a PR.
+
+# About the Team
+
+
+
+
