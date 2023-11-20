@@ -157,24 +157,15 @@ We leverage the [`langchain`](https://github.com/hwchase17/langchain) library in
 
 # Roadmap
 
-- [high priority] Sell your soul.
-- [high priority] Improve reliability of the parser [issue here](https://github.com/filip-michalsky/SalesGPT/issues/26) and [here](https://github.com/filip-michalsky/SalesGPT/issues/25)
-- Add example implementation of OpenAI functions agent[issue here](https://github.com/filip-michalsky/SalesGPT/issues/17)
-- Add support for multiple tools [issue here](https://github.com/filip-michalsky/SalesGPT/issues/10)
-- Add an agent controller for when stages need to be traversed linearly without skips [issue here](https://github.com/filip-michalsky/SalesGPT/issues/19)
-- Add `tool_getter` to choose a tool based on vector distance to the tasks needed to be done
-- What tools should the agent have? (e.g., the ability to search the internet)
-- Add the ability of Sales Agent to interact with AI plugins on your website (.well-known/ai-plugin.json)
-
-~~-- [high priority] Add support for multiple LLMs backends [PR in progress here](https://github.com/filip-michalsky/SalesGPT/pull/36)~~-
-~~-
- Add the ability to stop generation when user interupts the agent~~
-
-~~- Add a vectorstore to incorporate a real product knowledge base vs. the LLM making it up.~~
-
-~~- Knowledge base for products/services a Sales Agent can offer (so that LLM does not make it up)~~
-
-~~- Convert LLM Chains (linear workflow) to an Agent (decides what to do based on user's input)~~
+1) Documenting the Repo
+2) Documenting the API
+3) Code Documentation
+4) Refactor
+5) Agent Parsing Reliability
+7) Deployment Instructions
+8) Calling Functionality
+9) Security Integration via prompt-armor
+10) Resolve tickets and PRs (ongoing)
 
 # How to Contribute
 
