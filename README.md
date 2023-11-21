@@ -1,18 +1,24 @@
 # :robot: SalesGPT - Open Source AI Agent for Sales
 
 <div align="center">
-       
-[Features](#features) [Performance Statistics](#performance-statistics) [Demos and Use Cases](#demos-and-use-cases) [Contact Us](#contact-us-for-suggestions-questions-or-help)
+
+BADGE downloads
+BADGE docs
+Badge tests passing
+
+[Features](#features) | [Performance Statistics](#performance-statistics) | [Demos and Use Cases](#demos-and-use-cases) | [Contact Us](#contact-us-for-suggestions-questions-or-help)
 
 </div>
 
-This repo demonstrates an implementation of a **context-aware** AI Agent for Sales using LLMs and can work across voice, email and texting. SalesGPT is context-aware, which means it can understand what stage of a sales conversation it is in and act accordingly.
+This repo demonstrates an implementation of a **context-aware** AI Agent for Sales using LLMs and can work across voice, email and texting (SMS, WhatsApp, WeChat, Weibo, Telegram, etc.). 
+
+SalesGPT is *context-aware*, which means it can understand what stage of a sales conversation it is in and act accordingly.
 Morever, SalesGPT has access to tools, such as your own pre-defined product knowledge base, significantly reducing hallucinations!
 
 # Features
 
-- Business & Product Knowledge: Reference only your business information & products and significantly reduce hallucinations
-- Contextual Understanding: Sales Stage Awareness
+- *Business & Product Knowledge:* Reference only your business information & products and significantly reduce hallucinations
+- *Contextual Understanding:* Sales Stage Awareness
        - Introduction: Start the conversation by introducing yourself and your company. 
        - Qualification: Qualify the prospect by confirming if they are the right person to talk to regarding your product/service.
        - Value Proposition: Briefly explain how your product/service can benefit the prospect. 
@@ -165,13 +171,19 @@ We leverage the [`langchain`](https://github.com/hwchase17/langchain) library in
 7) Deployment Instructions
 8) Calling Functionality
 9) Security Integration via prompt-armor
-10) Resolve tickets and PRs (ongoing)
+10) LLM evaluations 
+11) Resolve tickets and PRs (ongoing)
 
 # How to Contribute
 
 Contributions are highly encouraged! Please fork and submit a PR.
 
 # About the Team
+
+Maintaner: Filip Michalsky 
+
+## Follow Us on Twitter
+
 
 
 
