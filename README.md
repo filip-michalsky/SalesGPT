@@ -41,15 +41,17 @@ The AI Sales Agent understands the conversation stage (you can define your own s
 ### Business & Product Knowledge:
 -  Reference only your business information & products and significantly reduce hallucinations!
 
-### Use Any LLM to power your AI Sales Agent
-- Thanks to intgration with [LiteLLM](https://github.com/BerriAI/litellm), you can choose *any closed/open-sourced LLM* to work with SalesGPT! Thanks to LiteLLM maintainers for this contribution!
+### Use Any LLM to Power Your AI Sales Agent
+- Thanks to our integration with [LiteLLM](https://github.com/BerriAI/litellm), you can choose *any closed/open-sourced LLM* to work with SalesGPT! Thanks to LiteLLM maintainers for this contribution!
 
-### Power real-time sales conversations
+### Power Real-time Sales Conversations
 - Synchronous & Asynchronous Completion with LLMs
 - Synchronous & Asynchronous Streaming from LLMs
+
+### Latency
 - Voice AI Sales Agent has <1s round trip response rate.
 
-### Enterprise-grade Security
+### Enterprise-Grade Security
 
 - Upcoming integration with [PromptArmor](https://promptarmor.com/) to protect your AI Sales Agents against security vulnerabilities.
 
@@ -156,7 +158,7 @@ sales_agent.step()
 
 ## Install
 
-Make sure your have a **python 3.10+** and run:
+Make sure you have a **python 3.10+** and run:
 
 `pip install -r requirements.txt`
 
@@ -220,7 +222,7 @@ Lead Maintaner: Filip Michalsky
 
 Support Team: 
 
-Our AI engineering intern: Honza Michna
+AI Engineering Intern: Honza Michna
 
 
 
