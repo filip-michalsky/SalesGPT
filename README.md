@@ -6,40 +6,56 @@ BADGE downloads
 BADGE docs
 Badge tests passing
 
-[Features](#features) | [Performance Statistics](#performance-statistics) | [Demos and Use Cases](#demos-and-use-cases) | [Contact Us](#contact-us-for-suggestions-questions-or-help)
+IMAGE HERE
+
+[Our Vision](#our-vision-build-the-best-open-source-ai-sales-agent) | [Features](#features) | [Demos and Use Cases](#demos-and-use-cases) |  [Quickstart](#quick-start) | [Setup](#setup) | [Contact Us](https://5b7mfhwiany.typeform.com/to/xmJbWIjG)
 
 </div>
 
-This repo demonstrates an implementation of a **context-aware** AI Agent for Sales using LLMs and can work across voice, email and texting (SMS, WhatsApp, WeChat, Weibo, Telegram, etc.). 
+This repo is an implementation of a **context-aware** AI Agent for Sales using LLMs and can work across voice, email and texting (SMS, WhatsApp, WeChat, Weibo, Telegram, etc.). 
 
 SalesGPT is *context-aware*, which means it can understand what stage of a sales conversation it is in and act accordingly.
-Morever, SalesGPT has access to tools, such as your own pre-defined product knowledge base, significantly reducing hallucinations!
+Morever, SalesGPT has access to tools, such as your own pre-defined product knowledge base, significantly reducing hallucinations.
+
+# Our Vision: Build the Best Open Source AI Sales Agent
+
+We are building SalesGPT to power your best Autonomous Sales Agents. Hence, we would love to learn more about use cases you are building towards which will fuel SalesGPT development roadmap.
+
+**If you want us to build better towards your needs, or need help with your AI Sales Agents, please fill out our 45 seconds [SalesGPT Use Case Intake Survey](https://5b7mfhwiany.typeform.com/to/xmJbWIjG)**.
 
 # Features
 
-- *Business & Product Knowledge:* Reference only your business information & products and significantly reduce hallucinations
-- *Contextual Understanding:* Sales Stage Awareness
-       - Introduction: Start the conversation by introducing yourself and your company. 
-       - Qualification: Qualify the prospect by confirming if they are the right person to talk to regarding your product/service.
-       - Value Proposition: Briefly explain how your product/service can benefit the prospect. 
-       - Needs Analysis: Ask open-ended questions to uncover the prospect's needs and pain points. 
-       - Solution Presentation: Based on the prospect's needs, present your product/service as the solution that can address their pain points.
-       - Objection Handling: Address any objections that the prospect may have regarding your product/service. 
-       - Close: Ask for the sale by proposing a next step. 
-       - End Conversation: The user does not want to continue the conversation, so end the call.
-- Synchronous & Asynchronous Completion
-- Synchronous & Asynchronous Streaming
+### Contextual Understanding: Sales Stage Awareness
 
-# Performance Statistics
+The AI Sales Agent understands the conversation stage (you can define your own stages fitting your needs):
 
-- Latency
-- ...
-- ...
-- ...
+  - Introduction: Start the conversation by introducing yourself and your company. 
+  - Qualification: Qualify the prospect by confirming if they are the right person to talk to regarding your product/service.
+  - Value Proposition: Briefly explain how your product/service can benefit the prospect. 
+  - Needs Analysis: Ask open-ended questions to uncover the prospect's needs and pain points. 
+  - Solution Presentation: Based on the prospect's needs, present your product/service as the solution that can address their pain points.
+  - Objection Handling: Address any objections that the prospect may have regarding your product/service. 
+  - Close: Ask for the sale by proposing a next step. 
+  - End Conversation: The user does not want to continue the conversation, so end the call.
+
+### Business & Product Knowledge:
+-  Reference only your business information & products and significantly reduce hallucinations!
+
+### Use Any LLM to power your AI Sales Agent
+- Thanks to intgration with [LiteLLM](https://github.com/BerriAI/litellm), you can choose *any closed/open-sourced LLM* to work with SalesGPT! Thanks to LiteLLM maintainers for this contribution!
+
+### Power real-time sales conversations
+- Synchronous & Asynchronous Completion with LLMs
+- Synchronous & Asynchronous Streaming from LLMs
+- Voice AI Sales Agent has <1s round trip response rate.
+
+### Enterprise-grade Security
+
+- Upcoming integration with [PromptArmor](https://promptarmor.com/) to protect your AI Sales Agents against security vulnerabilities.
 
 # Demos and Use Cases
 
-<i>Crusty AI Sales Agent Phone Call Demo - Powered by SalesGPT</i>
+<i>Crusty AI Sales Agent Phone Call Demo - Powered by SalesGPT</i>  A New Way to Sell? 🤔
 
 <div>
     <a href="https://www.loom.com/share/f0fac42954904471b266980e4948b07d">
@@ -47,15 +63,7 @@ Morever, SalesGPT has access to tools, such as your own pre-defined product know
     </a>
   </div>
 
-### To get a feel for a conversation with the AI Sales agent, you can run:
-
-`python run.py --verbose True --config examples/example_agent_setup.json`
-
-from your terminal.
-
-# Contact Us for Suggestions Questions or Help
-
-Please reach out here to chat with us: <a href="https://docs.google.com/forms/d/e/1FAIpQLSebN17aNh-HlkGu2wOKiPzhFlQuorNk_7Mk6LQO3_vFsbuOZQ/viewform?usp=sharing">Contact Form</a> 
+See more use cases here (Landing page).
 
 # Quick Start
 
@@ -128,9 +136,25 @@ sales_agent.step()
 > Observation: Sleep Haven offers three mattresses: the Classic Harmony Spring Mattress for $1,299, the Plush Serenity Bamboo Mattress for $2,599, and the Luxury Cloud-Comfort Memory Foam Mattress for $999. The sizes available vary by mattress.<br>
 > Ted Lasso: Sleep Haven offers three mattresses at different price points. The Classic Harmony Spring Mattress is priced at $1,299, the Plush Serenity Bamboo Mattress is priced at $2,599, and the Luxury Cloud-Comfort Memory Foam Mattress is priced at $999. The prices may vary depending on the size you choose. Would you like more information about the specific sizes and features of each mattress? 
 
-# Install Test and Deploy
 
-### Install
+
+## Architecture
+
+<img src="https://singularity-assets-public.s3.amazonaws.com/new_flow.png"  width="800" height="440">
+
+
+
+## :red_circle: Latest News
+
+- Sales Agent can now take advantage of **tools**, such as look up products in a product catalog!
+- SalesGPT is now compatible with [LiteLLM](https://github.com/BerriAI/litellm), choose *any closed/open-sourced LLM* to work with SalesGPT! Thanks to LiteLLM maintainers for this contribution!
+- SalesGPT works with synchronous and asynchronous completion, as well as synchronous/asynchronous streaming. Scale your Sales Agents up!
+
+
+
+# Setup
+
+## Install
 
 Make sure your have a **python 3.10+** and run:
 
@@ -144,14 +168,22 @@ Install with pip
 
 `pip install salesgpt`
 
-### Test
+## Run an Example AI Sales agent
 
-1. `pip install -r requirements.txt`
-2. `pytest`
+`python run.py --verbose True --config examples/example_agent_setup.json`
+
+from your terminal.
+
+## Test your setup
+
+1. Activate an environment with `python 3.10+`
+2. cd `SalesGPT`
+2. `pip install -r requirements.txt`
+3. `pytest`
 
 All tests should pass.
 
-### Deploy
+## Deploy
 
 We have a SalesGPT deployment demo via FastAPI.
 
@@ -163,7 +195,7 @@ We leverage the [`langchain`](https://github.com/hwchase17/langchain) library in
 
 # Roadmap
 
-1) Documenting the Repo
+1) Documenting the Repo better
 2) Documenting the API
 3) Code Documentation
 4) Refactor
@@ -180,10 +212,15 @@ Contributions are highly encouraged! Please fork and submit a PR.
 
 # About the Team
 
-Maintaner: Filip Michalsky 
+Lead Maintaner: Filip Michalsky 
 
-## Follow Us on Twitter
+- [Contact Email](mailto:filipmichalsky@gmail.com)
+- [LinkedIn](https://www.linkedin.com/in/filip-michalsky/)
+- Follow us on X at [@FilipMichalsky](https://twitter.com/FilipMichalsky)
 
+Support Team: 
+
+Our AI engineering intern: Honza Michna
 
 
 
