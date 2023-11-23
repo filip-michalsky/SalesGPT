@@ -1,12 +1,11 @@
-# :robot: SalesGPT - Open Source AI Agent for Sales
-
 <div align="center">
 
-BADGE downloads
-BADGE docs
-Badge tests passing
+# :robot: SalesGPT - Open Source AI Agent for Sales
 
-IMAGE HERE
+<img src="https://demo-bucket-45.s3.amazonaws.com/filtr145_simple_robot_mascot_for_a_sales_company_professional_5282c6e6-40c1-4576-95c8-e4ba3c389f3f.png"  width="200">
+
+</div>
+<div align="center">
 
 [Our Vision](#our-vision-build-the-best-open-source-ai-sales-agent) | [Features](#features) | [Demos and Use Cases](#demos-and-use-cases) |  [Quickstart](#quick-start) | [Setup](#setup) | [Contact Us](https://5b7mfhwiany.typeform.com/to/xmJbWIjG)
 
@@ -19,9 +18,7 @@ Morever, SalesGPT has access to tools, such as your own pre-defined product know
 
 # Our Vision: Build the Best Open Source AI Sales Agent
 
-We are building SalesGPT to power your best Autonomous Sales Agents. Hence, we would love to learn more about use cases you are building towards which will fuel SalesGPT development roadmap.
-
-**If you want us to build better towards your needs, or need help with your AI Sales Agents, please fill out our 45 seconds [SalesGPT Use Case Intake Survey](https://5b7mfhwiany.typeform.com/to/xmJbWIjG)**.
+We are building SalesGPT to power your best Autonomous Sales Agents. Hence, we would love to learn more about use cases you are building towards which will fuel SalesGPT development roadmap, so please don't hesitate to reach out.
 
 # Features
 
@@ -48,12 +45,15 @@ The AI Sales Agent understands the conversation stage (you can define your own s
 - Synchronous & Asynchronous Completion with LLMs
 - Synchronous & Asynchronous Streaming from LLMs
 
-### Latency
-- Voice AI Sales Agent has <1s round trip response rate.
+### Optimized for Low Latency in Voice Channel
+- Voice AI Sales Agent boasts **<1s** round trip response rate to human speakers which includes the entire pipeline - speech to text, LLM inference, and text to speech - while ensuring stability and scalability.
+
+### Human in the loop
+- For use cases where AI sales agent needs human supervision.
 
 ### Enterprise-Grade Security
 
-- Upcoming integration with [PromptArmor](https://promptarmor.com/) to protect your AI Sales Agents against security vulnerabilities.
+- Upcoming integration with [PromptArmor](https://promptarmor.com/) to protect your AI Sales Agents against security vulnerabilities (see our roadmap).
 
 # Demos and Use Cases
 
@@ -65,7 +65,12 @@ The AI Sales Agent understands the conversation stage (you can define your own s
     </a>
   </div>
 
-See more use cases here (Landing page).
+
+# Contact Us for Suggestions, Questions, or Help
+
+We are building SalesGPT to power your best Autonomous Sales Agents. Hence, we would love to learn more about use cases you are building towards which will fuel SalesGPT development roadmap.
+
+**If you want us to build better towards your needs, or need help with your AI Sales Agents, please reach out to chat with us: [SalesGPT Use Case Intake Survey](https://5b7mfhwiany.typeform.com/to/xmJbWIjG)**
 
 # Quick Start
 
@@ -204,13 +209,9 @@ We leverage the [`langchain`](https://github.com/hwchase17/langchain) library in
 5) Agent Parsing Reliability
 7) Deployment Instructions
 8) Calling Functionality
-9) Security Integration via prompt-armor
+9) Enterprise-Grade Security - integration with [PromptArmor](https://promptarmor.com/) to protect your AI Sales Agents against security vulnerabilities
 10) LLM evaluations 
 11) Resolve tickets and PRs (ongoing)
-
-# How to Contribute
-
-Contributions are highly encouraged! Please fork and submit a PR.
 
 # About the Team
 
@@ -220,10 +221,13 @@ Lead Maintaner: Filip Michalsky
 - [LinkedIn](https://www.linkedin.com/in/filip-michalsky/)
 - Follow us on X at [@FilipMichalsky](https://twitter.com/FilipMichalsky)
 
-Support Team: 
+Our Support Team: 
 
-AI Engineering Intern: Honza Michna
+- AI Engineering: Honza Michna ([LinkedIn](https://www.linkedin.com/in/jan-michna-998b78132/))
 
+# How to Contribute
+
+Contributions are highly encouraged! Please fork and submit a PR.
 
 
 
