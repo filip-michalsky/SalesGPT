@@ -8,9 +8,6 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 
-env:
-  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-
 jobs:
   check_skip:
     runs-on: ubuntu-latest
@@ -49,8 +46,7 @@ jobs:
         run: |
           python3 -m pip install .[all]
           python3 setup.py egg_info
-      - name: Import 
-        env:
-          OPEN_AI_KEY: ${{ secrets.OPEN_AI_KEY }}
       - name: Unit tests
+        env:
+          OPEN_AI_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: make test
