@@ -2,7 +2,14 @@
 
 # :robot: SalesGPT - Open Source AI Agent for Sales
 
+
 <img src="https://demo-bucket-45.s3.amazonaws.com/filtr145_simple_robot_mascot_for_a_sales_company_professional_5282c6e6-40c1-4576-95c8-e4ba3c389f3f.png"  width="200">
+
+![GitHub Repo stars](https://img.shields.io/github/stars/filip-michalsky/SalesGPT?style=social)
+[![Downloads](https://pepy.tech/badge/salesGPT)](https://pepy.tech/project/salesgpt)
+[![License](<https://img.shields.io/badge/License-MIT-brightgreen.svg>)](https://opensource.org/licenses/MIT)
+[![PyPI version](https://img.shields.io/pypi/v/salesgpt.svg)](https://badge.fury.io/py/salesgpt)
+![GithubActions](https://github.com/coqui-ai/TTS/actions/workflows/data_tests.yml/badge.svg)
 
 </div>
 <div align="center">
