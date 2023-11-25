@@ -1,6 +1,11 @@
 Updates to the SalesGPT project: Building the world's best AI Sales Agents.
 
-September October 4 2023
+November 25 2023
+---------------
+Version 0.0.9
+- Fixed dependency on openai 1.0.0 SDK which works with our streaming module.
+
+October 4 2023
 ---------------
 Version 0.0.8
 - Improved streaming endpoint, now accessible with simple `stream=True` kwarg.
