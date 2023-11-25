@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - improve_readme
   pull_request:
     types: [opened, synchronize, reopened]
 
