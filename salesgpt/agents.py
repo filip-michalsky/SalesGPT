@@ -269,9 +269,8 @@ class SalesGPT(Chain):
     def from_llm(cls, llm: ChatLiteLLM, verbose: bool = False, **kwargs) -> "SalesGPT":
         """Initialize the SalesGPT Controller."""
         stage_analyzer_chain = StageAnalyzerChain.from_llm(llm, verbose=verbose)
-        if (
-            "use_custom_prompt" in kwargs.keys()
-            and kwargs["use_custom_prompt"] == "True"
+        if "use_custom_prompt" in kwargs.keys() and (
+            kwargs["use_custom_prompt"] == "True" or kwargs["use_custom_prompt"] is True
         ):
             use_custom_prompt = deepcopy(kwargs["use_custom_prompt"])
             custom_prompt = deepcopy(kwargs["custom_prompt"])
@@ -293,7 +292,7 @@ class SalesGPT(Chain):
             )
 
         if "use_tools" in kwargs.keys() and (
-            kwargs["use_tools"] == "True" or kwargs["use_tools"] == True
+            kwargs["use_tools"] == "True" or kwargs["use_tools"] is True
         ):
             # set up agent with tools
             product_catalog = kwargs["product_catalog"]
