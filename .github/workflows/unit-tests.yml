@@ -48,5 +48,8 @@ jobs:
           python3 setup.py egg_info
       - name: Unit tests
         env:
-          OPEN_AI_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: make test
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          echo "OPENAI_API_KEY: $OPENAI_API_KEY"
+          export OPENAI_API_KEY=$OPENAI_API_KEY
+          make test
