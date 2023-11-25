@@ -9,7 +9,8 @@
 [![Downloads](https://pepy.tech/badge/salesGPT)](https://pepy.tech/project/salesgpt)
 [![License](<https://img.shields.io/badge/License-MIT-brightgreen.svg>)](https://opensource.org/licenses/MIT)
 [![PyPI version](https://img.shields.io/pypi/v/salesgpt.svg)](https://badge.fury.io/py/salesgpt)
-![GithubActions](https://github.com/coqui-ai/TTS/actions/workflows/data_tests.yml/badge.svg)
+![GithubActions](https://github.com/filip-michalsky/SalesGPT/actions/workflows/unit-tests.yml/badge.svg)
+
 
 </div>
 <div align="center">

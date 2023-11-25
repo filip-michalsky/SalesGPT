@@ -20,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.10", "3.11"]
+        python-version: ["3.10", "3.11", "3.12"]
         experimental: [false]
     steps:
       - uses: actions/checkout@v3
@@ -44,12 +44,11 @@ jobs:
           pip install -r requirements-dev.txt
       - name: Install SalesGPT
         run: |
-          python3 -m pip install .[all]
+          python3 -m pip install .
           python3 setup.py egg_info
       - name: Unit tests
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
-          echo "OPENAI_API_KEY: $OPENAI_API_KEY"
           export OPENAI_API_KEY=$OPENAI_API_KEY
           make test
