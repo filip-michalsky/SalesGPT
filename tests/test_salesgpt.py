@@ -105,7 +105,7 @@ class TestSalesGPT:
         stream_generator = sales_agent.step(stream=True)
         agent_output = ""
         for chunk in stream_generator:
-            token = chunk["choices"][0]["delta"].get("content", "")
+            token = chunk["choices"][0]["delta"].get("content", "") or ""
             agent_output += token
 
         assert agent_output is not None, "Agent output cannot be None."
@@ -144,7 +144,7 @@ class TestSalesGPT:
         assert is_async_generator == True, "This needs to be an async generator!"
         agent_output = ""
         async for chunk in astream_generator:
-            token = chunk["choices"][0]["delta"].get("content", "")
+            token = chunk["choices"][0]["delta"].get("content", "") or ""
             agent_output += token
 
         assert agent_output is not None, "Agent output cannot be None."

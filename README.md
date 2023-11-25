@@ -2,7 +2,15 @@
 
 # :robot: SalesGPT - Open Source AI Agent for Sales
 
+
 <img src="https://demo-bucket-45.s3.amazonaws.com/filtr145_simple_robot_mascot_for_a_sales_company_professional_5282c6e6-40c1-4576-95c8-e4ba3c389f3f.png"  width="200">
+
+![GitHub Repo stars](https://img.shields.io/github/stars/filip-michalsky/SalesGPT?style=social)
+[![Downloads](https://pepy.tech/badge/salesGPT)](https://pepy.tech/project/salesgpt)
+[![License](<https://img.shields.io/badge/License-MIT-brightgreen.svg>)](https://opensource.org/licenses/MIT)
+[![PyPI version](https://img.shields.io/pypi/v/salesgpt.svg)](https://badge.fury.io/py/salesgpt)
+![GithubActions](https://github.com/filip-michalsky/SalesGPT/actions/workflows/unit-tests.yml/badge.svg)
+
 
 </div>
 <div align="center">
@@ -18,7 +26,7 @@ Morever, SalesGPT has access to tools, such as your own pre-defined product know
 
 # Our Vision: Build the Best Open Source AI Sales Agent
 
-We are building SalesGPT to power your best Autonomous Sales Agents. Hence, we would love to learn more about use cases you are building towards which will fuel SalesGPT development roadmap, so please don't hesitate to reach out.
+We are building SalesGPT to power your best AI Sales Agents. Hence, we would love to learn more about use cases you are building towards which will fuel SalesGPT development roadmap, so please don't hesitate to reach out.
 
 # Features
 
@@ -68,7 +76,7 @@ The AI Sales Agent understands the conversation stage (you can define your own s
 
 # Contact Us for Suggestions, Questions, or Help
 
-We are building SalesGPT to power your best Autonomous Sales Agents. Hence, we would love to learn more about use cases you are building towards which will fuel SalesGPT development roadmap.
+We are building SalesGPT to power your best AI Sales Agents. Hence, we would love to learn more about use cases you are building towards which will fuel SalesGPT development roadmap.
 
 **If you want us to build better towards your needs, or need help with your AI Sales Agents, please reach out to chat with us: [SalesGPT Use Case Intake Survey](https://5b7mfhwiany.typeform.com/to/n6CbtxJm?utm_source=github-salesgpt&utm_medium=readme&utm_campaign=leads)**
 
@@ -206,12 +214,20 @@ We leverage the [`langchain`](https://github.com/hwchase17/langchain) library in
 2) Documenting the API
 3) Code Documentation
 4) Refactor
-5) Agent Parsing Reliability
-7) Deployment Instructions
-8) Calling Functionality
+5) Improve reliability of the parser [issue here](https://github.com/filip-michalsky/SalesGPT/issues/26) and [here](https://github.com/filip-michalsky/SalesGPT/issues/25)
+7) Improve Deployment Instructions
+8) Calling Functionality - sample code
 9) Enterprise-Grade Security - integration with [PromptArmor](https://promptarmor.com/) to protect your AI Sales Agents against security vulnerabilities
 10) LLM evaluations 
 11) Resolve tickets and PRs (ongoing)
+12) Add example implementation of OpenAI functions agent[issue here](https://github.com/filip-michalsky/SalesGPT/issues/17)
+13) Add support for multiple tools [issue here](https://github.com/filip-michalsky/SalesGPT/issues/10)
+14) Add an agent controller for when stages need to be traversed linearly without skips [issue here](https://github.com/filip-michalsky/SalesGPT/issues/19)
+15) Add `tool_getter` to choose a tool based on vector distance to the tasks needed to be done
+16) What tools should the agent have? (e.g., the ability to search the internet)
+17) Add the ability of Sales Agent to interact with AI plugins on your website (.well-known/ai-plugin.json)
+18) More SalesGPT examples
+
 
 # About the Team
 
