@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "salesgpt-requirements"
+name = "SalesGPT"
 version = "0.1.0"
 description = ""
 authors = ["chemik-bit <honza.michna.00@gmail.com>"]
