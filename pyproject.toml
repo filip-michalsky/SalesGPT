@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "salesgpt-requirements"
+version = "0.1.0"
+description = ""
+authors = ["chemik-bit <honza.michna.00@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
