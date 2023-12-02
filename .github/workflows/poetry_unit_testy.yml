@@ -28,6 +28,18 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           architecture: x64
+          
+      - name: Check OS
+        run: cat /etc/os-release
+
+      - name: Install/upgrade Python setup tools
+        run: python3 -m pip install --upgrade pip setuptools wheel
+
+      - name: Install additional system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends git make gcc
+
 
       - name: Install Poetry
         run: |
@@ -41,16 +53,6 @@ jobs:
         run: |
           poetry install
 
-      - name: Check OS
-        run: cat /etc/os-release
-
-      - name: Install additional system dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends git make gcc
-
-      - name: Install/upgrade Python setup tools
-        run: python3 -m pip install --upgrade pip setuptools wheel
 
       - name: Run Unit Tests
         env:
