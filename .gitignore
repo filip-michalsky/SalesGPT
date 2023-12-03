@@ -1,3 +1,5 @@
+!.github/workflows
+
 *.log
 **.env
 .DS_Store

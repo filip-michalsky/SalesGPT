@@ -60,3 +60,4 @@ jobs:
         run: |
           export OPENAI_API_KEY=$OPENAI_API_KEY
           make test # Executing tests with Poetry
+
