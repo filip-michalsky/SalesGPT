@@ -1,9 +1,24 @@
 [tool.poetry]
 name = "SalesGPT"
-version = "0.1.0"
-description = ""
-authors = ["chemik-bit <honza.michna.00@gmail.com>"]
+version = "0.0.10"  
+description = "SalesGPT - Your Context-Aware AI Sales Assistant"
+authors = ["Filip Michalsky "]
+license = "Apache-2.0"
 readme = "README.md"
+homepage = "https://github.com/filip-michalsky/SalesGPT"
+repository = "https://github.com/filip-michalsky/SalesGPT"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+keywords = ["openai", "sales", "gpt", "autonomous", "agi"]
+
 
 [tool.poetry.dependencies]
 python = "^3.8.1"
