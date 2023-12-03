@@ -171,10 +171,7 @@ sales_agent.step()
 
 ## Install
 
-Make sure you have a **python 3.10+** and run:
-
-`pip install -r requirements.txt`
-
+Make sure you have a **python >=3.8,<3.12**:
 Create `.env` file and put your API keys there by specifying a line, for instance: 
 
 `OPENAI_API_KEY=sk-xxx`
@@ -191,9 +188,8 @@ from your terminal.
 
 ## Test your setup
 
-1. Activate an environment with `python 3.10+`
+1. Activate your environment with `python >=3.8,<3.12 `
 2. cd `SalesGPT`
-2. `pip install -r requirements.txt`
 3. `pytest`
 
 All tests should pass.
