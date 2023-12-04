@@ -9,8 +9,7 @@ from salesgpt.salesgptapi import SalesGPTAPI
 
 app = FastAPI()
 
-GPT_MODEL = "gpt-3.5-turbo-0613"
-# GPT_MODEL_16K = "gpt-3.5-turbo-16k-0613"
+GPT_MODEL = os.environ.get('MODEL_NAME')
 
 
 @app.get("/")

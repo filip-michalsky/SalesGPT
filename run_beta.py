@@ -2,8 +2,8 @@ import os
 import argparse
 import json
 from tortoise import Tortoise, run_async
-from langchain.chat_models import ChatLiteLLM
-from salesgpt.agents import SalesGPT
+from openai import OpenAI
+from salesgpt_beta.agents import SalesGPT
 
 from dotenv import load_dotenv
 
@@ -13,7 +13,7 @@ load_dotenv()
 async def init_db():
     await Tortoise.init(
         db_url=os.environ.get('DB_URL'),
-        modules={'models': ['salesgpt.models']},
+        modules={'models': ['salesgpt_beta.models']},
     )
 
 
@@ -33,8 +33,8 @@ if __name__ == "__main__":
                         help="The salesperson name", default="Ted Lasso")
     parser.add_argument("--customer_name", type=str,
                         help="The customer name", default="Alice Yu")
-    parser.add_argument("--use_tools", type=bool,
-                        help="Use tools or not", default=False)
+    parser.add_argument("--customer_phone", type=str,
+                        help="The customer phone", default="+8613911118888")
     parser.add_argument("--product_catalog", type=str,
                         help="Product catalog location",
                         default='examples/sample_product_catalog.txt')
@@ -47,22 +47,23 @@ if __name__ == "__main__":
     verbose = args.verbose
     salesperson_name = args.salesperson_name
     customer_name = args.customer_name
-    use_tools = args.use_tools
+    customer_phone = args.customer_phone
     product_catalog = args.product_catalog
 
     # Init database
     run_async(init_db())
 
-    llm = ChatLiteLLM(temperature=0, model_name=os.environ.get('MODEL_NAME'))
+    openAI = OpenAI()
 
     if config_path == "":
         print("No agent config specified, using a standard config")
         # keep boolean as string to be consistent with JSON configs.
         sales_agent = SalesGPT.from_llm(
-            llm, use_tools=use_tools,
-            product_catalog=product_catalog,
-            salesperson_name=salesperson_name,
+            llm=openAI,
             customer_name=customer_name,
+            customer_phone=customer_phone,
+            salesperson_name=salesperson_name,
+            product_catalog=product_catalog,
             verbose=verbose,
         )
     else:
@@ -70,17 +71,18 @@ if __name__ == "__main__":
         with open(config_path, "r", encoding=os.environ.get('ENCODING')) as f:
             config = json.load(f)
         print(f"Agent config {config}")
-        sales_agent = SalesGPT.from_llm(llm, verbose=verbose, **config)
+        sales_agent = SalesGPT.from_llm(llm=openAI, verbose=verbose, **config)
 
     sales_agent.seed_agent()
     print("=" * 10)
     cnt = 0
     while True:
 
-        sales_agent.step()
+        response = sales_agent.step()
+        print(response)
 
         # end conversation
-        if sales_agent.sales_chat.is_live_ended():
+        if sales_agent.chatDao.is_live_ended():
             print("Sales Agent determined it is time to end the conversation.")
             break
         human_input = input("Your response: ")

@@ -6,7 +6,6 @@ from langchain.prompts.base import StringPromptTemplate
 class CustomPromptTemplateForTools(StringPromptTemplate):
     # The template to use
     template: str
-    ############## NEW ######################
     # The list of tools available
     tools_getter: Callable
 
@@ -20,7 +19,6 @@ class CustomPromptTemplateForTools(StringPromptTemplate):
             thoughts += f"\nObservation: {observation}\nThought: "
         # Set the agent_scratchpad variable to that value
         kwargs["agent_scratchpad"] = thoughts
-        ############## NEW ######################
         tools = self.tools_getter(kwargs["input"])
         # Create a tools variable from the list of tools provided
         kwargs["tools"] = "\n".join(

@@ -7,6 +7,7 @@ from langchain.schema import AgentAction, AgentFinish  # OutputParserException
 
 
 class SalesConvoOutputParser(AgentOutputParser):
+    react_regex = r"Action: (.*?)[\n]*Action Input: (.*)"
     ai_prefix: str = "AI"  # change for salesperson_name
     verbose: bool = False
 
@@ -19,20 +20,15 @@ class SalesConvoOutputParser(AgentOutputParser):
             print(text)
             print("-------")
         if f"{self.ai_prefix}:" in text:
+            pure_text = text.split(f"{self.ai_prefix}:")[-1].strip()
             return AgentFinish(
-                {"output": text.split(f"{self.ai_prefix}:")[-1].strip()}, text
+                {"output": pure_text}, text
             )
-        regex = r"Action: (.*?)[\n]*Action Input: (.*)"
-        match = re.search(regex, text)
+        match = re.search(self.react_regex, text)
         if not match:
-            ## TODO - this is not entirely reliable, sometimes results in an error.
             return AgentFinish(
-                {
-                    "output": "I apologize, I was unable to find the answer to your question. Is there anything else I can help with?"
-                },
-                text,
+                {"output": text}, text,
             )
-            # raise OutputParserException(f"Could not parse LLM output: `{text}`")
         action = match.group(1)
         action_input = match.group(2)
         return AgentAction(action.strip(), action_input.strip(" ").strip('"'), text)

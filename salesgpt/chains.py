@@ -1,9 +1,11 @@
-from langchain import LLMChain, PromptTemplate
+from langchain.chains import LLMChain
+from langchain.prompts import PromptTemplate
 from langchain.chat_models import ChatLiteLLM
 
 from salesgpt.logger import time_logger
 from salesgpt.prompts import (SALES_AGENT_INCEPTION_PROMPT,
-                              STAGE_ANALYZER_INCEPTION_PROMPT)
+                              STAGE_ANALYZER_INCEPTION_PROMPT,
+                              STAGE_ANALYZER_INCEPTION_SNIPPETS_PROMPT)
 
 
 class StageAnalyzerChain(LLMChain):
@@ -11,11 +13,11 @@ class StageAnalyzerChain(LLMChain):
 
     @classmethod
     @time_logger
-    def from_llm(cls, llm: ChatLiteLLM, verbose: bool = True) -> LLMChain:
+    def from_llm(cls, llm: ChatLiteLLM, use_snippets: bool = True, verbose: bool = True) -> LLMChain:
         """Get the response parser."""
-        stage_analyzer_inception_prompt_template = STAGE_ANALYZER_INCEPTION_PROMPT
+        template = STAGE_ANALYZER_INCEPTION_SNIPPETS_PROMPT if use_snippets else STAGE_ANALYZER_INCEPTION_PROMPT
         prompt = PromptTemplate(
-            template=stage_analyzer_inception_prompt_template,
+            template=template,
             input_variables=[
                 "conversation_history",
                 "conversation_stage_id",
@@ -36,7 +38,9 @@ class SalesConversationChain(LLMChain):
         verbose: bool = True,
         use_custom_prompt: bool = False,
         custom_prompt: str = "You are an AI Sales agent, sell me this pencil",
+
     ) -> LLMChain:
+
         """Get the response parser."""
         if use_custom_prompt:
             sales_agent_inception_prompt = custom_prompt
@@ -51,6 +55,7 @@ class SalesConversationChain(LLMChain):
                     "conversation_purpose",
                     "conversation_type",
                     "conversation_history",
+                    "customer_name",
                 ],
             )
         else:
@@ -66,6 +71,9 @@ class SalesConversationChain(LLMChain):
                     "conversation_purpose",
                     "conversation_type",
                     "conversation_history",
+                    "customer_name",
                 ],
             )
-        return cls(prompt=prompt, llm=llm, verbose=verbose)
+        return cls(prompt=prompt,
+                   llm=llm,
+                   verbose=verbose)

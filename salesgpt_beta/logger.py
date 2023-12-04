@@ -9,7 +9,7 @@ working_dir = os.path.dirname(os.path.abspath(__file__))
 logging_dir = os.path.join(os.path.dirname(working_dir), 'logs')
 os.makedirs(logging_dir, exist_ok=True)
 log_filename = os.path.join(logging_dir, 'log.out')
-file_handler = logging.FileHandler(filename=log_filename)
+file_handler = logging.FileHandler(filename=log_filename, encoding=os.environ.get('ENCODING'))
 handlers = [stream_handler, file_handler]
 
 
@@ -18,7 +18,7 @@ class TimeFilter(logging.Filter):
         return "Running" in record.getMessage()
 
 
-logger.addFilter(TimeFilter())
+# logger.addFilter(TimeFilter())
 
 # Configure the logging module
 logging.basicConfig(

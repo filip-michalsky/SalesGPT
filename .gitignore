@@ -4,6 +4,8 @@
 **__pycache__
 /scratch
 **.chroma/
+.idea/
+logs/
 
 # Distribution / packaging
 .Python
