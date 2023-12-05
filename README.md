@@ -172,9 +172,8 @@ sales_agent.step()
 ## Install
 
 Make sure you have a **python >=3.8,<3.12**:
-Create `.env` file and put your API keys there by specifying a line, for instance: 
 
-`OPENAI_API_KEY=sk-xxx`
+Create `.env` file just as our `.env.example` and put your API keys there by specifying a new line just as we have done.
 
 Install with pip
 
