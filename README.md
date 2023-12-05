@@ -181,6 +181,7 @@ Install with pip
 
 ## Run an Example AI Sales agent
 
+`git clone && cd`
 `python run.py --verbose True --config examples/example_agent_setup.json`
 
 from your terminal.
