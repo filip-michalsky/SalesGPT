@@ -17,18 +17,13 @@ test:	## run tests with pytest.
 	@echo "Tests executed."
 
 # Set up the development environment
-setup: install_poetry clone_repo install_dependencies
+setup: install_poetry install_dependencies
 
 # Install Poetry for dependency management
 install_poetry:
 	pip install -U pip setuptools
 	pip install poetry
 	@echo "Poetry installed."
-
-# Clone the GitHub repository
-clone_repo:
-	git clone https://github.com/filip-michalsky/SalesGPT.git
-	@echo "Repository cloned."
 
 # Install project dependencies using Poetry
 install_dependencies:
@@ -42,5 +37,5 @@ clean:
 	rm -rf SalesGPT
 	@echo "Environment cleaned up."
 
-.PHONY: default setup install_poetry clone_repo install_dependencies test clean
+.PHONY: default setup install_poetry install_dependencies test clean
 

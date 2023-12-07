@@ -173,7 +173,7 @@ sales_agent.step()
 
 Make sure you have a **python >=3.8,<3.12**:
 
-Create a virtual environment at a location on your computer. We use the generic "env" name for our virtual environment in the setup. You can rename this, but make sure to then use this name later when working with the environment (also rename the VENV variable in the Makefile accordingly to be able to use make commands successfully):
+Create a virtual environment at a location on your computer. We use the generic "env" name for our virtual environment in the setup. You can rename this, but make sure to then use this name later when working with the environment (also rename the VENV variable in the Makefile accordingly to be able to use make commands successfully after cloning our repository):
 
 #### For Windows:
 
@@ -191,6 +191,16 @@ Create a virtual environment at a location on your computer. We use the generic 
 
 To deactivate a virtual environment after you have stopped using it simply run: `deactivate`
 
+Clone the SalesGPT Github repository: 
+
+`git clone https://github.com/filip-michalsky/SalesGPT.git`
+
+Navigate to the repository and in case you used a different venv name rename the VENV variable in the Makefile: 
+
+`cd SalesGPT`
+
+
+
 If you simply want to work with SalesGPT as an end user without local changes you can install from PyPI using: 
 
 `pip install salesgpt`
@@ -201,11 +211,12 @@ If you want to work on your own version of SalesGPT or contribute to our open-so
 
 For more detailed installation steps along with the reasons for doing each please visit CONTRIBUTING.md
 
+Finally, for use of SalesGPT create an `.env` file just as our `.env.example` and put your API keys there by specifying a new line just as we have done.
+
 ## Run an Example AI Sales agent
 
 `git clone https://github.com/filip-michalsky/SalesGPT.git`
 `cd SalesGPT`
-Create `.env` file just as our `.env.example` and put your API keys there by specifying a new line just as we have done.
 `python run.py --verbose True --config examples/example_agent_setup.json`
 
 from your terminal.
