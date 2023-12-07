@@ -22,7 +22,7 @@ setup:
 	pip install poetry
 	@echo "Poetry installed."
 	@echo "Installing project dependencies using Poetry."
-	cd SalesGPT && poetry install
+	poetry install
 	@echo "Dependencies installed."
 
 # Clean up the environment
