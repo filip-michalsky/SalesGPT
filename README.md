@@ -214,9 +214,12 @@ For more detailed installation steps along with the reasons for doing each pleas
 Finally, for use of SalesGPT create an `.env` file just as our `.env.example` and put your API keys there by specifying a new line just as we have done.
 
 ## Run an Example AI Sales agent
+If you used a local installation of SalesGPT skip the next two steps and directly run the run.py script: 
 
 `git clone https://github.com/filip-michalsky/SalesGPT.git`
+
 `cd SalesGPT`
+
 `python run.py --verbose True --config examples/example_agent_setup.json`
 
 from your terminal.
