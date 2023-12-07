@@ -6,9 +6,6 @@ from langchain.chat_models import ChatLiteLLM
 
 from salesgpt.agents import SalesGPT
 
-import openai
-openai.api_key = os.getenv('OPEN_API_KEY')
-
 
 class TestSalesGPT:
     def test_valid_inference_no_tools(self, load_env):
