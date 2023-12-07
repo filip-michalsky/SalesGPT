@@ -17,19 +17,14 @@ test:	## run tests with pytest.
 	@echo "Tests executed."
 
 # Set up the development environment
-setup: install_poetry install_dependencies
-
-# Install Poetry for dependency management
-install_poetry:
+setup:
 	pip install -U pip setuptools
 	pip install poetry
 	@echo "Poetry installed."
-
-# Install project dependencies using Poetry
-install_dependencies:
+	@echo "Installing project dependencies using Poetry."
 	cd SalesGPT && poetry install
 	@echo "Dependencies installed."
-	
+
 # Clean up the environment
 clean:
 	@echo "Cleaning up..."
@@ -37,5 +32,4 @@ clean:
 	rm -rf SalesGPT
 	@echo "Environment cleaned up."
 
-.PHONY: default setup install_poetry install_dependencies test clean
-
+.PHONY: default setup test clean
