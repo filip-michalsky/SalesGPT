@@ -173,26 +173,55 @@ sales_agent.step()
 
 Make sure you have a **python >=3.8,<3.12**:
 
-Create `.env` file just as our `.env.example` and put your API keys there by specifying a new line just as we have done.
+Create a virtual environment at a location on your computer. We use the generic "env" name for our virtual environment in the setup. You can rename this, but make sure to then use this name later when working with the environment (also rename the VENV variable in the Makefile accordingly to be able to use make commands successfully):
 
-Install with pip
+#### For Windows:
+
+- Open Command Prompt or PowerShell.
+- Navigate to your project directory: `cd path\to\your\project`
+- Create a virtual environment: `python -m venv env`
+- Activate the virtual environment: `.\env\Scripts\activate`
+
+#### For Mac:
+
+- Open Terminal.
+- Navigate to your project directory: `cd path/to/your/project`
+- Create a virtual environment: `python3 -m venv env`
+- Activate the virtual environment: `source env/bin/activate`
+
+To deactivate a virtual environment after you have stopped using it simply run: `deactivate`
+
+If you simply want to work with SalesGPT as an end user without local changes you can install from PyPI using: 
 
 `pip install salesgpt`
 
+If you want to work on your own version of SalesGPT or contribute to our open-source version install by activating your virtual environment as aforementioned and then run: 
+
+`make setup`
+
+For more detailed installation steps along with the reasons for doing each please visit CONTRIBUTING.md
+
 ## Run an Example AI Sales agent
 
-`git clone && cd`
+`git clone https://github.com/filip-michalsky/SalesGPT.git`
+`cd SalesGPT`
+Create `.env` file just as our `.env.example` and put your API keys there by specifying a new line just as we have done.
 `python run.py --verbose True --config examples/example_agent_setup.json`
 
 from your terminal.
 
 ## Test your setup
 
-1. Activate your environment with `python >=3.8,<3.12 `
-2. cd `SalesGPT`
-3. `pytest`
+1. Activate your environment as described above. (run `source env/bin/activate` on Unix-like systems and `.\env\Scripts\activate` on Windows. Replace *env* with the name of your virtual environment)
+2. cd `SalesGPT`      If you haven't already navigated to the SalesGPT home directory
+3. `make test`
 
-All tests should pass.
+All tests should pass. Warnings can be ignored.
+
+## Uninstall SalesGPT
+
+To delete the virtual environment you used for SalesGPT programming and your SalesGPT repository from your system navigate to the directory where you installed your virtual environment and cloned SalesGPT and run: 
+`make clean`
 
 ## Deploy
 

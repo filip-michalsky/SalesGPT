@@ -90,7 +90,7 @@ Running tests is essential for ensuring the integrity and functionality of the c
 
 #### For Windows and Mac:
 
-- Execute `pytest` in the command line.
+- Execute `make test` in the command line.
 - This command runs all test cases in the project.
 - Ensure there are no failures; warnings can be ignored.
 - Successful test runs indicate that the setup and project code are functioning correctly.
