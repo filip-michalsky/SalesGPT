@@ -1,11 +1,19 @@
 Updates to the SalesGPT project: Building the world's best AI Sales Agents.
 
-November 25 2023
+December 10, 2023
+---------------
+Version 0.1.0
+- Migrated dependency management to Poetry.
+- added makefile for easy installation and testing.
+- expanded compatibility for python 3.8, 3.9, 3.10, and 3.11
+- detailed installation + contribution instructions
+
+November 25, 2023
 ---------------
 Version 0.0.9
 - Fixed dependency on openai 1.0.0 SDK which works with our streaming module.
 
-October 4 2023
+October 4, 2023
 ---------------
 Version 0.0.8
 - Improved streaming endpoint, now accessible with simple `stream=True` kwarg.
@@ -14,13 +22,13 @@ Version 0.0.8
 - Improved docstrings.
 -  Split `requirements.txt` into dev and production requirements.
 
-September 8 2023
+September 8, 2023
 ---------------
 Version 0.0.7
 - SalesGPT is now compatible with LiteLLM - choose any closed/open-sourced LLM 
 to work with SalesGPT.
 
-August 23 2023
+August 23, 2023
 ---------------
 Version 0.0.6
 - "use_tools" as a keyword argument (kwarg) is treated as STRING i.e., agent_config["use_tools"]="True"
