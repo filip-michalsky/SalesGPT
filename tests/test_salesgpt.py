@@ -12,7 +12,10 @@ dotenv_path = os.path.join(os.path.dirname(__file__), '..', '.env')
 load_dotenv(dotenv_path)
 
 # Now, try to load the API key
-openai.api_key = os.getenv('OPENAI_API_KEY')
+api_key = os.getenv('OPENAI_API_KEY')
+if not api_key:
+    raise Exception("OPENAI_API_KEY not found")
+#openai.api_key = os.getenv('OPENAI_API_KEY')
 
 class TestSalesGPT:
     def test_valid_inference_no_tools(self, load_env):
