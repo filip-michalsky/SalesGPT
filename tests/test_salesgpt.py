@@ -6,6 +6,13 @@ from langchain.chat_models import ChatLiteLLM
 
 from salesgpt.agents import SalesGPT
 
+import openai
+from dotenv import load_dotenv
+dotenv_path = os.path.join(os.path.dirname(__file__), '..', '.env')
+load_dotenv(dotenv_path)
+
+# Now, try to load the API key
+openai.api_key = os.getenv('OPENAI_API_KEY')
 
 class TestSalesGPT:
     def test_valid_inference_no_tools(self, load_env):
@@ -105,7 +112,7 @@ class TestSalesGPT:
         stream_generator = sales_agent.step(stream=True)
         agent_output = ""
         for chunk in stream_generator:
-            token = chunk["choices"][0]["delta"].get("content", "")
+            token = chunk["choices"][0]["delta"].get("content", "") or ""
             agent_output += token
 
         assert agent_output is not None, "Agent output cannot be None."
@@ -144,7 +151,7 @@ class TestSalesGPT:
         assert is_async_generator == True, "This needs to be an async generator!"
         agent_output = ""
         async for chunk in astream_generator:
-            token = chunk["choices"][0]["delta"].get("content", "")
+            token = chunk["choices"][0]["delta"].get("content", "") or ""
             agent_output += token
 
         assert agent_output is not None, "Agent output cannot be None."
