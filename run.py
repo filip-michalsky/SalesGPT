@@ -1,5 +1,6 @@
 import argparse
 import json
+import os
 
 from dotenv import load_dotenv
 from langchain.chat_models import ChatLiteLLM
@@ -8,6 +9,12 @@ from salesgpt.agents import SalesGPT
 
 load_dotenv()  # loads .env file
 
+# LangSmith settings section, set TRACING_V2 to "true" to enable it
+# or leave it as it is, if you don't need tracing (more info in README)
+os.environ["LANGCHAIN_TRACING_V2"] = "false"
+os.environ["LANGCHAIN_ENDPOINT"] = "https://api.smith.langchain.com"
+os.environ["LANGCHAIN_API_KEY"] = os.getenv("LANGCHAIN_SMITH_API_KEY")
+os.environ["LANGCHAIN_PROJECT"] = ""  # insert you project name here
 
 if __name__ == "__main__":
     # Initialize argparse
