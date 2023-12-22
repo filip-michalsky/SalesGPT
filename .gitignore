@@ -27,7 +27,6 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
-litellm_uuid.txt
 
 WadaSNR/
 .idea/
@@ -198,3 +197,4 @@ internal/*
 *_phoneme.npy
 wandb
 depot/*
+litellm_uuid.txt
