@@ -80,7 +80,8 @@ const config = {
             sidebarId: 'tutorialSidebar',
             position: 'left',
             label: 'Tutorial',
-          },*/
+          },
+          */
           //{to: '/blog', label: 'Blog', position: 'left'},
           {
             href: 'https://github.com/filip-michalsky/salesgpt',

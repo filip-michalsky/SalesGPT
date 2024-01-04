@@ -1,5 +1,7 @@
 ---
-sidebar_position: 1
+//sidebar_exclude: true
+//sidebar_label: " "
+sidebar_class_name: hidden
 ---
 
 # Create a Page
