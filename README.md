@@ -71,11 +71,18 @@ The AI Sales Agent understands the conversation stage (you can define your own s
 
 <i>Crusty AI Sales Agent Phone Call Demo - Powered by SalesGPT</i>  A New Way to Sell? 🤔
 <div>
+Demo #1: Rachel - Mattress Sales Field Representative
+</div>
+<div>
     <a href="https://www.loom.com/share/f0fac42954904471b266980e4948b07d">
       <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/f0fac42954904471b266980e4948b07d-with-play.gif">
     </a>
 </div>
+<div>
+Demo # 2: Joanna - AI Agent / Digital Worker for Accountants
+</div>
  <div>
+
    
 [![Joanna - AI Agent for Accountants](https://img.youtube.com/vi/E-aA8Q2H0gY/0.jpg)](https://www.youtube.com/watch?v=E-aA8Q2H0gY "Joanna - AI Agent for Accountants")
 
