@@ -66,27 +66,20 @@ The AI Sales Agent understands the conversation stage (you can define your own s
 ### Enterprise-Grade Security
 
 - Upcoming integration with [PromptArmor](https://promptarmor.com/) to protect your AI Sales Agents against security vulnerabilities (see our roadmap).
-
 # Demos and Use Cases
 
-<i>Crusty AI Sales Agent Phone Call Demo - Powered by SalesGPT</i>  A New Way to Sell? 🤔
-<div>
-Demo #1: Rachel - Mattress Sales Field Representative
-</div>
-<div>
-    <a href="https://www.loom.com/share/f0fac42954904471b266980e4948b07d">
-      <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/f0fac42954904471b266980e4948b07d-with-play.gif">
-    </a>
-</div>
-<div>
-Demo # 2: Joanna - AI Agent / Digital Worker for Accountants
-</div>
- <div>
+<i>Crusty AI Sales Agent Demo - Powered by SalesGPT:</i> *A New Way to Sell?* 🤔
 
-   
+**Demo #1: Rachel - Mattress Sales Field Representative**
+
+[![Rachel - Mattress Sales Field Representative](https://cdn.loom.com/sessions/thumbnails/f0fac42954904471b266980e4948b07d-with-play.gif)](https://www.loom.com/share/f0fac42954904471b266980e4948b07d)
+
+<i>Crusty AI Worker Demo - Powered by SalesGPT:</i> *Hiring a new AI employee?* 🤔
+
+**Demo #2: Joanna - AI Agent / Digital Worker for Accountants**
+
 [![Joanna - AI Agent for Accountants](https://img.youtube.com/vi/E-aA8Q2H0gY/0.jpg)](https://www.youtube.com/watch?v=E-aA8Q2H0gY "Joanna - AI Agent for Accountants")
 
-</div>
 
 # Contact Us for Suggestions, Questions, or Help
 
