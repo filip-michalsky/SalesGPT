@@ -82,7 +82,7 @@ const config = {
             label: 'Tutorial',
           },
           */
-         // {to: '/blog', label: 'Blog', position: 'left'},
+          {href: 'https://sales-gpt-fork-ylnm.vercel.app', label: 'API', position: 'left'},
           {
             href: 'https://github.com/filip-michalsky/salesgpt',
             label: 'GitHub',
