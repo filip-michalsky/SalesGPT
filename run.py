@@ -3,7 +3,7 @@ import json
 import os
 
 from dotenv import load_dotenv
-from langchain.chat_models import ChatLiteLLM
+from langchain_community.chat_models import ChatLiteLLM
 
 from salesgpt.agents import SalesGPT
 
@@ -24,8 +24,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--config", type=str, help="Path to agent config file", default=""
     )
-    parser.add_argument("--verbose", type=bool, help="Verbosity",
-                        default=False)
+    parser.add_argument("--verbose", type=bool, help="Verbosity", default=False)
     parser.add_argument(
         "--max_num_turns",
         type=int,
