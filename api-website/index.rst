@@ -10,7 +10,8 @@ Welcome to SalesGPT's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-:red-text:`We have just begun building this website and are still actively working on it. Any suggestions to improve readability / desired contents are welcome! Please contact @chemik-bit on Github.
+.. role:: red-text
+:red-text:`We have just begun building this website and are still actively working on it. Any suggestions to improve readability / desired contents are welcome! Please contact @chemik-bit on Github.`
 
 Indices and tables
 ==================
