@@ -10,7 +10,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 const config = {
   title: 'SalesGPT Docs',
   tagline: 'Get up to speed with SalesGPT',
-  favicon: 'img/insta.ico',
+  favicon: '/img/sgpt_fav.ico',
 
   // Set the production url of your site here
   url: 'https://your-docusaurus-site.example.com',
