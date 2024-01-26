@@ -1,0 +1,6 @@
+{
+    "scripts": {
+      "build": "pip install sphinx && make html"
+    }
+  }
+  
