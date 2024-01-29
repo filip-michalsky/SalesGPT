@@ -1,11 +1,12 @@
 from copy import deepcopy
 from typing import Any, Callable, Dict, List, Union
 
-from langchain.agents import AgentExecutor, LLMSingleActionAgent
+from langchain.agents import (AgentExecutor, LLMSingleActionAgent,
+                              create_openai_tools_agent)
 from langchain.chains import LLMChain, RetrievalQA
 from langchain.chains.base import Chain
-from langchain.chat_models import ChatLiteLLM
-from langchain.llms.base import create_base_retry_decorator
+from langchain_community.chat_models import ChatLiteLLM
+from langchain_core.language_models.llms import create_base_retry_decorator
 from litellm import acompletion
 from pydantic import Field
 
@@ -222,57 +223,46 @@ class SalesGPT(Chain):
             model=self.model_name,
         )
 
-    def _call(self, inputs: Dict[str, Any]) -> None:
+    def _call(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
         """Run one step of the sales agent."""
 
-        # Generate agent's utterance
-        # if use tools
-        if self.use_tools:
-            ai_message = self.sales_agent_executor.run(
-                input="",
-                conversation_stage=self.current_conversation_stage,
-                conversation_history="\n".join(self.conversation_history),
-                salesperson_name=self.salesperson_name,
-                salesperson_role=self.salesperson_role,
-                company_name=self.company_name,
-                company_business=self.company_business,
-                company_values=self.company_values,
-                conversation_purpose=self.conversation_purpose,
-                conversation_type=self.conversation_type,
-            )
+        # override inputs temporarily
+        inputs = {
+            "input": "",
+            "conversation_stage": self.current_conversation_stage,
+            "conversation_history": "\n".join(self.conversation_history),
+            "salesperson_name": self.salesperson_name,
+            "salesperson_role": self.salesperson_role,
+            "company_name": self.company_name,
+            "company_business": self.company_business,
+            "company_values": self.company_values,
+            "conversation_purpose": self.conversation_purpose,
+            "conversation_type": self.conversation_type,
+        }
 
+        # Generate agent's utterance
+        if self.use_tools:
+            ai_message = self.sales_agent_executor.invoke(inputs)
+            output = ai_message["output"]
         else:
-            # else
-            ai_message = self.sales_conversation_utterance_chain.run(
-                conversation_stage=self.current_conversation_stage,
-                conversation_history="\n".join(self.conversation_history),
-                salesperson_name=self.salesperson_name,
-                salesperson_role=self.salesperson_role,
-                company_name=self.company_name,
-                company_business=self.company_business,
-                company_values=self.company_values,
-                conversation_purpose=self.conversation_purpose,
-                conversation_type=self.conversation_type,
-            )
+            ai_message = self.sales_conversation_utterance_chain.invoke(inputs)
+            output = ai_message["text"]
 
         # Add agent's response to conversation history
         agent_name = self.salesperson_name
-        ai_message = agent_name + ": " + ai_message
-        if "<END_OF_TURN>" not in ai_message:
-            ai_message += " <END_OF_TURN>"
-        self.conversation_history.append(ai_message)
-        print(ai_message.replace("<END_OF_TURN>", ""))
-        return {}
+        output = agent_name + ": " + output
+        if "<END_OF_TURN>" not in output:
+            output += " <END_OF_TURN>"
+        self.conversation_history.append(output)
+        print(output.replace("<END_OF_TURN>", ""))
+        return ai_message
 
     @classmethod
     @time_logger
     def from_llm(cls, llm: ChatLiteLLM, verbose: bool = False, **kwargs) -> "SalesGPT":
         """Initialize the SalesGPT Controller."""
         stage_analyzer_chain = StageAnalyzerChain.from_llm(llm, verbose=verbose)
-        if (
-            "use_custom_prompt" in kwargs.keys()
-            and kwargs["use_custom_prompt"] == "True"
-        ):
+        if "use_custom_prompt" in kwargs.keys() and kwargs["use_custom_prompt"] is True:
             use_custom_prompt = deepcopy(kwargs["use_custom_prompt"])
             custom_prompt = deepcopy(kwargs["custom_prompt"])
 
@@ -293,7 +283,7 @@ class SalesGPT(Chain):
             )
 
         if "use_tools" in kwargs.keys() and (
-            kwargs["use_tools"] == "True" or kwargs["use_tools"] == True
+            kwargs["use_tools"] == "True" or kwargs["use_tools"] is True
         ):
             # set up agent with tools
             product_catalog = kwargs["product_catalog"]

@@ -2,20 +2,20 @@ import json
 import os
 
 import pytest
-from langchain.chat_models import ChatLiteLLM
+from dotenv import load_dotenv
+from langchain_community.chat_models import ChatLiteLLM
 
 from salesgpt.agents import SalesGPT
 
-import openai
-from dotenv import load_dotenv
-dotenv_path = os.path.join(os.path.dirname(__file__), '..', '.env')
+dotenv_path = os.path.join(os.path.dirname(__file__), "..", ".env")
 load_dotenv(dotenv_path)
 
 # Now, try to load the API key
-api_key = os.getenv('OPENAI_API_KEY')
+api_key = os.getenv("OPENAI_API_KEY")
 if not api_key:
     raise Exception("OPENAI_API_KEY not found")
 #openai.api_key = os.getenv('OPENAI_API_KEY')
+
 
 class TestSalesGPT:
     def test_valid_inference_no_tools(self, load_env):

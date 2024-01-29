@@ -1,5 +1,6 @@
-from langchain import LLMChain, PromptTemplate
-from langchain.chat_models import ChatLiteLLM
+from langchain.chains import LLMChain
+from langchain.prompts import PromptTemplate
+from langchain_community.chat_models import ChatLiteLLM
 
 from salesgpt.logger import time_logger
 from salesgpt.prompts import (SALES_AGENT_INCEPTION_PROMPT,

@@ -92,7 +92,7 @@ We are building SalesGPT to power your best AI Sales Agents. Hence, we would lov
 ```python
 import os
 from salesgpt.agents import SalesGPT
-from langchain.chat_models import ChatLiteLLM
+from langchain_community.chat_models import ChatLiteLLM
 
 from dotenv import load_dotenv
 load_dotenv() # make sure you have .env file with your API keys, eg., OPENAI_API_KEY=sk-xxx

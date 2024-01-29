@@ -1,12 +1,13 @@
 from langchain.agents import Tool
 from langchain.chains import RetrievalQA
-from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.llms import OpenAI
 from langchain.text_splitter import CharacterTextSplitter
-from langchain.vectorstores import Chroma
+from langchain_community.vectorstores import Chroma
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 
 
-def setup_knowledge_base(product_catalog: str = None):
+def setup_knowledge_base(
+    product_catalog: str = None, model_name: str = "gpt-3.5-turbo"
+):
     """
     We assume that the product catalog is simply a text string.
     """
@@ -17,7 +18,7 @@ def setup_knowledge_base(product_catalog: str = None):
     text_splitter = CharacterTextSplitter(chunk_size=10, chunk_overlap=0)
     texts = text_splitter.split_text(product_catalog)
 
-    llm = OpenAI(temperature=0)
+    llm = ChatOpenAI(model_name=model_name, temperature=0)
     embeddings = OpenAIEmbeddings()
     docsearch = Chroma.from_texts(
         texts, embeddings, collection_name="product-knowledge-base"
