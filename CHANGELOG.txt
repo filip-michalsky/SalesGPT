@@ -1,4 +1,10 @@
-Updates to the SalesGPT project: Building the world's best AI Sales Agents.
+Updates to the SalesGPT project: Building the world's best AI Sales Agents and virtual workers.
+
+January 29, 2024
+---------------
+Version 0.1.1
+- updated compatibility to match LangChain 0.1 including examples
+- WIP of the website and API documentation.
 
 December 10, 2023
 ---------------
