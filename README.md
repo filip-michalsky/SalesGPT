@@ -74,13 +74,6 @@ The AI Sales Agent understands the conversation stage (you can define your own s
 
 [![Rachel - Mattress Sales Field Representative](https://cdn.loom.com/sessions/thumbnails/f0fac42954904471b266980e4948b07d-with-play.gif)](https://www.loom.com/share/f0fac42954904471b266980e4948b07d)
 
-<i>Crusty AI Worker Demo - Powered by SalesGPT:</i> *Hiring a new AI employee?* 🤔
-
-**Demo #2: Joanna - AI Agent / Digital Worker for Accountants**
-
-[![Joanna - AI Agent for Accountants](https://img.youtube.com/vi/E-aA8Q2H0gY/0.jpg)](https://www.youtube.com/watch?v=E-aA8Q2H0gY "Joanna - AI Agent for Accountants")
-
-
 # Contact Us for Suggestions, Questions, or Help
 
 We are building SalesGPT to power your best AI Sales Agents. Hence, we would love to learn more about use cases you are building towards which will fuel SalesGPT development roadmap.
