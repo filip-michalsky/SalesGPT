@@ -5,8 +5,10 @@ import uvicorn
 from fastapi import FastAPI
 from pydantic import BaseModel
 
+from api.config import ApiKeySettings
 from salesgpt.salesgptapi import SalesGPTAPI
 
+api_settings = ApiKeySettings()
 app = FastAPI()
 
 GPT_MODEL = "gpt-3.5-turbo-0613"
@@ -33,16 +35,6 @@ async def chat_with_sales_agent(req: MessageList):
     return res
 
 
-def _set_env():
-    with open(".env", "r") as f:
-        env_file = f.readlines()
-    envs_dict = {
-        key.strip("'"): value.strip("\n")
-        for key, value in [(i.split("=")) for i in env_file]
-    }
-    os.environ["OPENAI_API_KEY"] = envs_dict["OPENAI_API_KEY"]
-
 
 if __name__ == "__main__":
-    _set_env()
     uvicorn.run(app, host="127.0.0.1", port=8000)
