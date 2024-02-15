@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>salesgpt.agents module &mdash; SalesGPT  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4698285b" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="salesgpt.chains module" href="salesgpt.chains.html" />
+    <link rel="prev" title="Welcome to SalesGPT’s documentation!" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            SalesGPT
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">salesgpt.agents module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#salesgpt.agents.SalesGPT"><code class="docutils literal notranslate"><span class="pre">SalesGPT</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.acall"><code class="docutils literal notranslate"><span class="pre">SalesGPT.acall()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.acompletion_with_retry"><code class="docutils literal notranslate"><span class="pre">SalesGPT.acompletion_with_retry()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.astep"><code class="docutils literal notranslate"><span class="pre">SalesGPT.astep()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.company_business"><code class="docutils literal notranslate"><span class="pre">SalesGPT.company_business</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.company_name"><code class="docutils literal notranslate"><span class="pre">SalesGPT.company_name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.company_values"><code class="docutils literal notranslate"><span class="pre">SalesGPT.company_values</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.conversation_history"><code class="docutils literal notranslate"><span class="pre">SalesGPT.conversation_history</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.conversation_purpose"><code class="docutils literal notranslate"><span class="pre">SalesGPT.conversation_purpose</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.conversation_stage_dict"><code class="docutils literal notranslate"><span class="pre">SalesGPT.conversation_stage_dict</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.conversation_stage_id"><code class="docutils literal notranslate"><span class="pre">SalesGPT.conversation_stage_id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.conversation_type"><code class="docutils literal notranslate"><span class="pre">SalesGPT.conversation_type</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.current_conversation_stage"><code class="docutils literal notranslate"><span class="pre">SalesGPT.current_conversation_stage</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.determine_conversation_stage"><code class="docutils literal notranslate"><span class="pre">SalesGPT.determine_conversation_stage()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.from_llm"><code class="docutils literal notranslate"><span class="pre">SalesGPT.from_llm()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.human_step"><code class="docutils literal notranslate"><span class="pre">SalesGPT.human_step()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.input_keys"><code class="docutils literal notranslate"><span class="pre">SalesGPT.input_keys</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.knowledge_base"><code class="docutils literal notranslate"><span class="pre">SalesGPT.knowledge_base</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.model_name"><code class="docutils literal notranslate"><span class="pre">SalesGPT.model_name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.output_keys"><code class="docutils literal notranslate"><span class="pre">SalesGPT.output_keys</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.retrieve_conversation_stage"><code class="docutils literal notranslate"><span class="pre">SalesGPT.retrieve_conversation_stage()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.sales_agent_executor"><code class="docutils literal notranslate"><span class="pre">SalesGPT.sales_agent_executor</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.sales_conversation_utterance_chain"><code class="docutils literal notranslate"><span class="pre">SalesGPT.sales_conversation_utterance_chain</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.salesperson_name"><code class="docutils literal notranslate"><span class="pre">SalesGPT.salesperson_name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.salesperson_role"><code class="docutils literal notranslate"><span class="pre">SalesGPT.salesperson_role</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.seed_agent"><code class="docutils literal notranslate"><span class="pre">SalesGPT.seed_agent()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.stage_analyzer_chain"><code class="docutils literal notranslate"><span class="pre">SalesGPT.stage_analyzer_chain</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.step"><code class="docutils literal notranslate"><span class="pre">SalesGPT.step()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.use_tools"><code class="docutils literal notranslate"><span class="pre">SalesGPT.use_tools</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.chains.html">salesgpt.chains module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.logger.html">salesgpt.logger module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.parsers.html">salesgpt.parsers module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.prompts.html">salesgpt.prompts module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.prompts_cn.html">salesgpt.prompts_cn module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.salesgptapi.html">salesgpt.salesgptapi module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.stages.html">salesgpt.stages module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.templates.html">salesgpt.templates module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.tools.html">salesgpt.tools module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.version.html">salesgpt.version module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">SalesGPT</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">salesgpt.agents module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/salesgpt/salesgpt.agents.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-salesgpt.agents">
+<span id="salesgpt-agents-module"></span><h1>salesgpt.agents module<a class="headerlink" href="#module-salesgpt.agents" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="salesgpt.agents.SalesGPT">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">salesgpt.agents.</span></span><span class="sig-name descname"><span class="pre">SalesGPT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BaseMemory</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callbacks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">BaseCallbackHandler</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">BaseCallbackManager</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback_manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BaseCallbackManager</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conversation_history</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conversation_stage_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_conversation_stage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Introduction:</span> <span class="pre">Start</span> <span class="pre">the</span> <span class="pre">conversation</span> <span class="pre">by</span> <span class="pre">introducing</span> <span class="pre">yourself</span> <span class="pre">and</span> <span class="pre">your</span> <span class="pre">company.</span> <span class="pre">Be</span> <span class="pre">polite</span> <span class="pre">and</span> <span class="pre">respectful</span> <span class="pre">while</span> <span class="pre">keeping</span> <span class="pre">the</span> <span class="pre">tone</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">conversation</span> <span class="pre">professional.</span> <span class="pre">Your</span> <span class="pre">greeting</span> <span class="pre">should</span> <span class="pre">be</span> <span class="pre">welcoming.</span> <span class="pre">Always</span> <span class="pre">clarify</span> <span class="pre">in</span> <span class="pre">your</span> <span class="pre">greeting</span> <span class="pre">the</span> <span class="pre">reason</span> <span class="pre">why</span> <span class="pre">you</span> <span class="pre">are</span> <span class="pre">calling.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage_analyzer_chain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="salesgpt.chains.html#salesgpt.chains.StageAnalyzerChain" title="salesgpt.chains.StageAnalyzerChain"><span class="pre">StageAnalyzerChain</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">FieldInfo(default=Ellipsis,</span> <span class="pre">extra={})</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sales_agent_executor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AgentExecutor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">FieldInfo(default=Ellipsis,</span> <span class="pre">extra={})</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">knowledge_base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">RetrievalQA</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">FieldInfo(default=Ellipsis,</span> <span class="pre">extra={})</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sales_conversation_utterance_chain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="salesgpt.chains.html#salesgpt.chains.SalesConversationChain" title="salesgpt.chains.SalesConversationChain"><span class="pre">SalesConversationChain</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">FieldInfo(default=Ellipsis,</span> <span class="pre">extra={})</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conversation_stage_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{'1':</span> <span class="pre">'Introduction:</span> <span class="pre">Start</span> <span class="pre">the</span> <span class="pre">conversation</span> <span class="pre">by</span> <span class="pre">introducing</span> <span class="pre">yourself</span> <span class="pre">and</span> <span class="pre">your</span> <span class="pre">company.</span> <span class="pre">Be</span> <span class="pre">polite</span> <span class="pre">and</span> <span class="pre">respectful</span> <span class="pre">while</span> <span class="pre">keeping</span> <span class="pre">the</span> <span class="pre">tone</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">conversation</span> <span class="pre">professional.</span> <span class="pre">Your</span> <span class="pre">greeting</span> <span class="pre">should</span> <span class="pre">be</span> <span class="pre">welcoming.</span> <span class="pre">Always</span> <span class="pre">clarify</span> <span class="pre">in</span> <span class="pre">your</span> <span class="pre">greeting</span> <span class="pre">the</span> <span class="pre">reason</span> <span class="pre">why</span> <span class="pre">you</span> <span class="pre">are</span> <span class="pre">calling.',</span> <span class="pre">'2':</span> <span class="pre">'Qualification:</span> <span class="pre">Qualify</span> <span class="pre">the</span> <span class="pre">prospect</span> <span class="pre">by</span> <span class="pre">confirming</span> <span class="pre">if</span> <span class="pre">they</span> <span class="pre">are</span> <span class="pre">the</span> <span class="pre">right</span> <span class="pre">person</span> <span class="pre">to</span> <span class="pre">talk</span> <span class="pre">to</span> <span class="pre">regarding</span> <span class="pre">your</span> <span class="pre">product/service.</span> <span class="pre">Ensure</span> <span class="pre">that</span> <span class="pre">they</span> <span class="pre">have</span> <span class="pre">the</span> <span class="pre">authority</span> <span class="pre">to</span> <span class="pre">make</span> <span class="pre">purchasing</span> <span class="pre">decisions.',</span> <span class="pre">'3':</span> <span class="pre">'Value</span> <span class="pre">proposition:</span> <span class="pre">Briefly</span> <span class="pre">explain</span> <span class="pre">how</span> <span class="pre">your</span> <span class="pre">product/service</span> <span class="pre">can</span> <span class="pre">benefit</span> <span class="pre">the</span> <span class="pre">prospect.</span> <span class="pre">Focus</span> <span class="pre">on</span> <span class="pre">the</span> <span class="pre">unique</span> <span class="pre">selling</span> <span class="pre">points</span> <span class="pre">and</span> <span class="pre">value</span> <span class="pre">proposition</span> <span class="pre">of</span> <span class="pre">your</span> <span class="pre">product/service</span> <span class="pre">that</span> <span class="pre">sets</span> <span class="pre">it</span> <span class="pre">apart</span> <span class="pre">from</span> <span class="pre">competitors.',</span> <span class="pre">'4':</span> <span class="pre">&quot;Needs</span> <span class="pre">analysis:</span> <span class="pre">Ask</span> <span class="pre">open-ended</span> <span class="pre">questions</span> <span class="pre">to</span> <span class="pre">uncover</span> <span class="pre">the</span> <span class="pre">prospect's</span> <span class="pre">needs</span> <span class="pre">and</span> <span class="pre">pain</span> <span class="pre">points.</span> <span class="pre">Listen</span> <span class="pre">carefully</span> <span class="pre">to</span> <span class="pre">their</span> <span class="pre">responses</span> <span class="pre">and</span> <span class="pre">take</span> <span class="pre">notes.&quot;,</span> <span class="pre">'5':</span> <span class="pre">&quot;Solution</span> <span class="pre">presentation:</span> <span class="pre">Based</span> <span class="pre">on</span> <span class="pre">the</span> <span class="pre">prospect's</span> <span class="pre">needs,</span> <span class="pre">present</span> <span class="pre">your</span> <span class="pre">product/service</span> <span class="pre">as</span> <span class="pre">the</span> <span class="pre">solution</span> <span class="pre">that</span> <span class="pre">can</span> <span class="pre">address</span> <span class="pre">their</span> <span class="pre">pain</span> <span class="pre">points.&quot;,</span> <span class="pre">'6':</span> <span class="pre">'Objection</span> <span class="pre">handling:</span> <span class="pre">Address</span> <span class="pre">any</span> <span class="pre">objections</span> <span class="pre">that</span> <span class="pre">the</span> <span class="pre">prospect</span> <span class="pre">may</span> <span class="pre">have</span> <span class="pre">regarding</span> <span class="pre">your</span> <span class="pre">product/service.</span> <span class="pre">Be</span> <span class="pre">prepared</span> <span class="pre">to</span> <span class="pre">provide</span> <span class="pre">evidence</span> <span class="pre">or</span> <span class="pre">testimonials</span> <span class="pre">to</span> <span class="pre">support</span> <span class="pre">your</span> <span class="pre">claims.',</span> <span class="pre">'7':</span> <span class="pre">'Close:</span> <span class="pre">Ask</span> <span class="pre">for</span> <span class="pre">the</span> <span class="pre">sale</span> <span class="pre">by</span> <span class="pre">proposing</span> <span class="pre">a</span> <span class="pre">next</span> <span class="pre">step.</span> <span class="pre">This</span> <span class="pre">could</span> <span class="pre">be</span> <span class="pre">a</span> <span class="pre">demo,</span> <span class="pre">a</span> <span class="pre">trial</span> <span class="pre">or</span> <span class="pre">a</span> <span class="pre">meeting</span> <span class="pre">with</span> <span class="pre">decision-makers.</span> <span class="pre">Ensure</span> <span class="pre">to</span> <span class="pre">summarize</span> <span class="pre">what</span> <span class="pre">has</span> <span class="pre">been</span> <span class="pre">discussed</span> <span class="pre">and</span> <span class="pre">reiterate</span> <span class="pre">the</span> <span class="pre">benefits.',</span> <span class="pre">'8':</span> <span class="pre">&quot;End</span> <span class="pre">conversation:</span> <span class="pre">It's</span> <span class="pre">time</span> <span class="pre">to</span> <span class="pre">end</span> <span class="pre">the</span> <span class="pre">call</span> <span class="pre">as</span> <span class="pre">there</span> <span class="pre">is</span> <span class="pre">nothing</span> <span class="pre">else</span> <span class="pre">to</span> <span class="pre">be</span> <span class="pre">said.&quot;}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'gpt-3.5-turbo-0613'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_tools</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">salesperson_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Ted</span> <span class="pre">Lasso'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">salesperson_role</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Business</span> <span class="pre">Development</span> <span class="pre">Representative'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">company_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Sleep</span> <span class="pre">Haven'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">company_business</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Sleep</span> <span class="pre">Haven</span> <span class="pre">is</span> <span class="pre">a</span> <span class="pre">premium</span> <span class="pre">mattress</span> <span class="pre">company</span> <span class="pre">that</span> <span class="pre">provides</span> <span class="pre">customers</span> <span class="pre">with</span> <span class="pre">the</span> <span class="pre">most</span> <span class="pre">comfortable</span> <span class="pre">and</span> <span class="pre">supportive</span> <span class="pre">sleeping</span> <span class="pre">experience</span> <span class="pre">possible.</span> <span class="pre">We</span> <span class="pre">offer</span> <span class="pre">a</span> <span class="pre">range</span> <span class="pre">of</span> <span class="pre">high-quality</span> <span class="pre">mattresses,</span> <span class="pre">pillows,</span> <span class="pre">and</span> <span class="pre">bedding</span> <span class="pre">accessories</span> <span class="pre">that</span> <span class="pre">are</span> <span class="pre">designed</span> <span class="pre">to</span> <span class="pre">meet</span> <span class="pre">the</span> <span class="pre">unique</span> <span class="pre">needs</span> <span class="pre">of</span> <span class="pre">our</span> <span class="pre">customers.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">company_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&quot;Our</span> <span class="pre">mission</span> <span class="pre">at</span> <span class="pre">Sleep</span> <span class="pre">Haven</span> <span class="pre">is</span> <span class="pre">to</span> <span class="pre">help</span> <span class="pre">people</span> <span class="pre">achieve</span> <span class="pre">a</span> <span class="pre">better</span> <span class="pre">night's</span> <span class="pre">sleep</span> <span class="pre">by</span> <span class="pre">providing</span> <span class="pre">them</span> <span class="pre">with</span> <span class="pre">the</span> <span class="pre">best</span> <span class="pre">possible</span> <span class="pre">sleep</span> <span class="pre">solutions.</span> <span class="pre">We</span> <span class="pre">believe</span> <span class="pre">that</span> <span class="pre">quality</span> <span class="pre">sleep</span> <span class="pre">is</span> <span class="pre">essential</span> <span class="pre">to</span> <span class="pre">overall</span> <span class="pre">health</span> <span class="pre">and</span> <span class="pre">well-being,</span> <span class="pre">and</span> <span class="pre">we</span> <span class="pre">are</span> <span class="pre">committed</span> <span class="pre">to</span> <span class="pre">helping</span> <span class="pre">our</span> <span class="pre">customers</span> <span class="pre">achieve</span> <span class="pre">optimal</span> <span class="pre">sleep</span> <span class="pre">by</span> <span class="pre">offering</span> <span class="pre">exceptional</span> <span class="pre">products</span> <span class="pre">and</span> <span class="pre">customer</span> <span class="pre">service.&quot;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conversation_purpose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'find</span> <span class="pre">out</span> <span class="pre">whether</span> <span class="pre">they</span> <span class="pre">are</span> <span class="pre">looking</span> <span class="pre">to</span> <span class="pre">achieve</span> <span class="pre">better</span> <span class="pre">sleep</span> <span class="pre">via</span> <span class="pre">buying</span> <span class="pre">a</span> <span class="pre">premier</span> <span class="pre">mattress.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conversation_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'call'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#salesgpt.agents.SalesGPT" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Chain</span></code></p>
+<p>Controller model for the Sales Agent.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="salesgpt.agents.SalesGPT.acall">
+<span class="sig-name descname"><span class="pre">acall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#salesgpt.agents.SalesGPT.acall" title="Link to this definition"></a></dt>
+<dd><p>This method is not implemented yet.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>*args: Variable length argument list.
+**kwargs: Arbitrary keyword arguments.</p>
+</dd>
+<dt>Raises:</dt><dd><p>NotImplementedError: This method has not been implemented yet.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="salesgpt.agents.SalesGPT.acompletion_with_retry">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">acompletion_with_retry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">llm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#salesgpt.agents.SalesGPT.acompletion_with_retry" title="Link to this definition"></a></dt>
+<dd><p>Use tenacity to retry the async completion call.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="salesgpt.agents.SalesGPT.astep">
+<span class="sig-name descname"><span class="pre">astep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#salesgpt.agents.SalesGPT.astep" title="Link to this definition"></a></dt>
+<dd><dl class="simple">
+<dt>Args:</dt><dd><p>stream (bool): whether or not return
+streaming generator object to manipulate streaming chunks in downstream applications.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="salesgpt.agents.SalesGPT.company_business">
+<span class="sig-name descname"><span class="pre">company_business</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#salesgpt.agents.SalesGPT.company_business" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="salesgpt.agents.SalesGPT.company_name">
+<span class="sig-name descname"><span class="pre">company_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#salesgpt.agents.SalesGPT.company_name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="salesgpt.agents.SalesGPT.company_values">
+<span class="sig-name descname"><span class="pre">company_values</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#salesgpt.agents.SalesGPT.company_values" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="salesgpt.agents.SalesGPT.conversation_history">
+<span class="sig-name descname"><span class="pre">conversation_history</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#salesgpt.agents.SalesGPT.conversation_history" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="salesgpt.agents.SalesGPT.conversation_purpose">
+<span class="sig-name descname"><span class="pre">conversation_purpose</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#salesgpt.agents.SalesGPT.conversation_purpose" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="salesgpt.agents.SalesGPT.conversation_stage_dict">
+<span class="sig-name descname"><span class="pre">conversation_stage_dict</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span></em><a class="headerlink" href="#salesgpt.agents.SalesGPT.conversation_stage_dict" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="salesgpt.agents.SalesGPT.conversation_stage_id">
+<span class="sig-name descname"><span class="pre">conversation_stage_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#salesgpt.agents.SalesGPT.conversation_stage_id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="salesgpt.agents.SalesGPT.conversation_type">
+<span class="sig-name descname"><span class="pre">conversation_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#salesgpt.agents.SalesGPT.conversation_type" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="salesgpt.agents.SalesGPT.current_conversation_stage">
+<span class="sig-name descname"><span class="pre">current_conversation_stage</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#salesgpt.agents.SalesGPT.current_conversation_stage" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="salesgpt.agents.SalesGPT.determine_conversation_stage">
+<span class="sig-name descname"><span class="pre">determine_conversation_stage</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#salesgpt.agents.SalesGPT.determine_conversation_stage" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="salesgpt.agents.SalesGPT.from_llm">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_llm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">llm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ChatLiteLLM</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#salesgpt.agents.SalesGPT" title="salesgpt.agents.SalesGPT"><span class="pre">SalesGPT</span></a></span></span><a class="headerlink" href="#salesgpt.agents.SalesGPT.from_llm" title="Link to this definition"></a></dt>
+<dd><p>Initialize the SalesGPT Controller.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="salesgpt.agents.SalesGPT.human_step">
+<span class="sig-name descname"><span class="pre">human_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">human_input</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#salesgpt.agents.SalesGPT.human_step" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="salesgpt.agents.SalesGPT.input_keys">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">input_keys</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#salesgpt.agents.SalesGPT.input_keys" title="Link to this definition"></a></dt>
+<dd><p>Keys expected to be in the chain input.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="salesgpt.agents.SalesGPT.knowledge_base">
+<span class="sig-name descname"><span class="pre">knowledge_base</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">RetrievalQA</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#salesgpt.agents.SalesGPT.knowledge_base" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="salesgpt.agents.SalesGPT.model_name">
+<span class="sig-name descname"><span class="pre">model_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#salesgpt.agents.SalesGPT.model_name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="salesgpt.agents.SalesGPT.output_keys">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">output_keys</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#salesgpt.agents.SalesGPT.output_keys" title="Link to this definition"></a></dt>
+<dd><p>Keys expected to be in the chain output.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="salesgpt.agents.SalesGPT.retrieve_conversation_stage">
+<span class="sig-name descname"><span class="pre">retrieve_conversation_stage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#salesgpt.agents.SalesGPT.retrieve_conversation_stage" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="salesgpt.agents.SalesGPT.sales_agent_executor">
+<span class="sig-name descname"><span class="pre">sales_agent_executor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">AgentExecutor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#salesgpt.agents.SalesGPT.sales_agent_executor" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="salesgpt.agents.SalesGPT.sales_conversation_utterance_chain">
+<span class="sig-name descname"><span class="pre">sales_conversation_utterance_chain</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="salesgpt.chains.html#salesgpt.chains.SalesConversationChain" title="salesgpt.chains.SalesConversationChain"><span class="pre">SalesConversationChain</span></a></em><a class="headerlink" href="#salesgpt.agents.SalesGPT.sales_conversation_utterance_chain" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="salesgpt.agents.SalesGPT.salesperson_name">
+<span class="sig-name descname"><span class="pre">salesperson_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#salesgpt.agents.SalesGPT.salesperson_name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="salesgpt.agents.SalesGPT.salesperson_role">
+<span class="sig-name descname"><span class="pre">salesperson_role</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#salesgpt.agents.SalesGPT.salesperson_role" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="salesgpt.agents.SalesGPT.seed_agent">
+<span class="sig-name descname"><span class="pre">seed_agent</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#salesgpt.agents.SalesGPT.seed_agent" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="salesgpt.agents.SalesGPT.stage_analyzer_chain">
+<span class="sig-name descname"><span class="pre">stage_analyzer_chain</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="salesgpt.chains.html#salesgpt.chains.StageAnalyzerChain" title="salesgpt.chains.StageAnalyzerChain"><span class="pre">StageAnalyzerChain</span></a></em><a class="headerlink" href="#salesgpt.agents.SalesGPT.stage_analyzer_chain" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="salesgpt.agents.SalesGPT.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#salesgpt.agents.SalesGPT.step" title="Link to this definition"></a></dt>
+<dd><dl class="simple">
+<dt>Args:</dt><dd><p>stream (bool): whether or not return
+streaming generator object to manipulate streaming chunks in downstream applications.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="salesgpt.agents.SalesGPT.use_tools">
+<span class="sig-name descname"><span class="pre">use_tools</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#salesgpt.agents.SalesGPT.use_tools" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="Welcome to SalesGPT’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="salesgpt.chains.html" class="btn btn-neutral float-right" title="salesgpt.chains module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Filip-Michalsky.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -123,6 +123,16 @@ class SalesGPT(Chain):
 
     @time_logger
     def acall(self, *args, **kwargs):
+        """
+        This method is not implemented yet.
+
+        Args:
+            \*args: Variable length argument list.
+            \*\*kwargs: Arbitrary keyword arguments.
+        
+        Raises:
+            NotImplementedError: This method has not been implemented yet.
+        """
         raise NotImplementedError("This method has not been implemented yet.")
 
     @time_logger
