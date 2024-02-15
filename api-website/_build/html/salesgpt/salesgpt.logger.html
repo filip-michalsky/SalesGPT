@@ -21,7 +21,9 @@
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="salesgpt.parsers module" href="salesgpt.parsers.html" />
+    <link rel="prev" title="salesgpt.chains module" href="salesgpt.chains.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -43,18 +45,28 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">salesgpt.logger module</a><ul>
-<li><a class="reference internal" href="#salesgpt.logger.TimeFilter"><code class="docutils literal notranslate"><span class="pre">TimeFilter</span></code></a><ul>
-<li><a class="reference internal" href="#salesgpt.logger.TimeFilter.filter"><code class="docutils literal notranslate"><span class="pre">TimeFilter.filter()</span></code></a></li>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.agents.html">salesgpt.agents module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.chains.html">salesgpt.chains module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">salesgpt.logger module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#salesgpt.logger.TimeFilter"><code class="docutils literal notranslate"><span class="pre">TimeFilter</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.logger.TimeFilter.filter"><code class="docutils literal notranslate"><span class="pre">TimeFilter.filter()</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#salesgpt.logger.time_logger"><code class="docutils literal notranslate"><span class="pre">time_logger()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#salesgpt.logger.time_logger"><code class="docutils literal notranslate"><span class="pre">time_logger()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.parsers.html">salesgpt.parsers module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.prompts.html">salesgpt.prompts module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.prompts_cn.html">salesgpt.prompts_cn module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.salesgptapi.html">salesgpt.salesgptapi module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.stages.html">salesgpt.stages module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.templates.html">salesgpt.templates module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.tools.html">salesgpt.tools module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.version.html">salesgpt.version module</a></li>
 </ul>
-</div>
+
         </div>
       </div>
     </nav>
@@ -98,7 +110,16 @@ If deemed appropriate, the record may be modified in-place.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="salesgpt.logger.time_logger">
 <span class="sig-prename descclassname"><span class="pre">salesgpt.logger.</span></span><span class="sig-name descname"><span class="pre">time_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#salesgpt.logger.time_logger" title="Link to this definition"></a></dt>
-<dd><p>Decorator function to log time taken by any function.</p>
+<dd><p>Decorator function to log the time taken by any function.</p>
+<p>This decorator logs the execution time of the decorated function. It logs the start time before the function 
+execution, the end time after the function execution, and calculates the execution time. The function name and 
+execution time are then logged at the INFO level.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>func (Callable): The function to be decorated.</p>
+</dd>
+<dt>Returns:</dt><dd><p>Callable: The decorated function.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
@@ -106,7 +127,10 @@ If deemed appropriate, the record may be modified in-place.</p>
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="salesgpt.chains.html" class="btn btn-neutral float-left" title="salesgpt.chains module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="salesgpt.parsers.html" class="btn btn-neutral float-right" title="salesgpt.parsers module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 

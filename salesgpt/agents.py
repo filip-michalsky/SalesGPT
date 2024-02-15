@@ -218,9 +218,9 @@ class SalesGPT(Chain):
 
         Parameters
         ----------
-        *args : tuple
+        \*args : tuple
             Variable length argument list.
-        **kwargs : dict
+        \*\*kwargs : dict
             Arbitrary keyword arguments.
 
         Raises
@@ -315,7 +315,7 @@ class SalesGPT(Chain):
         ----------
         llm : Any
             The language model to be used for the completion.
-        **kwargs : Any
+        \*\*kwargs : Any
             Additional keyword arguments to be passed to the completion function.
 
         Returns
@@ -426,7 +426,28 @@ class SalesGPT(Chain):
     @classmethod
     @time_logger
     def from_llm(cls, llm: ChatLiteLLM, verbose: bool = False, **kwargs) -> "SalesGPT":
-        """Initialize the SalesGPT Controller."""
+        """
+        Class method to initialize the SalesGPT Controller from a given ChatLiteLLM instance.
+
+        This method sets up the stage analyzer chain and sales conversation utterance chain. It also checks if custom prompts
+        are to be used and if tools are to be set up for the agent. If tools are to be used, it sets up the knowledge base,
+        gets the tools, sets up the prompt, and initializes the agent with the tools. If tools are not to be used, it sets
+        the sales agent executor and knowledge base to None.
+
+        Parameters
+        ----------
+        llm : ChatLiteLLM
+            The ChatLiteLLM instance to initialize the SalesGPT Controller from.
+        verbose : bool, optional
+            If True, verbose output is enabled. Default is False.
+        \*\*kwargs : dict
+            Additional keyword arguments.
+
+        Returns
+        -------
+        SalesGPT
+            The initialized SalesGPT Controller.
+        """
         stage_analyzer_chain = StageAnalyzerChain.from_llm(llm, verbose=verbose)
         if "use_custom_prompt" in kwargs.keys() and kwargs["use_custom_prompt"] is True:
             use_custom_prompt = deepcopy(kwargs["use_custom_prompt"])
