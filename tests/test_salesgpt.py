@@ -16,7 +16,6 @@ if not api_key:
     raise Exception("OPENAI_API_KEY not found")
 #openai.api_key = os.getenv('OPENAI_API_KEY')
 
-
 class TestSalesGPT:
     def test_valid_inference_no_tools(self, load_env):
         """Test that the agent will start and generate the first utterance."""

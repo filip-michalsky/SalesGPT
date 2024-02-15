@@ -1,0 +1,121 @@
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .chat-header {
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .chat-header h2 {
+    margin: 0;
+  }
+  
+  .chat-header select {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    color: #007bff;
+    font-weight: bold;
+    background-color: #ffffff;
+  }
+  
+  .chat-body {
+    flex: 1;
+    padding: 10px;
+    background-color: #f9f9f9;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .message {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .message.user {
+    justify-content: flex-end;
+  }
+  
+  .message.bot {
+    justify-content: flex-start;
+  }
+  
+  .avatar {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #007bff;
+    color: #ffffff;
+    border-radius: 50%;
+    margin: 0 10px;
+  }
+  
+  .text {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 10px;
+    max-width: 70%;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  }
+  
+  .chat-footer {
+    display: flex;
+    padding: 10px;
+    background-color: #f0f0f0;
+  }
+  
+  .chat-footer input {
+    flex: 1;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    outline: none;
+  }
+  
+  .chat-footer button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .chat-footer button:hover {
+    background-color: #0056b3;
+  }
+
+  .github-link {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    color: white;
+    background-color: #333;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+  
+  .github-link:hover {
+    background-color: #444;
+  }

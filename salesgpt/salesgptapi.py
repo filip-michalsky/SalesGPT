@@ -47,7 +47,7 @@ class SalesGPTAPI:
             # todo:
             # if self.verbose:
             print("Maximum number of turns reached - ending the conversation.")
-            return "<END_OF_>"
+            return ["BOT","In case you'll have any questions - just text me one more time!"]
 
         # seed
         sales_agent.seed_agent()
@@ -64,11 +64,13 @@ class SalesGPTAPI:
         # end conversation
         if "<END_OF_CALL>" in sales_agent.conversation_history[-1]:
             print("Sales Agent determined it is time to end the conversation.")
-            return "<END_OF_CALL>"
+            return ["BOT","In case you'll have any questions - just text me one more time!"]
 
         reply = sales_agent.conversation_history[-1]
 
         if self.verbose:
             print("=" * 10)
             print(f"{sales_agent.salesperson_name}:{reply}")
+            print(f"REPLY:{reply}")
         return reply.split(": ")
+    
