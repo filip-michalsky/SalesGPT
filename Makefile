@@ -6,7 +6,7 @@
 #PYTHON_WINDOWS := python
 
 # Define virtual environment directory
-VENV := env
+VENV := .venv
 
 # Default target executed when no arguments are given to make.
 default: test
