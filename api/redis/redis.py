@@ -1,3 +1,5 @@
+import json
+
 from redis import asyncio as aioredis
 
 from api.config import RedisSettings
@@ -19,10 +21,9 @@ class Redis:
     async def __aexit__(self, *args):
         await self.connection.close()
 
-    async def get(self, key: str) -> str:
-        result = await self.connection.get(key)
-        if result:
-            return result.decode()
+    async def get(self, name: str) -> json:
+        result = await self.connection.json().get(name=name)
+        return result
 
     async def set(self, key: str, value: str, ex: int = None):
         result = await self.connection.set(name=key, value=value, ex=ex)
