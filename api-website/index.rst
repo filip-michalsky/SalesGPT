@@ -10,17 +10,17 @@ Welcome to SalesGPT's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   salesgpt/salesgpt.agents
-   salesgpt/salesgpt.chains
-   salesgpt/salesgpt.logger
-   salesgpt/salesgpt.parsers
-   salesgpt/salesgpt.prompts
-   salesgpt/salesgpt.prompts_cn
-   salesgpt/salesgpt.salesgptapi
-   salesgpt/salesgpt.stages
-   salesgpt/salesgpt.templates
-   salesgpt/salesgpt.tools
-   salesgpt/salesgpt.version
+   Agents <salesgpt/salesgpt.agents>
+   Chains <salesgpt/salesgpt.chains>
+   Logger <salesgpt/salesgpt.logger> 
+   Parsers <salesgpt/salesgpt.parsers>
+   Prompts <salesgpt/salesgpt.prompts>
+   Prompts_cn <salesgpt/salesgpt.prompts_cn>
+   SalesGPT API <salesgpt/salesgpt.salesgptapi>
+   Stages <salesgpt/salesgpt.stages>
+   Templates <salesgpt/salesgpt.templates>
+   Tools <salesgpt/salesgpt.tools>
+   Version <salesgpt/salesgpt.version>
 
 .. role:: red-text
 

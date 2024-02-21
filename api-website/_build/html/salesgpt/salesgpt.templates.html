@@ -21,7 +21,9 @@
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="salesgpt.tools module" href="salesgpt.tools.html" />
+    <link rel="prev" title="salesgpt.stages module" href="salesgpt.stages.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -43,23 +45,29 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">salesgpt.templates module</a><ul>
-<li><a class="reference internal" href="#salesgpt.templates.CustomPromptTemplateForTools"><code class="docutils literal notranslate"><span class="pre">CustomPromptTemplateForTools</span></code></a><ul>
-<li><a class="reference internal" href="#salesgpt.templates.CustomPromptTemplateForTools.format"><code class="docutils literal notranslate"><span class="pre">CustomPromptTemplateForTools.format()</span></code></a></li>
-<li><a class="reference internal" href="#salesgpt.templates.CustomPromptTemplateForTools.input_types"><code class="docutils literal notranslate"><span class="pre">CustomPromptTemplateForTools.input_types</span></code></a></li>
-<li><a class="reference internal" href="#salesgpt.templates.CustomPromptTemplateForTools.input_variables"><code class="docutils literal notranslate"><span class="pre">CustomPromptTemplateForTools.input_variables</span></code></a></li>
-<li><a class="reference internal" href="#salesgpt.templates.CustomPromptTemplateForTools.output_parser"><code class="docutils literal notranslate"><span class="pre">CustomPromptTemplateForTools.output_parser</span></code></a></li>
-<li><a class="reference internal" href="#salesgpt.templates.CustomPromptTemplateForTools.partial_variables"><code class="docutils literal notranslate"><span class="pre">CustomPromptTemplateForTools.partial_variables</span></code></a></li>
-<li><a class="reference internal" href="#salesgpt.templates.CustomPromptTemplateForTools.template"><code class="docutils literal notranslate"><span class="pre">CustomPromptTemplateForTools.template</span></code></a></li>
-<li><a class="reference internal" href="#salesgpt.templates.CustomPromptTemplateForTools.tools_getter"><code class="docutils literal notranslate"><span class="pre">CustomPromptTemplateForTools.tools_getter</span></code></a></li>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.agents.html">Agents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.chains.html">Chains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.logger.html">Logger</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.parsers.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.prompts.html">Prompts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.prompts_cn.html">Prompts_cn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.salesgptapi.html">SalesGPT API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.stages.html">Stages</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Templates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#salesgpt.templates.CustomPromptTemplateForTools"><code class="docutils literal notranslate"><span class="pre">CustomPromptTemplateForTools</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.templates.CustomPromptTemplateForTools.format"><code class="docutils literal notranslate"><span class="pre">CustomPromptTemplateForTools.format()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.templates.CustomPromptTemplateForTools.template"><code class="docutils literal notranslate"><span class="pre">CustomPromptTemplateForTools.template</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.templates.CustomPromptTemplateForTools.tools_getter"><code class="docutils literal notranslate"><span class="pre">CustomPromptTemplateForTools.tools_getter</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.tools.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.version.html">Version</a></li>
 </ul>
-</div>
+
         </div>
       </div>
     </nav>
@@ -88,7 +96,7 @@
 <span id="salesgpt-templates-module"></span><h1>salesgpt.templates module<a class="headerlink" href="#module-salesgpt.templates" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="salesgpt.templates.CustomPromptTemplateForTools">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">salesgpt.templates.</span></span><span class="sig-name descname"><span class="pre">CustomPromptTemplateForTools</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_variables</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_parser</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BaseOutputParser</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partial_variables</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tools_getter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#salesgpt.templates.CustomPromptTemplateForTools" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">salesgpt.templates.</span></span><span class="sig-name descname"><span class="pre">CustomPromptTemplateForTools</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_variables</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_parser</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BaseOutputParser</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partial_variables</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tools_getter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#salesgpt.templates.CustomPromptTemplateForTools" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">StringPromptTemplate</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="salesgpt.templates.CustomPromptTemplateForTools.format">
@@ -107,30 +115,6 @@
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="salesgpt.templates.CustomPromptTemplateForTools.input_types">
-<span class="sig-name descname"><span class="pre">input_types</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#salesgpt.templates.CustomPromptTemplateForTools.input_types" title="Link to this definition"></a></dt>
-<dd><p>A dictionary of the types of the variables the prompt template expects.
-If not provided, all variables are assumed to be strings.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="salesgpt.templates.CustomPromptTemplateForTools.input_variables">
-<span class="sig-name descname"><span class="pre">input_variables</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#salesgpt.templates.CustomPromptTemplateForTools.input_variables" title="Link to this definition"></a></dt>
-<dd><p>A list of the names of the variables the prompt template expects.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="salesgpt.templates.CustomPromptTemplateForTools.output_parser">
-<span class="sig-name descname"><span class="pre">output_parser</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">BaseOutputParser</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#salesgpt.templates.CustomPromptTemplateForTools.output_parser" title="Link to this definition"></a></dt>
-<dd><p>How to parse the output of calling an LLM on this formatted prompt.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="salesgpt.templates.CustomPromptTemplateForTools.partial_variables">
-<span class="sig-name descname"><span class="pre">partial_variables</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#salesgpt.templates.CustomPromptTemplateForTools.partial_variables" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="salesgpt.templates.CustomPromptTemplateForTools.template">
 <span class="sig-name descname"><span class="pre">template</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#salesgpt.templates.CustomPromptTemplateForTools.template" title="Link to this definition"></a></dt>
 <dd></dd></dl>
@@ -147,7 +131,10 @@ If not provided, all variables are assumed to be strings.</p>
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="salesgpt.stages.html" class="btn btn-neutral float-left" title="salesgpt.stages module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="salesgpt.tools.html" class="btn btn-neutral float-right" title="salesgpt.tools module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 
