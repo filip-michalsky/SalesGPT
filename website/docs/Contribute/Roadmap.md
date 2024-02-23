@@ -5,7 +5,7 @@ sidebar_position: 3
 
 # Roadmap
 
-1) Documenting the Repo better
+1) Documenting the Repo better - Done
 2) Documenting the API - Done
 3) Code Documentation
 4) Refactor
