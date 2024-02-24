@@ -3,7 +3,9 @@ from fastapi import APIRouter
 from api.redis.redis import Redis
 from api.schemas.chatDTO import Chat
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/tokens"
+)
 
 redis = Redis()
 
