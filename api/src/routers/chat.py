@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from api.redis.redis import Redis
+from api.my_redis.redis import Redis
 from api.schemas.chatDTO import Chat
 
 router = APIRouter(

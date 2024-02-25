@@ -34,3 +34,14 @@ class Redis:
     async def is_exist(self, key:str) -> int | None:
         isExists = await self.connection.exists(key)
         return isExists
+
+
+class Cache(Redis):
+    async def add_message_to_cache(self, token: str, source: str, message_data: dict):
+        async with self:
+            if source == "human":
+                message_data['msg'] = "User: " + message_data['msg'] + " <END_OF_TURN>"
+            elif source == "bot":
+                message_data['msg'] = "Ted Lasso: " + message_data['msg'] + " <END_OF_TURN>"
+
+            await self.connection.json().arrappend(str(token), Path('.messages'), message_data)
