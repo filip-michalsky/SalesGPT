@@ -10,7 +10,8 @@
 [![License](<https://img.shields.io/badge/License-MIT-brightgreen.svg>)](https://opensource.org/licenses/MIT)
 [![PyPI version](https://img.shields.io/pypi/v/salesgpt.svg)](https://badge.fury.io/py/salesgpt)
 ![GithubActions](https://github.com/filip-michalsky/SalesGPT/actions/workflows/poetry_unit_tests.yml/badge.svg)
-[![HitCount](https://hits.dwyl.com/filip-michalsky/SalesGPT.svg?style=flat-square)](http://hits.dwyl.com/filip-michalsky/SalesGPT)
+<br>
+[![Discord](https://img.shields.io/badge/Join%20us%20on-Discord-7289DA?style=flat&logo=discord)](https://discord.com/channels/1210176660687822878/1210176661279211522)
 
 
 </div>
