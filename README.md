@@ -11,9 +11,7 @@
 [![PyPI version](https://img.shields.io/pypi/v/salesgpt.svg)](https://badge.fury.io/py/salesgpt)
 ![GithubActions](https://github.com/filip-michalsky/SalesGPT/actions/workflows/poetry_unit_tests.yml/badge.svg)
 <br>
-[![Discord](https://img.shields.io/badge/Join%20us%20on-Discord-7289DA?style=flat&logo=discord)](https://discord.com/channels/1210176660687822878/1210176661279211522)
-
-
+[![Discord](https://img.shields.io/badge/Join%20us%20on-Discord-7289DA?style=flat&logo=discord)](https://discord.gg/KXFucQyHf4)
 </div>
 <div align="center">
 
