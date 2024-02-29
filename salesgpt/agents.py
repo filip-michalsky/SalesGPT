@@ -9,6 +9,7 @@ from langchain_community.chat_models import ChatLiteLLM
 from langchain_core.language_models.llms import create_base_retry_decorator
 from litellm import acompletion
 from pydantic import Field
+from langchain_core.agents import _convert_agent_action_to_messages,_convert_agent_observation_to_messages
 
 from salesgpt.chains import SalesConversationChain, StageAnalyzerChain
 from salesgpt.logger import time_logger
@@ -105,21 +106,22 @@ class SalesGPT(Chain):
             streaming generator object to manipulate streaming chunks in downstream applications.
         """
         if not stream:
-            self._call(inputs={})
+            return self._call(inputs={})#delete return?
         else:
             return self._streaming_generator()
 
     @time_logger
-    def astep(self, stream: bool = False):
+    async def astep(self, stream: bool = False):
         """
         Args:
             stream (bool): whether or not return
             streaming generator object to manipulate streaming chunks in downstream applications.
         """
         if not stream:
-            self._acall(inputs={})
+            await self._acall(inputs={})
         else:
-            return self._astreaming_generator()
+            async for result in self._astreaming_generator():
+                yield result
 
     @time_logger
     def acall(self, *args, **kwargs):
@@ -151,7 +153,8 @@ class SalesGPT(Chain):
         message_dict = {"role": "system", "content": inception_messages[0].content}
 
         if self.sales_conversation_utterance_chain.verbose:
-            print("\033[92m" + inception_messages[0].content + "\033[0m")
+            pass
+            #print("\033[92m" + inception_messages[0].content + "\033[0m")
         return [message_dict]
 
     @time_logger
@@ -215,13 +218,14 @@ class SalesGPT(Chain):
 
         messages = self._prep_messages()
 
-        return await self.acompletion_with_retry(
+        async for result in self.acompletion_with_retry(
             llm=self.sales_conversation_utterance_chain.llm,
             messages=messages,
             stop="<END_OF_TURN>",
             stream=True,
             model=self.model_name,
-        )
+        ):
+            yield result
 
     def _call(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
         """Run one step of the sales agent."""
@@ -242,11 +246,19 @@ class SalesGPT(Chain):
 
         # Generate agent's utterance
         if self.use_tools:
+            print("USE TOOOLS INVOKE:\n#\n#\n#\n#\n------------------")
             ai_message = self.sales_agent_executor.invoke(inputs)
+            print(f"AI Message: {ai_message}")
             output = ai_message["output"]
+            print()
+            print(f"Output: {output}")
         else:
-            ai_message = self.sales_conversation_utterance_chain.invoke(inputs)
+            print("WITHOUT TOOLS:\n#\n#\n#\n#\n------------------")
+            ai_message = self.sales_conversation_utterance_chain.invoke(inputs,return_intermediate_steps=True)
             output = ai_message["text"]
+            print(f"AI Message: {ai_message}")
+            print()
+            print(f"Output: {output}")
 
         # Add agent's response to conversation history
         agent_name = self.salesperson_name
@@ -269,7 +281,7 @@ class SalesGPT(Chain):
             # clean up
             del kwargs["use_custom_prompt"]
             del kwargs["custom_prompt"]
-
+        
             sales_conversation_utterance_chain = SalesConversationChain.from_llm(
                 llm,
                 verbose=verbose,
@@ -285,6 +297,8 @@ class SalesGPT(Chain):
         if "use_tools" in kwargs.keys() and (
             kwargs["use_tools"] == "True" or kwargs["use_tools"] is True
         ):
+            
+            use_tools = kwargs.pop("use_tools")
             # set up agent with tools
             product_catalog = kwargs["product_catalog"]
             knowledge_base = setup_knowledge_base(product_catalog)
@@ -315,7 +329,6 @@ class SalesGPT(Chain):
             # WARNING: this output parser is NOT reliable yet
             ## It makes assumptions about output from LLM which can break and throw an error
             output_parser = SalesConvoOutputParser(ai_prefix=kwargs["salesperson_name"])
-
             sales_agent_with_tools = LLMSingleActionAgent(
                 llm_chain=llm_chain,
                 output_parser=output_parser,
@@ -324,11 +337,12 @@ class SalesGPT(Chain):
             )
 
             sales_agent_executor = AgentExecutor.from_agent_and_tools(
-                agent=sales_agent_with_tools, tools=tools, verbose=verbose
+                agent=sales_agent_with_tools, tools=tools, verbose=verbose,return_intermediate_steps=True
             )
         else:
             sales_agent_executor = None
             knowledge_base = None
+            use_tools=False
 
         return cls(
             stage_analyzer_chain=stage_analyzer_chain,
@@ -337,5 +351,6 @@ class SalesGPT(Chain):
             knowledge_base=knowledge_base,
             model_name=llm.model,
             verbose=verbose,
+            use_tools= use_tools,
             **kwargs,
         )

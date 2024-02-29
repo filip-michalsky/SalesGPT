@@ -35,6 +35,7 @@ class SalesConvoOutputParser(AgentOutputParser):
             # raise OutputParserException(f"Could not parse LLM output: `{text}`")
         action = match.group(1)
         action_input = match.group(2)
+        print(f"AAACT:{action}\n\n\n{action_input}")
         return AgentAction(action.strip(), action_input.strip(" ").strip('"'), text)
 
     @property
