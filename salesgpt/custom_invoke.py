@@ -2,6 +2,7 @@
 from langchain.chains.base import Chain
 from typing import Dict, Any, Optional
 # Corrected import path for RunnableConfig
+from langchain.agents import AgentExecutor
 from langchain_core.runnables import RunnableConfig, ensure_config
 from langchain_core.outputs import RunInfo
 from langchain.callbacks.manager import (
@@ -10,7 +11,7 @@ from langchain.callbacks.manager import (
 from langchain_core.load.dump import dumpd
 import inspect
 
-class CustomChain(Chain):
+class CustomAgentExecutor(AgentExecutor):
     def invoke(
         self,
         input: Dict[str, Any],
@@ -80,3 +81,7 @@ class CustomChain(Chain):
         final_outputs["intermediate_steps"] = intermediate_steps
 
         return final_outputs
+    
+
+if __name__=="__main__":
+    agent = CustomAgentExecutor()

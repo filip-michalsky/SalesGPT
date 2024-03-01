@@ -15,7 +15,7 @@ type Message = {
     useTools: boolean,
     tool?: string,
     toolInput?: string,
-    action?: string,
+    actionOutput?: string,
     actionInput?: string
   };
 };
@@ -33,7 +33,7 @@ export function ChatInterface() {
     conversationalStage: string,
     tool?: string,
     toolInput?: string,
-    action?: string,
+    actionOutput?: string,
     actionInput?: string
   }[]>([]);
   const [maxHeight, setMaxHeight] = useState('80vh'); // Default to 100% of the viewport height
@@ -110,42 +110,7 @@ export function ChatInterface() {
       }
   
       if (stream) {
-        const reader = response.body?.getReader();
-        const decoder = new TextDecoder();
-  
-        const botMessage: Message = { id: session_id, text: '', sender: 'bot' };
-        setMessages((prevMessages) => [...prevMessages, botMessage]);
-  
-        reader.read().then(function processText({ done, value }) {
-          if (done) {
-            console.log("Stream complete");
-            return;
-          }   
-          const str = decoder.decode(value, { stream: true });
-  
-          str.split('\n').forEach((line) => {
-            if (!line.trim()) return;
-            try {
-              const data = JSON.parse(line);
-              setMessages((prevMessages) => {
-                const newMessages = [...prevMessages];
-                const lastMessageIndex = newMessages.length - 1;
-                const lastMessage = newMessages[lastMessageIndex];
-                if (lastMessage.sender === 'bot') {
-                  if (!lastMessage.text.endsWith(data.token)) {
-                    lastMessage.text += data.token;
-                  }
-                  newMessages[lastMessageIndex] = lastMessage;
-                }
-                return newMessages;
-              });
-            } catch (error) {
-              console.error('Error parsing JSON:', error);
-            }
-          });
-  
-          reader.read().then(processText);
-        });
+        {/*Not implemented*/}
       } else {
         if (!stream) {
           const data = await response.json();
@@ -157,7 +122,7 @@ export function ChatInterface() {
             conversationalStage: data.conversational_stage,
             tool: data.tool,
             toolInput: data.tool_input,
-            action: data.action,
+            actionOutput: data.action_output,
             actionInput: data.action_input
           }]);
           const botMessageText = `${data.response}`;
@@ -248,11 +213,11 @@ export function ChatInterface() {
                   {process.toolInput && (
                     <div><strong>Tool Input:</strong> {process.toolInput}</div>
                   )}
-                  {process.action && (
-                    <div><strong>Action:</strong> {process.action}</div>
-                  )}
                   {process.actionInput && (
                     <div><strong>Action Input:</strong> {process.actionInput}</div>
+                  )}
+                  {process.actionOutput && (
+                    <div><strong>Action Output:</strong> {process.actionOutput}</div>
                   )}
                 </div>
               ))}

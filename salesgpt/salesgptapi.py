@@ -79,19 +79,19 @@ class SalesGPTAPI:
                 agent_action = res_str[0]
                 tool,tool_input,log = agent_action.tool, agent_action.tool_input, agent_action.log
                 actions = re.search(r"Action: (.*?)[\n]*Action Input: (.*)",log)
-                action = actions.group(1)
-                action_input = actions.group(2)
+                action_input= actions.group(2)
+                action_output = ai_log['intermediate_steps'][1]['outputs']['intermediate_steps'][0][1]
             except:
-                tool,tool_input,action,action_input = "","","",""
+                tool,tool_input,action,action_input,action_output = "","","","",""
         else:   
-            tool,tool_input,action,action_input = "","","",""
+            tool,tool_input,action,action_input,action_output = "","","","",""
         return {
             "bot_name": reply.split(": ")[0],
             "response": reply.split(": ")[1].rstrip('<END_OF_TURN>'),
             "conversational_stage": self.sales_agent.current_conversation_stage,
             "tool": tool,
             "tool_input": tool_input,
-            "action": action,
+            "action_output": action_output,
             "action_input": action_input
         }
 

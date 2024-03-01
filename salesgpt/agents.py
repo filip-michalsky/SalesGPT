@@ -19,7 +19,7 @@ from salesgpt.stages import CONVERSATION_STAGES
 from salesgpt.templates import CustomPromptTemplateForTools
 from salesgpt.tools import get_tools, setup_knowledge_base
 
-
+from salesgpt.custom_invoke import CustomAgentExecutor
 def _create_retry_decorator(llm: Any) -> Callable[[Any], Any]:
     import openai
 
@@ -40,7 +40,7 @@ class SalesGPT(Chain):
     conversation_stage_id: str = "1"
     current_conversation_stage: str = CONVERSATION_STAGES.get("1")
     stage_analyzer_chain: StageAnalyzerChain = Field(...)
-    sales_agent_executor: Union[AgentExecutor, None] = Field(...)
+    sales_agent_executor: Union[CustomAgentExecutor, None] = Field(...)
     knowledge_base: Union[RetrievalQA, None] = Field(...)
     sales_conversation_utterance_chain: SalesConversationChain = Field(...)
     conversation_stage_dict: Dict = CONVERSATION_STAGES
@@ -336,7 +336,7 @@ class SalesGPT(Chain):
                 allowed_tools=tool_names,
             )
 
-            sales_agent_executor = AgentExecutor.from_agent_and_tools(
+            sales_agent_executor = CustomAgentExecutor.from_agent_and_tools(
                 agent=sales_agent_with_tools, tools=tools, verbose=verbose,return_intermediate_steps=True
             )
         else:
