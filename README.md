@@ -10,9 +10,8 @@
 [![License](<https://img.shields.io/badge/License-MIT-brightgreen.svg>)](https://opensource.org/licenses/MIT)
 [![PyPI version](https://img.shields.io/pypi/v/salesgpt.svg)](https://badge.fury.io/py/salesgpt)
 ![GithubActions](https://github.com/filip-michalsky/SalesGPT/actions/workflows/poetry_unit_tests.yml/badge.svg)
-[![HitCount](https://hits.dwyl.com/filip-michalsky/SalesGPT.svg?style=flat-square)](http://hits.dwyl.com/filip-michalsky/SalesGPT)
-
-
+<br>
+[![Discord](https://img.shields.io/badge/Join%20us%20on-Discord-7289DA?style=flat&logo=discord)](https://discord.gg/KXFucQyHf4)
 </div>
 <div align="center">
 
@@ -73,13 +72,6 @@ The AI Sales Agent understands the conversation stage (you can define your own s
 **Demo #1: Rachel - Mattress Sales Field Representative**
 
 [![Rachel - Mattress Sales Field Representative](https://cdn.loom.com/sessions/thumbnails/f0fac42954904471b266980e4948b07d-with-play.gif)](https://www.loom.com/share/f0fac42954904471b266980e4948b07d)
-
-<i>Crusty AI Worker Demo - Powered by SalesGPT:</i> *Hiring a new AI employee?* 🤔
-
-**Demo #2: Joanna - AI Agent / Digital Worker for Accountants**
-
-[![Joanna - AI Agent for Accountants](https://img.youtube.com/vi/E-aA8Q2H0gY/0.jpg)](https://www.youtube.com/watch?v=E-aA8Q2H0gY "Joanna - AI Agent for Accountants")
-
 
 # Contact Us for Suggestions, Questions, or Help
 

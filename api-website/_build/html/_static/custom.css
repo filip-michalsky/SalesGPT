@@ -1,3 +1,25 @@
 .red-text {
     color: red;
 }
+
+.wy-menu-extra {
+    margin-top: 20px; /* Adjust the space above the button */
+    text-align: center; /* Center the button */
+  }
+  
+  .btn-primary {
+    background-color: #000000; /* Change to black */
+    color: #FFFFFF; /* Change to white */
+    border-radius: 5px;
+    padding: 10px 15px;
+    display: inline-block;
+    text-decoration: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-primary:hover, .btn-primary:focus {
+    background-color: #0000FF; /* Keep the hover color blue */
+    color: #FFFFFF; /* Change the hover text color to white */
+    text-decoration: none;
+  }

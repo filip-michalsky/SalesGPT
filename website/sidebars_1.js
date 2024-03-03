@@ -1,10 +1,11 @@
-export default {
+const sidebars = {
   tutorialSidebar: [
-    'extra',
     {
       type: 'category',
-      label: 'Tutorial',
-      items: ['tutorial-basics/create-a-document'],
+      label: 'My Directory',
+      items: ['doc1', 'doc2', 'doc3'], // these docs are inside 'My Directory'
     },
   ],
 };
+
+export default sidebars;

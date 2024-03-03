@@ -23,6 +23,7 @@ class StageAnalyzerChain(LLMChain):
                 "conversation_stages",
             ],
         )
+        print(f"STAGE ANALYZER PROMPT {prompt}")
         return cls(prompt=prompt, llm=llm, verbose=verbose)
 
 

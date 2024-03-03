@@ -5,8 +5,8 @@ sidebar_position: 3
 
 # Roadmap
 
-1) Documenting the Repo better
-2) Documenting the API
+1) Documenting the Repo better - Done
+2) Documenting the API - Done
 3) Code Documentation
 4) Refactor
 5) Improve reliability of the parser [issue here](https://github.com/filip-michalsky/SalesGPT/issues/26) and [here](https://github.com/filip-michalsky/SalesGPT/issues/25)
