@@ -227,7 +227,15 @@ class TestSalesGPT:
         )  # Passing use_tools="True" as arg
         assert isinstance(sales_agent_passing_str, SalesGPT)
         assert sales_agent_passing_str.seed_agent() is None
-        assert sales_agent_passing_str.step() is None
+        output = sales_agent_passing_str.step()
+
+        keys_expected = ['input', 'conversation_stage', 'conversation_history', 'salesperson_name', 
+                         'salesperson_role', 'company_name', 'company_business', 'company_values', 
+                         'conversation_purpose', 'conversation_type', 'output', 'intermediate_steps']
+        
+        assert output is not None
+        for key in keys_expected:
+            assert key in output.keys(), f"Expected key {key} in output, got {output.keys()}"
 
         sales_agent_passing_bool = SalesGPT.from_llm(
             llm,
@@ -248,4 +256,15 @@ class TestSalesGPT:
         )  # Passing use_tools=True as arg
         assert isinstance(sales_agent_passing_bool, SalesGPT)
         assert sales_agent_passing_bool.seed_agent() is None
-        assert sales_agent_passing_bool.step() is None
+
+        output = sales_agent_passing_bool.step()
+
+        keys_expected = ['input', 'conversation_stage', 'conversation_history', 'salesperson_name', 
+                    'salesperson_role', 'company_name', 'company_business', 'company_values', 
+                    'conversation_purpose', 'conversation_type', 'output', 'intermediate_steps']
+        
+        assert output is not None, "Output cannot be None"
+        for key in keys_expected:
+            assert key in output.keys(), f"Expected key {key} in output, got {output.keys()}"
+
+
