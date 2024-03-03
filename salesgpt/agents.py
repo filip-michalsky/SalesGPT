@@ -20,6 +20,19 @@ from salesgpt.tools import get_tools, setup_knowledge_base
 
 
 def _create_retry_decorator(llm: Any) -> Callable[[Any], Any]:
+    """
+    Creates a retry decorator for handling OpenAI API errors.
+
+    This function creates a retry decorator that will retry a function call
+    if it raises any of the specified OpenAI API errors. The maximum number of retries
+    is determined by the 'max_retries' attribute of the 'llm' object.
+
+    Args:
+        llm (Any): An object that has a 'max_retries' attribute specifying the maximum number of retries.
+
+    Returns:
+        Callable[[Any], Any]: A retry decorator.
+    """
     import openai
 
     errors = [
@@ -56,24 +69,76 @@ class SalesGPT(Chain):
     conversation_type: str = "call"
 
     def retrieve_conversation_stage(self, key):
+        """
+        Retrieves the conversation stage based on the provided key.
+
+        This function uses the key to look up the corresponding conversation stage in the conversation_stage_dict dictionary.
+        If the key is not found in the dictionary, it defaults to "1".
+
+        Args:
+            key (str): The key to look up in the conversation_stage_dict dictionary.
+
+        Returns:
+            str: The conversation stage corresponding to the key, or "1" if the key is not found.
+        """
         return self.conversation_stage_dict.get(key, "1")
 
     @property
     def input_keys(self) -> List[str]:
+        """
+        Property that returns a list of input keys.
+
+        This property is currently set to return an empty list. It can be overridden in a subclass to return a list of keys
+        that are used to extract input data from a dictionary.
+
+        Returns:
+            List[str]: An empty list.
+        """
         return []
 
     @property
     def output_keys(self) -> List[str]:
+        """
+        Property that returns a list of output keys.
+
+        This property is currently set to return an empty list. It can be overridden in a subclass to return a list of keys
+        that are used to extract output data from a dictionary.
+
+        Returns:
+            List[str]: An empty list.
+        """
         return []
 
     @time_logger
     def seed_agent(self):
-        # Step 1: seed the conversation
+        """
+        This method seeds the conversation by setting the initial conversation stage and clearing the conversation history.
+
+        The initial conversation stage is retrieved using the key "1". The conversation history is reset to an empty list.
+
+        Returns:
+            None
+        """
         self.current_conversation_stage = self.retrieve_conversation_stage("1")
         self.conversation_history = []
 
     @time_logger
     def determine_conversation_stage(self):
+        """
+        Determines the current conversation stage based on the conversation history.
+
+        This method uses the stage_analyzer_chain to analyze the conversation history and determine the current stage.
+        The conversation history is joined into a single string, with each entry separated by a newline character.
+        The current conversation stage ID is also passed to the stage_analyzer_chain.
+
+        The method then prints the determined conversation stage ID and retrieves the corresponding conversation stage
+        from the conversation_stage_dict dictionary using the retrieve_conversation_stage method.
+
+        Finally, the method prints the determined conversation stage.
+
+        Returns:
+            None
+        """
         self.conversation_stage_id = self.stage_analyzer_chain.run(
             conversation_history="\n".join(self.conversation_history).rstrip("\n"),
             conversation_stage_id=self.conversation_stage_id,
@@ -93,16 +158,33 @@ class SalesGPT(Chain):
         print(f"Conversation Stage: {self.current_conversation_stage}")
 
     def human_step(self, human_input):
-        # process human input
+        """
+        Processes the human input and appends it to the conversation history.
+
+        This method takes the human input as a string, formats it by adding "User: " at the beginning and " <END_OF_TURN>" at the end, and then appends this formatted string to the conversation history.
+
+        Args:
+            human_input (str): The input string from the human user.
+
+        Returns:
+            None
+        """
         human_input = "User: " + human_input + " <END_OF_TURN>"
         self.conversation_history.append(human_input)
 
     @time_logger
     def step(self, stream: bool = False):
         """
+        Executes a step in the conversation. If the stream argument is set to True, 
+        it returns a streaming generator object for manipulating streaming chunks in downstream applications. 
+        If the stream argument is set to False, it calls the _call method with an empty dictionary as input.
+
         Args:
-            stream (bool): whether or not return
-            streaming generator object to manipulate streaming chunks in downstream applications.
+            stream (bool, optional): A flag indicating whether to return a streaming generator object. 
+            Defaults to False.
+
+        Returns:
+            Generator: A streaming generator object if stream is set to True. Otherwise, it returns None.
         """
         if not stream:
             self._call(inputs={})
@@ -112,9 +194,17 @@ class SalesGPT(Chain):
     @time_logger
     def astep(self, stream: bool = False):
         """
+        Executes an asynchronous step in the conversation. 
+
+        If the stream argument is set to False, it calls the _acall method with an empty dictionary as input.
+        If the stream argument is set to True, it returns a streaming generator object for manipulating streaming chunks in downstream applications.
+
         Args:
-            stream (bool): whether or not return
-            streaming generator object to manipulate streaming chunks in downstream applications.
+            stream (bool, optional): A flag indicating whether to return a streaming generator object. 
+            Defaults to False.
+
+        Returns:
+            Generator: A streaming generator object if stream is set to True. Otherwise, it returns None.
         """
         if not stream:
             self._acall(inputs={})
@@ -123,13 +213,37 @@ class SalesGPT(Chain):
 
     @time_logger
     def acall(self, *args, **kwargs):
+        """
+        This method is currently not implemented.
+
+        Parameters
+        ----------
+        \*args : tuple
+            Variable length argument list.
+        \*\*kwargs : dict
+            Arbitrary keyword arguments.
+
+        Raises
+        ------
+        NotImplementedError
+            Indicates that this method has not been implemented yet.
+        """
         raise NotImplementedError("This method has not been implemented yet.")
 
     @time_logger
     def _prep_messages(self):
         """
-        Helper function to prepare messages to be passed to a streaming generator.
+        Prepares a list of messages for the streaming generator.
+
+        This method prepares a list of messages based on the current state of the conversation.
+        The messages are prepared using the 'prep_prompts' method of the 'sales_conversation_utterance_chain' object.
+        The prepared messages include details about the current conversation stage, conversation history, salesperson's name and role,
+        company's name, business, values, conversation purpose, and conversation type.
+
+        Returns:
+            list: A list of prepared messages to be passed to a streaming generator.
         """
+        
         prompt = self.sales_conversation_utterance_chain.prep_prompts(
             [
                 dict(
@@ -157,19 +271,27 @@ class SalesGPT(Chain):
     @time_logger
     def _streaming_generator(self):
         """
-        Sometimes, the sales agent wants to take an action before the full LLM output is available.
-        For instance, if we want to do text to speech on the partial LLM output.
+        Generates a streaming generator for partial LLM output manipulation.
 
-        This function returns a streaming generator which can manipulate partial output from an LLM
-        in-flight of the generation.
+        This method is used when the sales agent needs to take an action before the full LLM output is available.
+        For example, when performing text to speech on the partial LLM output. The method returns a streaming generator
+        which can manipulate partial output from an LLM in-flight of the generation.
 
-        Example:
+        Returns
+        -------
+        generator
+            A streaming generator for manipulating partial LLM output.
 
-        >> streaming_generator = self._streaming_generator()
-        # Now I can loop through the output in chunks:
-        >> for chunk in streaming_generator:
-        Out: Chunk 1, Chunk 2, ... etc.
-        See: https://github.com/openai/openai-cookbook/blob/main/examples/How_to_stream_completions.ipynb
+        Examples
+        --------
+        >>> streaming_generator = self._streaming_generator()
+        >>> for chunk in streaming_generator:
+        ...     print(chunk)
+        Chunk 1, Chunk 2, ... etc.
+
+        See Also
+        --------
+        https://github.com/openai/openai-cookbook/blob/main/examples/How_to_stream_completions.ipynb
         """
 
         messages = self._prep_messages()
@@ -182,7 +304,30 @@ class SalesGPT(Chain):
         )
 
     async def acompletion_with_retry(self, llm: Any, **kwargs: Any) -> Any:
-        """Use tenacity to retry the async completion call."""
+        """
+        Use tenacity to retry the async completion call.
+
+        This method uses the tenacity library to retry the asynchronous completion call in case of failure.
+        It creates a retry decorator using the '_create_retry_decorator' method and applies it to the 
+        '_completion_with_retry' function which makes the actual asynchronous completion call.
+
+        Parameters
+        ----------
+        llm : Any
+            The language model to be used for the completion.
+        \*\*kwargs : Any
+            Additional keyword arguments to be passed to the completion function.
+
+        Returns
+        -------
+        Any
+            The result of the completion function call.
+
+        Raises
+        ------
+        Exception
+            If the completion function call fails after the maximum number of retries.
+        """
         retry_decorator = _create_retry_decorator(llm)
 
         @retry_decorator
@@ -197,20 +342,25 @@ class SalesGPT(Chain):
         Asynchronous generator to reduce I/O blocking when dealing with multiple
         clients simultaneously.
 
-        Sometimes, the sales agent wants to take an action before the full LLM output is available.
-        For instance, if we want to do text to speech on the partial LLM output.
-
         This function returns a streaming generator which can manipulate partial output from an LLM
-        in-flight of the generation.
+        in-flight of the generation. This is useful in scenarios where the sales agent wants to take an action 
+        before the full LLM output is available. For instance, if we want to do text to speech on the partial LLM output.
 
-        Example:
+        Returns
+        -------
+        AsyncGenerator
+            A streaming generator which can manipulate partial output from an LLM in-flight of the generation.
 
-        >> streaming_generator = self._astreaming_generator()
-        # Now I can loop through the output in chunks:
-        >> async for chunk in streaming_generator:
-            await chunk ...
+        Examples
+        --------
+        >>> streaming_generator = self._astreaming_generator()
+        >>> async for chunk in streaming_generator:
+        >>>     await chunk ...
         Out: Chunk 1, Chunk 2, ... etc.
-        See: https://github.com/openai/openai-cookbook/blob/main/examples/How_to_stream_completions.ipynb
+
+        See Also
+        --------
+        https://github.com/openai/openai-cookbook/blob/main/examples/How_to_stream_completions.ipynb
         """
 
         messages = self._prep_messages()
@@ -224,8 +374,24 @@ class SalesGPT(Chain):
         )
 
     def _call(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
-        """Run one step of the sales agent."""
+        """
+        Executes one step of the sales agent.
 
+        This function overrides the input temporarily with the current state of the conversation,
+        generates the agent's utterance using either the sales agent executor or the sales conversation utterance chain,
+        adds the agent's response to the conversation history, and returns the AI message.
+
+        Parameters
+        ----------
+        inputs : Dict[str, Any]
+            The initial inputs for the sales agent.
+
+        Returns
+        -------
+        Dict[str, Any]
+            The AI message generated by the sales agent.
+
+        """
         # override inputs temporarily
         inputs = {
             "input": "",
@@ -260,7 +426,28 @@ class SalesGPT(Chain):
     @classmethod
     @time_logger
     def from_llm(cls, llm: ChatLiteLLM, verbose: bool = False, **kwargs) -> "SalesGPT":
-        """Initialize the SalesGPT Controller."""
+        """
+        Class method to initialize the SalesGPT Controller from a given ChatLiteLLM instance.
+
+        This method sets up the stage analyzer chain and sales conversation utterance chain. It also checks if custom prompts
+        are to be used and if tools are to be set up for the agent. If tools are to be used, it sets up the knowledge base,
+        gets the tools, sets up the prompt, and initializes the agent with the tools. If tools are not to be used, it sets
+        the sales agent executor and knowledge base to None.
+
+        Parameters
+        ----------
+        llm : ChatLiteLLM
+            The ChatLiteLLM instance to initialize the SalesGPT Controller from.
+        verbose : bool, optional
+            If True, verbose output is enabled. Default is False.
+        \*\*kwargs : dict
+            Additional keyword arguments.
+
+        Returns
+        -------
+        SalesGPT
+            The initialized SalesGPT Controller.
+        """
         stage_analyzer_chain = StageAnalyzerChain.from_llm(llm, verbose=verbose)
         if "use_custom_prompt" in kwargs.keys() and kwargs["use_custom_prompt"] is True:
             use_custom_prompt = deepcopy(kwargs["use_custom_prompt"])

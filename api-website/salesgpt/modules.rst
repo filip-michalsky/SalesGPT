@@ -1,9 +1,7 @@
-SalesGPT
+salesgpt
 ========
 
 .. toctree::
    :maxdepth: 4
 
-   run
-   run_api
    salesgpt
