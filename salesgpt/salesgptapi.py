@@ -9,7 +9,7 @@ GPT_MODEL = "gpt-3.5-turbo"
 class SalesGPTAPI:
     USE_TOOLS = True
 
-    def __init__(self, config_path: str, verbose: bool = False, max_num_turns: int = 20,use_tools=True):
+    def __init__(self, config_path: str, verbose: bool = True, max_num_turns: int = 20,use_tools=True):
         self.config_path = config_path
         self.verbose = verbose
         self.max_num_turns = max_num_turns
@@ -71,6 +71,7 @@ class SalesGPTAPI:
 
         if self.verbose:
             print("=" * 10)
+            print(ai_log)
         ''''''
         if ai_log['intermediate_steps'][1]['outputs']['intermediate_steps'] is not []:
             try:
@@ -85,16 +86,19 @@ class SalesGPTAPI:
                 tool,tool_input,action,action_input,action_output = "","","","",""
         else:   
             tool,tool_input,action,action_input,action_output = "","","","",""
-        return {
+        
+        print(reply)
+        payload = {
             "bot_name": reply.split(": ")[0],
-            "response": reply.split(": ")[1].rstrip('<END_OF_TURN>'),
+            "response": ': '.join(reply.split(": ")[1:]).rstrip('<END_OF_TURN>'),
             "conversational_stage": self.sales_agent.current_conversation_stage,
             "tool": tool,
             "tool_input": tool_input,
             "action_output": action_output,
             "action_input": action_input
         }
-
+        return payload
+    
     async def do_stream(self, conversation_history: [str], human_input=None):
         current_turns = len(conversation_history) + 1
         if current_turns >= self.max_num_turns:

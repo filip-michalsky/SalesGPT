@@ -48,8 +48,7 @@ sessions = {}
 @app.get("/botname")
 async def get_bot_name():
     sales_api = SalesGPTAPI(config_path=CONFIG_PATH, verbose=True)
-    response = sales_api.do("")
-    name = response.get('bot_name',"SalesGPT")  # Access the 'name' key from the dictionary
+    name = sales_api.sales_agent.salesperson_name
     return {"name": name}
 
 @app.post("/chat")

@@ -195,7 +195,7 @@ class SalesGPT(Chain):
             Generator: A streaming generator object if stream is set to True. Otherwise, it returns None.
         """
         if not stream:
-            self._call(inputs={})
+            return self._call(inputs={})
         else:
             return self._streaming_generator()
 
