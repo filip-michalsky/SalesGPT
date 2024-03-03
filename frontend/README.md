@@ -1,40 +1,31 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# SalesGPT Frontend Application
 
-## Getting Started
+### Overview
 
-First, run the development server:
+This repository contains the frontend application for SalesGPT, a tool designed for testing and debugging purposes. Built on the Next.js platform, it provides a user-friendly interface to interact with the SalesGPT functionalities.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Installation
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+To set up the project environment, follow these steps:
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+1. Clone the repository to your local machine.
+2. Navigate to the frontend directory: `cd frontend/`
+3. Install all the necessary dependencies: `npm install`
+  
+### Running the Application
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+To start the frontend server, run the following command:
+`npm run dev`
+After starting the server, the application will be available at [localhost:3000/chat](http://localhost:3000/chat). 
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### Backend Dependency
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+This frontend application is designed to work in conjunction with a FastAPI backend. To initiate the backend server, execute the following command from the SalesGPT/ directory: `uvicorn run_api:app --port 8000`
 
-## Learn More
+## Contributing
 
-To learn more about Next.js, take a look at the following resources:
+We welcome contributions to the SalesGPT frontend application. Please feel free to submit pull requests or open issues to suggest improvements or add new features.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+This project is licensed under the MIT License - see the LICENSE file for details.
