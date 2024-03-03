@@ -195,7 +195,7 @@ class SalesGPT(Chain):
             Generator: A streaming generator object if stream is set to True. Otherwise, it returns None.
         """
         if not stream:
-            return self._call(inputs={})#delete return?
+            self._call(inputs={})
         else:
             return self._streaming_generator()
 
@@ -217,7 +217,7 @@ class SalesGPT(Chain):
         if not stream:
             self._acall(inputs={})
         else:
-            return self._astreaming_generator()
+            return await self._astreaming_generator()
 
     @time_logger
     def acall(self, *args, **kwargs):

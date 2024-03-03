@@ -195,7 +195,7 @@ class TestSalesGPT:
         import inspect
 
         is_async_generator = inspect.isasyncgen(astream_generator)
-        assert is_async_generator == True, "This needs to be an async generator!"
+        assert is_async_generator == True, f"This needs to be an async generator, got {type(astream_generator)}"
         agent_output = ""
         async for chunk in astream_generator:
             token = chunk["choices"][0]["delta"].get("content", "") or ""
