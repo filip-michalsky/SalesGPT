@@ -215,10 +215,9 @@ class SalesGPT(Chain):
             Generator: A streaming generator object if stream is set to True. Otherwise, it returns None.
         """
         if not stream:
-            await self._acall(inputs={})
+            self._acall(inputs={})
         else:
-            async for result in self._astreaming_generator():
-                yield result
+            return self._astreaming_generator()
 
     @time_logger
     def acall(self, *args, **kwargs):
@@ -375,14 +374,14 @@ class SalesGPT(Chain):
 
         messages = self._prep_messages()
 
-        async for result in self.acompletion_with_retry(
+        return await self.acompletion_with_retry(
             llm=self.sales_conversation_utterance_chain.llm,
             messages=messages,
             stop="<END_OF_TURN>",
             stream=True,
             model=self.model_name,
-        ):
-            yield result
+        )
+            
 
     def _call(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
         """
