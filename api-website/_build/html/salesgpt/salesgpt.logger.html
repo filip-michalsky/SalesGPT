@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>salesgpt.logger module &mdash; SalesGPT  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=a36129ee" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="salesgpt.parsers module" href="salesgpt.parsers.html" />
+    <link rel="prev" title="salesgpt.chains module" href="salesgpt.chains.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            SalesGPT
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+          <div class="wy-menu-extra">
+            <a href="https://salesgpt.vercel.app" class="btn-primary">Docs</a>
+          </div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.agents.html">Agents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.chains.html">Chains</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Logger</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#salesgpt.logger.TimeFilter"><code class="docutils literal notranslate"><span class="pre">TimeFilter</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.logger.TimeFilter.filter"><code class="docutils literal notranslate"><span class="pre">TimeFilter.filter()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#salesgpt.logger.time_logger"><code class="docutils literal notranslate"><span class="pre">time_logger()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.parsers.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.prompts.html">Prompts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.prompts_cn.html">Prompts_cn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.salesgptapi.html">SalesGPT API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.stages.html">Stages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.templates.html">Templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.tools.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="salesgpt.version.html">Version</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">SalesGPT</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">salesgpt.logger module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/salesgpt/salesgpt.logger.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-salesgpt.logger">
+<span id="salesgpt-logger-module"></span><h1>salesgpt.logger module<a class="headerlink" href="#module-salesgpt.logger" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="salesgpt.logger.TimeFilter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">salesgpt.logger.</span></span><span class="sig-name descname"><span class="pre">TimeFilter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#salesgpt.logger.TimeFilter" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Filter</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="salesgpt.logger.TimeFilter.filter">
+<span class="sig-name descname"><span class="pre">filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#salesgpt.logger.TimeFilter.filter" title="Link to this definition"></a></dt>
+<dd><p>Determine if the specified record is to be logged.</p>
+<p>Returns True if the record should be logged, or False otherwise.
+If deemed appropriate, the record may be modified in-place.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="salesgpt.logger.time_logger">
+<span class="sig-prename descclassname"><span class="pre">salesgpt.logger.</span></span><span class="sig-name descname"><span class="pre">time_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#salesgpt.logger.time_logger" title="Link to this definition"></a></dt>
+<dd><p>Decorator function to log the time taken by any function.</p>
+<p>This decorator logs the execution time of the decorated function. It logs the start time before the function 
+execution, the end time after the function execution, and calculates the execution time. The function name and 
+execution time are then logged at the INFO level.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>func (Callable): The function to be decorated.</p>
+</dd>
+<dt>Returns:</dt><dd><p>Callable: The decorated function.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="salesgpt.chains.html" class="btn btn-neutral float-left" title="salesgpt.chains module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="salesgpt.parsers.html" class="btn btn-neutral float-right" title="salesgpt.parsers module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Filip-Michalsky.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+
+
+
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -26,7 +26,19 @@ logging.basicConfig(
 
 
 def time_logger(func):
-    """Decorator function to log time taken by any function."""
+    """
+    Decorator function to log the time taken by any function.
+
+    This decorator logs the execution time of the decorated function. It logs the start time before the function 
+    execution, the end time after the function execution, and calculates the execution time. The function name and 
+    execution time are then logged at the INFO level.
+
+    Args:
+        func (Callable): The function to be decorated.
+
+    Returns:
+        Callable: The decorated function.
+    """
 
     @wraps(func)
     def wrapper(*args, **kwargs):

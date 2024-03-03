@@ -68,20 +68,19 @@ const config = {
       // Replace with your project's social card
       image: 'img/robot_mascot.ico',
       navbar: {
-        title: 'SalesGPT Documentation',
+        title: 'SalesGPT',
         logo: {
           alt: 'My Site Logo',
           src: 'img/robot_mascot.ico',
         },
+        
         items: [
-          /*
-          {
-            type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
-            position: 'left',
-            label: 'Tutorial',
-          },
-          */
+        {
+          to: '/Use_Cases/Basic_uses',
+          position: 'left',
+          label: 'Use Cases',
+        },
+        
           {href: 'https://salesgpt-api.vercel.app', label: 'API', position: 'left'},
           {
             href: 'https://github.com/filip-michalsky/salesgpt',
