@@ -219,7 +219,8 @@ If you used a local installation of SalesGPT skip the next two steps and directl
 
 `cd SalesGPT`
 
-###If you have Docker installed or would prefer to use Docker, follow these simple steps:
+### Docker utilization 
+If you have Docker installed or would prefer to use Docker, follow these simple steps:
 Before proceeding with the Docker steps, ensure you have Docker installed on your system. If not, please follow the installation instructions on the [official Docker website](https://docs.docker.com/get-docker/).
 
 1. Clone the SalesGPT Github repository:
@@ -236,7 +237,8 @@ Before proceeding with the Docker steps, ensure you have Docker installed on you
 
 This will build and start the necessary Docker containers for SalesGPT. You can then access the application by opening the following link in any of your browsers: [localhost:3000/chat](http://localhost:3000/chat)
 
-###If you do not have Docker installed please use the README.md file in the frontend directory to launch the user interface.
+### Direct user interface launch
+If you do not have Docker installed please use the README.md file in the frontend directory to launch the user interface.
 
 ## Test your setup
 
