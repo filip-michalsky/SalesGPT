@@ -46,7 +46,7 @@ class MessageList(BaseModel):
 sessions = {}
 
 @app.get("/botname")
-async def get_bot_name():
+async def initialize_agent():
     sales_api = SalesGPTAPI(config_path=CONFIG_PATH, verbose=True)
     name = sales_api.sales_agent.salesperson_name
     return {"name": name}
