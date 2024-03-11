@@ -213,15 +213,30 @@ For more detailed installation steps along with the reasons for doing each pleas
 Finally, for use of SalesGPT create an `.env` file just as our `.env.example` and put your API keys there by specifying a new line just as we have done.
 
 ## Run an Example AI Sales agent
-If you used a local installation of SalesGPT skip the next two steps and directly run the run.py script: 
+If you used a local installation of SalesGPT skip the next two steps and directly run either script: 
 
 `git clone https://github.com/filip-michalsky/SalesGPT.git`
 
 `cd SalesGPT`
 
-`python run.py --verbose True --config examples/example_agent_setup.json`
+###If you have Docker installed or would prefer to use Docker, follow these simple steps:
+Before proceeding with the Docker steps, ensure you have Docker installed on your system. If not, please follow the installation instructions on the [official Docker website](https://docs.docker.com/get-docker/).
 
-from your terminal.
+1. Clone the SalesGPT Github repository:
+
+   `git clone https://github.com/filip-michalsky/SalesGPT.git`
+
+2. Navigate to the SalesGPT directory:
+
+   `cd SalesGPT`
+
+3. Run the application using Docker Compose:
+
+   `docker-compose up`
+
+This will build and start the necessary Docker containers for SalesGPT. You can then access the application by opening the following link in any of your browsers: [localhost:3000/chat](http://localhost:3000/chat)
+
+###If you do not have Docker installed please use the README.md file in the frontend directory to launch the user interface.
 
 ## Test your setup
 
