@@ -28,10 +28,15 @@ author = 'Filip-Michalsky'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = ['sphinx.ext.autodoc',
-              "sphinxcontrib.googleanalytics"
+              "sphinxcontrib.googleanalytics",
+              'sphinxcontrib.gtagjs'
 ]
 
 googleanalytics_id = "G-N73Z2D8W81"
+
+gtagjs_ids = [
+    'GTM-W7H24KQZ',
+]
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
