@@ -32,7 +32,7 @@ extensions = ['sphinx.ext.autodoc',
               'sphinxcontrib.gtagjs'
 ]
 
-googleanalytics_id = "GTM-W7H24KQZ"
+googleanalytics_id = "GTM-NX3SZD79"
 
 gtagjs_ids = [
     'GTM-NX3SZD79',
