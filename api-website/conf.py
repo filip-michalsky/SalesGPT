@@ -29,14 +29,12 @@ author = 'Filip-Michalsky'
 # ones.
 extensions = ['sphinx.ext.autodoc',
               #"sphinxcontrib.googleanalytics",
-              'sphinxcontrib.gtagjs'
+              #'sphinxcontrib.gtagjs'
 ]
 
 #googleanalytics_id = "GTM-NX3SZD79"
 
-gtagjs_ids = [
-    'GTM-NX3SZD79',
-]
+#gtagjs_ids = ['GTM-NX3SZD79']
 
 GOOGLE_TAG_MANAGER_SNIPPET = """
 <!-- Google Tag Manager -->
