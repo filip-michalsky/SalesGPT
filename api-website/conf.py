@@ -37,6 +37,10 @@ googleanalytics_id = "GTM-NX3SZD79"
 gtagjs_ids = [
     'GTM-NX3SZD79',
 ]
+
+def setup(app):
+    app.add_javascript("https://www.googletagmanager.com/gtag/js?id=GTM-NX3SZD79")
+    app.add_javascript("google_analytics_tracker.js")
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
