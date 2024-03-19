@@ -35,7 +35,7 @@ extensions = ['sphinx.ext.autodoc',
 googleanalytics_id = "GTM-W7H24KQZ"
 
 gtagjs_ids = [
-    'GTM-W7H24KQZ',
+    'GTM-NX3SZD79',
 ]
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
