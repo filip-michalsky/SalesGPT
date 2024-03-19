@@ -28,11 +28,11 @@ author = 'Filip-Michalsky'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = ['sphinx.ext.autodoc',
-              "sphinxcontrib.googleanalytics",
+              #"sphinxcontrib.googleanalytics",
               'sphinxcontrib.gtagjs'
 ]
 
-googleanalytics_id = "GTM-NX3SZD79"
+#googleanalytics_id = "GTM-NX3SZD79"
 
 gtagjs_ids = [
     'GTM-NX3SZD79',
