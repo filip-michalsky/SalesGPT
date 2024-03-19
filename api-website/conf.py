@@ -38,19 +38,23 @@ gtagjs_ids = [
     'GTM-NX3SZD79',
 ]
 
-MATHJAX_CONFIG_JS = """
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'GTM-NX3SZD79', { 'anonymize_ip': true });
+GOOGLE_TAG_MANAGER_SNIPPET = """
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({
+'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NX3SZD79');</script>
+<!-- End Google Tag Manager -->
 """
+
 
 # 2. Create a setup() function if you don't already have one.
 #    (If you do, just add to your existing setup() function.)
 def setup(app):
     # 3. Tell Sphinx to add your JS code. Sphinx will insert
     #    the `body` into the html inside a <script> tag:
-    app.add_js_file(None, body=MATHJAX_CONFIG_JS)# Add any paths that contain templates here, relative to this directory.
+    app.add_js_file(None, body=GOOGLE_TAG_MANAGER_SNIPPET)# Add any paths that contain templates here, relative to this directory.
 
 
 templates_path = ['_templates']
