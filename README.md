@@ -2,7 +2,6 @@
 
 # :robot: SalesGPT - Open Source AI Agent for Sales
 
-
 <img src="https://demo-bucket-45.s3.amazonaws.com/filtr145_simple_robot_mascot_for_a_sales_company_professional_5282c6e6-40c1-4576-95c8-e4ba3c389f3f.png"  width="200">
 
 ![GitHub Repo stars](https://img.shields.io/github/stars/filip-michalsky/SalesGPT?style=social)
@@ -46,6 +45,9 @@ The AI Sales Agent understands the conversation stage (you can define your own s
 ### Business & Product Knowledge:
 -  Reference only your business information & products and significantly reduce hallucinations!
 
+### Close sales:
+-  The AI Agent can actually close sales by generating Stripe payment link and closing orders from customers.
+
 ### Use Any LLM to Power Your AI Sales Agent
 - Thanks to our integration with [LiteLLM](https://github.com/BerriAI/litellm), you can choose *any closed/open-sourced LLM* to work with SalesGPT! Thanks to LiteLLM maintainers for this contribution!
 
@@ -87,10 +89,10 @@ from salesgpt.agents import SalesGPT
 from langchain_community.chat_models import ChatLiteLLM
 
 from dotenv import load_dotenv
-load_dotenv() # make sure you have .env file with your API keys, eg., OPENAI_API_KEY=sk-xxx
+load_dotenv() # make sure you have .env file with your API keys, eg., OPENAI_API_KEY=sk-xxx, MINDWARE_API_KEY etc.
 
 # select your model - we support 50+ LLMs via LiteLLM https://docs.litellm.ai/docs/providers
-llm = ChatLiteLLM(temperature=0.4, model_name="gpt-3.5-turbo") 
+llm = ChatLiteLLM(temperature=0.4, model_name="gpt-4-0125-preview") 
                             
 sales_agent = SalesGPT.from_llm(llm, use_tools=True, verbose=False,
                             product_catalog = "examples/sample_product_catalog.txt",
@@ -148,14 +150,19 @@ sales_agent.step()
 > Action: ProductSearch<br>
 > ActionInput pricing for mattresses<br>
 > Observation: Sleep Haven offers three mattresses: the Classic Harmony Spring Mattress for $1,299, the Plush Serenity Bamboo Mattress for $2,599, and the Luxury Cloud-Comfort Memory Foam Mattress for $999. The sizes available vary by mattress.<br>
+
+> Thought: Do I need to use a tool? No <br>
 > Ted Lasso: Sleep Haven offers three mattresses at different price points. The Classic Harmony Spring Mattress is priced at $1,299, the Plush Serenity Bamboo Mattress is priced at $2,599, and the Luxury Cloud-Comfort Memory Foam Mattress is priced at $999. The prices may vary depending on the size you choose. Would you like more information about the specific sizes and features of each mattress? 
 
 > User:  No, I will take two Classic Harmony Spring Mattress please. <br>
 > Thought: Do I need to use a tool? Yes --> AI Agent uses tools here.<br>
 > Action: GeneratePaymentLink<br>
-> ActionInput pricing for mattresses<br>
-> Observation: Sleep Haven offers three mattresses: the Classic Harmony Spring Mattress for $1,299, the Plush Serenity Bamboo Mattress for $2,599, and the Luxury Cloud-Comfort Memory Foam Mattress for $999. The sizes available vary by mattress.<br>
-> Ted Lasso: Sleep Haven offers three mattresses at different price points. The Classic Harmony Spring Mattress is priced at $1,299, the Plush Serenity Bamboo Mattress is priced at $2,599, and the Luxury Cloud-Comfort Memory Foam Mattress is priced at $999. The prices may vary depending on the size you choose. Would you like more information about the specific sizes and features of each mattress? 
+> Action Input: Classic Harmony Spring Mattress, 2, John Doe
+> Observation: {"response":"https://buy.stripe.com/test_9AQ6rygc397Bbv228p"}
+
+> Thought: Do I need to use a tool? No <br>
+> Ted Lasso: Fantastic choice! I've generated a payment link for you to order two Classic Harmony Spring Mattresses. You can complete your purchase by clicking on this link: https://buy.stripe.com/test_9AQ6rygc397Bbv228p. Is there anything else I can assist you with today? 
+
 
 
 ## Architecture
@@ -201,8 +208,6 @@ Clone the SalesGPT Github repository:
 Navigate to the repository and in case you used a different venv name rename the VENV variable in the Makefile: 
 
 `cd SalesGPT`
-
-
 
 If you simply want to work with SalesGPT as an end user without local changes you can install from PyPI using: 
 
@@ -273,7 +278,7 @@ For futher reading take a look at the [docs](https://docs.smith.langchain.com/)
 1) Write more documentation
 3) Better code documentation
 4) Refactor
-5) Improve reliability of the parser [issue here](https://github.com/filip-michalsky/SalesGPT/issues/26) and [here](https://github.com/filip-michalsky/SalesGPT/issues/25)
+5) ~~Improve reliability of the parser [issue here](https://github.com/filip-michalsky/SalesGPT/issues/26) and [here](https://github.com/filip-michalsky/SalesGPT/issues/25)~~
 7) Improve Deployment Instructions
 8) Calling Functionality - sample code
 9) Enterprise-Grade Security - integration with [PromptArmor](https://promptarmor.com/) to protect your AI Sales Agents against security vulnerabilities

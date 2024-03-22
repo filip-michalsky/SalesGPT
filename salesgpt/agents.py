@@ -515,7 +515,7 @@ class SalesGPT(Chain):
             )
             llm_chain = LLMChain(llm=llm, prompt=prompt, verbose=verbose)
             tool_names = [tool.name for tool in tools]
-            output_parser = SalesConvoOutputParser(ai_prefix=kwargs.get("salesperson_name", ""))
+            output_parser = SalesConvoOutputParser(ai_prefix=kwargs.get("salesperson_name", ""), verbose=verbose)
             sales_agent_with_tools = LLMSingleActionAgent(
                 llm_chain=llm_chain,
                 output_parser=output_parser,

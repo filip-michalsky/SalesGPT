@@ -1,3 +1,6 @@
+import requests
+import json
+import os
 from langchain.agents import Tool
 from langchain.chains import RetrievalQA
 from langchain.text_splitter import CharacterTextSplitter
@@ -30,14 +33,39 @@ def setup_knowledge_base(
     return knowledge_base
 
 
-def get_tools(knowledge_base):
-    # we only use one tool for now, but this is highly extensible!
+def generate_stripe_payment_link(query: str) -> str:
+    """Generate a stripe payment link for a customer based on a single query string."""
+
+    url = os.getenv("MINDWARE_URL", "")
+    api_key = os.getenv("MINDWARE_API_KEY", "")
+
+    payload = json.dumps({"prompt": query})
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': f'Bearer {api_key}'
+    }
+
+    response = requests.request("POST", url, headers=headers, data=payload)
+    return response.text
+
+
+def get_tools(product_catalog):
+    # query to get_tools can be used to be embedded and relevant tools found
+    # see here: https://langchain-langchain.vercel.app/docs/use_cases/agents/custom_agent_with_plugin_retrieval#tool-retriever
+
+    # we only use two tools for now, but this is highly extensible!
+    knowledge_base = setup_knowledge_base(product_catalog)
     tools = [
         Tool(
             name="ProductSearch",
             func=knowledge_base.run,
-            description="useful for when you need to answer questions about product information",
-        )
+            description="useful for when you need to answer questions about product information or services offered, availability and their costs.",
+        ),
+        Tool(
+            name="GeneratePaymentLink",
+            func=generate_stripe_payment_link,
+            description="useful to close a transaction with a customer. You need to include product name and quantity and customer name in the query input.",
+        ),
     ]
 
     return tools

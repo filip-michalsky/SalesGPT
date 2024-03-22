@@ -31,7 +31,7 @@ To use a tool, please use the following format:
 
 ```
 Thought: Do I need to use a tool? Yes
-Action: the action to take, should be one of {tool_names}
+Action: the action to take, should be one of {tools}
 Action Input: the input to the action, always a simple string input
 Observation: the result of the action
 ```
@@ -52,10 +52,10 @@ Begin!
 Previous conversation history:
 {conversation_history}
 
-{salesperson_name}:
+Thought:
 {agent_scratchpad}
-
 """
+
 
 SALES_AGENT_INCEPTION_PROMPT = """Never forget your name is {salesperson_name}. You work as a {salesperson_role}.
 You work at company named {company_name}. {company_name}'s business is the following: {company_business}.
