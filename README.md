@@ -213,15 +213,83 @@ For more detailed installation steps along with the reasons for doing each pleas
 Finally, for use of SalesGPT create an `.env` file just as our `.env.example` and put your API keys there by specifying a new line just as we have done.
 
 ## Run an Example AI Sales agent
-If you used a local installation of SalesGPT skip the next two steps and directly run the run.py script: 
-
-`git clone https://github.com/filip-michalsky/SalesGPT.git`
+Navigate into the SalesGPT directory: 
 
 `cd SalesGPT`
 
+SalesGPT can be run in various ways, tailored to your preferences and setup. Below are the methods available:
+
+### 1. Using Docker
+For those who prefer containerization, Docker offers an isolated and consistent environment. Ensure Docker is installed on your system by following the [official Docker installation guide](https://docs.docker.com/get-docker/).
+
+To run SalesGPT with Docker, execute the following steps:
+
+1. **Start the Application with Docker Compose:**
+
+   Use the command below to start SalesGPT in detached mode:
+   ```
+   docker-compose up -d
+   ```
+   If you've made changes and want them to reflect, append `--build` to the command above.
+
+2. **Stopping the Application:**
+
+   To stop and remove all running containers related to SalesGPT, execute:
+   ```
+   docker-compose down
+   ```
+
+**Troubleshooting:**
+
+- **Clean Up Docker Resources:** If you encounter errors, you can clean up Docker by removing all unused containers, networks, images, and volumes with caution:
+  ```
+  docker system prune --volumes
+  ```
+- **Rebuild Without Cache:** To rebuild and start the services afresh without using cache, run:
+  ```
+  docker-compose up -d --build --no-cache
+  ```
+
+After successful setup, access SalesGPT at [localhost:3000/chat](http://localhost:3000/chat) in your browser.
+
+### 2. Direct User Interface Launch
+If Docker is not part of your workflow, you can directly launch the SalesGPT user interface. Please refer to the `README.md` file in the frontend directory for instructions on setting up the UI locally.
+
+### 3. Using the Terminal
+For terminal enthusiasts or automation scripts, run SalesGPT with the following command:
 `python run.py --verbose True --config examples/example_agent_setup.json`
 
-from your terminal.
+### 4. Running Only the Backend
+For those who wish to integrate SalesGPT's backend with their own user interface or application, running only the backend is a straightforward process. This allows you to leverage the powerful features of SalesGPT while maintaining full control over the user experience.
+
+To run only the backend of SalesGPT, follow these steps:
+1. **Start the Backend Service:**
+
+   Use the following command to start the backend service. This will initiate the server on port 8000 by default, making the API accessible:
+   ```
+   docker-compose up -d backend
+   ```
+
+   If you need to rebuild the backend image, perhaps after making changes, you can add `--build` to the command above.
+
+2. **Accessing the Backend:**
+
+   With the backend running, you can access the API endpoints at `http://localhost:8000`. Refer to the API documentation for details on available endpoints and their usage.
+
+3. **Stopping the Backend:**
+
+   To stop the backend service, execute:
+   ```
+   docker-compose stop backend
+   ```
+
+   If you wish to remove the backend container entirely, use:
+   ```
+   docker-compose down
+   ```
+
+This setup is ideal for developers looking to integrate SalesGPT's backend into custom applications or those who prefer to use a different frontend technology.
+
 
 ## Test your setup
 
@@ -235,12 +303,6 @@ All tests should pass. Warnings can be ignored.
 
 To delete the virtual environment you used for SalesGPT programming and your SalesGPT repository from your system navigate to the directory where you installed your virtual environment and cloned SalesGPT and run: 
 `make clean`
-
-## Deploy
-
-We have a SalesGPT deployment demo via FastAPI.
-
-Please refer to [README-api.md](https://github.com/filip-michalsky/SalesGPT/blob/main/README-api.md) for instructions!
 
 # Documentation
 
