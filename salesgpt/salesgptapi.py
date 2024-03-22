@@ -4,7 +4,7 @@ from langchain_community.chat_models import ChatLiteLLM
 import asyncio
 from salesgpt.agents import SalesGPT
 import re
-GPT_MODEL = "gpt-3.5-turbo"
+GPT_MODEL = "gpt-4-0125-preview"
 
 class SalesGPTAPI:
     USE_TOOLS = True
