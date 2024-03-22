@@ -1,0 +1,6 @@
+env/
+__pychace__/
+
+*.env
+*.env.*
+env.*

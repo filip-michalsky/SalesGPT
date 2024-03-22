@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.frontend
+    container_name: frontend
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./
+      dockerfile: Dockerfile.backend
+    container_name: backend
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    # Removed the ports section from backend as it is not allowed in build context
