@@ -291,8 +291,6 @@ To run only the backend of SalesGPT, follow these steps:
 This setup is ideal for developers looking to integrate SalesGPT's backend into custom applications or those who prefer to use a different frontend technology.
 
 
-
-
 ## Test your setup
 
 1. Activate your environment as described above. (run `source env/bin/activate` on Unix-like systems and `.\env\Scripts\activate` on Windows. Replace *env* with the name of your virtual environment)
