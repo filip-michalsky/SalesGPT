@@ -259,7 +259,6 @@ If Docker is not part of your workflow, you can directly launch the SalesGPT use
 For terminal enthusiasts or automation scripts, run SalesGPT with the following command:
 `python run.py --verbose True --config examples/example_agent_setup.json`
 
-### 4. 
 ### 4. Running Only the Backend
 For those who wish to integrate SalesGPT's backend with their own user interface or application, running only the backend is a straightforward process. This allows you to leverage the powerful features of SalesGPT while maintaining full control over the user experience.
 
