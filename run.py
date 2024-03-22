@@ -1,13 +1,20 @@
 import argparse
 import json
 import os
-
+import logging
+import warnings
 from dotenv import load_dotenv
 from langchain_community.chat_models import ChatLiteLLM
 
 from salesgpt.agents import SalesGPT
 
 load_dotenv()  # loads .env file
+
+# Suppress warnings
+warnings.filterwarnings("ignore")
+
+# Suppress logging
+logging.getLogger().setLevel(logging.CRITICAL)
 
 # LangSmith settings section, set TRACING_V2 to "true" to enable it
 # or leave it as it is, if you don't need tracing (more info in README)

@@ -150,21 +150,25 @@ sales_agent.step()
 > Observation: Sleep Haven offers three mattresses: the Classic Harmony Spring Mattress for $1,299, the Plush Serenity Bamboo Mattress for $2,599, and the Luxury Cloud-Comfort Memory Foam Mattress for $999. The sizes available vary by mattress.<br>
 > Ted Lasso: Sleep Haven offers three mattresses at different price points. The Classic Harmony Spring Mattress is priced at $1,299, the Plush Serenity Bamboo Mattress is priced at $2,599, and the Luxury Cloud-Comfort Memory Foam Mattress is priced at $999. The prices may vary depending on the size you choose. Would you like more information about the specific sizes and features of each mattress? 
 
+> User:  No, I will take two Classic Harmony Spring Mattress please. <br>
+> Thought: Do I need to use a tool? Yes --> AI Agent uses tools here.<br>
+> Action: GeneratePaymentLink<br>
+> ActionInput pricing for mattresses<br>
+> Observation: Sleep Haven offers three mattresses: the Classic Harmony Spring Mattress for $1,299, the Plush Serenity Bamboo Mattress for $2,599, and the Luxury Cloud-Comfort Memory Foam Mattress for $999. The sizes available vary by mattress.<br>
+> Ted Lasso: Sleep Haven offers three mattresses at different price points. The Classic Harmony Spring Mattress is priced at $1,299, the Plush Serenity Bamboo Mattress is priced at $2,599, and the Luxury Cloud-Comfort Memory Foam Mattress is priced at $999. The prices may vary depending on the size you choose. Would you like more information about the specific sizes and features of each mattress? 
 
 
 ## Architecture
 
-<img src="https://singularity-assets-public.s3.amazonaws.com/new_flow.png"  width="800" height="440">
-
+<img src="https://demo-bucket-45.s3.amazonaws.com/new_flow2.png"  width="800" height="440">
 
 
 ## :red_circle: Latest News
 
+- Sales Agents can now ACTUALLY sell! They autonomously generate Stripe payment links to sell products and services to customers.
+- You can now test your AI Sales Agents via our frontend.
 - Sales Agent can now take advantage of **tools**, such as look up products in a product catalog!
 - SalesGPT is now compatible with [LiteLLM](https://github.com/BerriAI/litellm), choose *any closed/open-sourced LLM* to work with SalesGPT! Thanks to LiteLLM maintainers for this contribution!
-- SalesGPT works with synchronous and asynchronous completion, as well as synchronous/asynchronous streaming. Scale your Sales Agents up!
-
-
 
 # Setup
 
