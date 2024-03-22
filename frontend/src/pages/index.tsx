@@ -2,6 +2,13 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+
+useEffect(() => {
+  const router = useRouter();
+  router.push('/chat');
+}, []);
 
 export default function Home() {
   return (
