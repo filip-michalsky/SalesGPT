@@ -4,6 +4,8 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile.frontend
+    volumes:
+      - ./frontend:/usr/src/app
     container_name: frontend
     env_file:
       - .env
@@ -16,6 +18,8 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile.backend
+    volumes:
+      - .:/app
     container_name: backend
     env_file:
       - .env
