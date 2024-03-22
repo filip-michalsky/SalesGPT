@@ -5,8 +5,4 @@ tiktoken>=0.5.2
 pydantic>=2.5.2
 litellm>=1.10.2
 ipykernel>=6.27.1
-pytest>=7.4.3
-pytest-cov>=4.1.0
-pytest-asyncio>=0.23.1
 langchain-openai==0.0.2
-
