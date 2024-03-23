@@ -39,6 +39,7 @@ export function ChatInterface() {
     actionInput?: string
   }[]>([]);
   const [maxHeight, setMaxHeight] = useState('80vh'); // Default to 100% of the viewport height
+  const [isBotTyping, setIsBotTyping] = useState(false);
 
   useEffect(() => {
     // This function will be called on resize events
@@ -98,7 +99,8 @@ export function ChatInterface() {
       human_say: userMessage,
       stream,
     };
-  
+    setIsBotTyping(true); // Start showing the typing indicator
+
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat`, {
         method: 'POST',
@@ -135,6 +137,8 @@ export function ChatInterface() {
         }}
       } catch (error) {
         console.error("Failed to fetch bot's response:", error);
+      } finally {
+        setIsBotTyping(false); // Stop showing the typing indicator
       }
   };  
   return (
@@ -188,6 +192,16 @@ export function ChatInterface() {
     )}
   </div>
 ))}
+  {isBotTyping && (
+    <div className="flex items-center justify-start">
+      <img alt="Bot" className="rounded-full mr-2" src="/maskot.png" style={{ width: 24, height: 24, objectFit: "cover" }} />
+      <div className={`${styles.typingBubble}`}>
+      <span className={`${styles.typingDot}`}></span>
+      <span className={`${styles.typingDot}`}></span>
+      <span className={`${styles.typingDot}`}></span>
+    </div>
+    </div>
+  )}
           </div>
           <div className="mt-4">
             <Input
