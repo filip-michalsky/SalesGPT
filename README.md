@@ -27,6 +27,27 @@ Morever, SalesGPT has access to tools, such as your own pre-defined product know
 
 We are building SalesGPT to power your best AI Sales Agents. Hence, we would love to learn more about use cases you are building towards which will fuel SalesGPT development roadmap, so please don't hesitate to reach out.
 
+## :red_circle: Latest News
+
+- AI Sales Agents can now ACTUALLY sell! They autonomously generate Stripe payment links to sell products and services to customers.
+- You can now test your AI Sales Agents via our frontend.
+- Sales Agent can now take advantage of **tools**, such as look up products in a product catalog!
+
+# Demos and Use Cases
+
+<i>Unload AI Sales Agent Demo - Powered by SalesGPT:</i> *A New Way to Sell?* 🤔
+
+**Demo #1: Rachel - Mattress Sales Field Representative**
+
+[![Rachel - Mattress Sales Field Representative](https://cdn.loom.com/sessions/thumbnails/f0fac42954904471b266980e4948b07d-with-play.gif)](https://www.loom.com/share/f0fac42954904471b266980e4948b07d)
+
+# Contact Us for Suggestions, Questions, or Help
+
+We are building SalesGPT to power your best AI Sales Agents. Hence, we would love to learn more about use cases you are building towards which will fuel SalesGPT development roadmap.
+
+**If you want us to build better towards your needs, or need help with your AI Sales Agents, please reach out to chat with us: [SalesGPT Use Case Intake Survey](https://5b7mfhwiany.typeform.com/to/n6CbtxJm?utm_source=github-salesgpt&utm_medium=readme&utm_campaign=leads)**
+
+
 # Features
 
 ### Contextual Understanding: Sales Stage Awareness
@@ -67,19 +88,6 @@ The AI Sales Agent understands the conversation stage (you can define your own s
 ### Enterprise-Grade Security
 
 - Upcoming integration with [PromptArmor](https://promptarmor.com/) to protect your AI Sales Agents against security vulnerabilities (see our roadmap).
-# Demos and Use Cases
-
-<i>Crusty AI Sales Agent Demo - Powered by SalesGPT:</i> *A New Way to Sell?* 🤔
-
-**Demo #1: Rachel - Mattress Sales Field Representative**
-
-[![Rachel - Mattress Sales Field Representative](https://cdn.loom.com/sessions/thumbnails/f0fac42954904471b266980e4948b07d-with-play.gif)](https://www.loom.com/share/f0fac42954904471b266980e4948b07d)
-
-# Contact Us for Suggestions, Questions, or Help
-
-We are building SalesGPT to power your best AI Sales Agents. Hence, we would love to learn more about use cases you are building towards which will fuel SalesGPT development roadmap.
-
-**If you want us to build better towards your needs, or need help with your AI Sales Agents, please reach out to chat with us: [SalesGPT Use Case Intake Survey](https://5b7mfhwiany.typeform.com/to/n6CbtxJm?utm_source=github-salesgpt&utm_medium=readme&utm_campaign=leads)**
 
 # Quick Start
 
@@ -169,13 +177,6 @@ sales_agent.step()
 
 <img src="https://demo-bucket-45.s3.amazonaws.com/new_flow2.png"  width="800" height="440">
 
-
-## :red_circle: Latest News
-
-- Sales Agents can now ACTUALLY sell! They autonomously generate Stripe payment links to sell products and services to customers.
-- You can now test your AI Sales Agents via our frontend.
-- Sales Agent can now take advantage of **tools**, such as look up products in a product catalog!
-- SalesGPT is now compatible with [LiteLLM](https://github.com/BerriAI/litellm), choose *any closed/open-sourced LLM* to work with SalesGPT! Thanks to LiteLLM maintainers for this contribution!
 
 # Setup
 
