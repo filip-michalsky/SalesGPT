@@ -60,7 +60,7 @@ export function ChatInterface() {
     // Function to fetch the bot name
     const fetchBotName = async () => {
       try {
-        const response = await fetch('http://localhost:8000/botname');
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/botname`);
 
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.statusText}`);
@@ -99,7 +99,7 @@ export function ChatInterface() {
     };
   
     try {
-      const response = await fetch('http://localhost:8000/chat', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -168,13 +168,11 @@ export function ChatInterface() {
             style={{ width: 24, height: 24, objectFit: "cover" }}
           />
           <span className={`text-frame p-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-900`}>
-          <ReactMarkdown 
-            children={message.text} 
-            rehypePlugins={[rehypeRaw]}
-            components={{
-              a: ({node, ...props}) => <a {...props} className="text-blue-500 hover:text-blue-700" />
-            }}
-          />
+          <ReactMarkdown rehypePlugins={[rehypeRaw]} components={{
+            a: ({node, ...props}) => <a {...props} className="text-blue-500 hover:text-blue-700" />
+          }}>
+            {message.text}
+          </ReactMarkdown>
           </span>
         </div>
         {message.sender === 'bot' && (
