@@ -1,15 +1,15 @@
 # Corrected import statements
-from langchain.chains.base import Chain
-from typing import Dict, Any, Optional
+import inspect
+from typing import Any, Dict, Optional
+
 # Corrected import path for RunnableConfig
 from langchain.agents import AgentExecutor
-from langchain_core.runnables import RunnableConfig, ensure_config
-from langchain_core.outputs import RunInfo
-from langchain.callbacks.manager import (
-    CallbackManager,
-)
+from langchain.callbacks.manager import CallbackManager
+from langchain.chains.base import Chain
 from langchain_core.load.dump import dumpd
-import inspect
+from langchain_core.outputs import RunInfo
+from langchain_core.runnables import RunnableConfig, ensure_config
+
 
 class CustomAgentExecutor(AgentExecutor):
     def invoke(
@@ -50,7 +50,9 @@ class CustomAgentExecutor(AgentExecutor):
         )
 
         # Capture the start of the chain as an intermediate step
-        intermediate_steps.append({"event": "Chain Started", "details": "Inputs prepared"})
+        intermediate_steps.append(
+            {"event": "Chain Started", "details": "Inputs prepared"}
+        )
 
         try:
             # Execute the _call method, passing 'run_manager' if supported
@@ -81,7 +83,7 @@ class CustomAgentExecutor(AgentExecutor):
         final_outputs["intermediate_steps"] = intermediate_steps
 
         return final_outputs
-    
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
     agent = CustomAgentExecutor()

@@ -1,6 +1,7 @@
-import requests
 import json
 import os
+
+import requests
 from langchain.agents import Tool
 from langchain.chains import RetrievalQA
 from langchain.text_splitter import CharacterTextSplitter
@@ -40,10 +41,7 @@ def generate_stripe_payment_link(query: str) -> str:
     api_key = os.getenv("MINDWARE_API_KEY", "")
 
     payload = json.dumps({"prompt": query})
-    headers = {
-        'Content-Type': 'application/json',
-        'Authorization': f'Bearer {api_key}'
-    }
+    headers = {"Content-Type": "application/json", "Authorization": f"Bearer {api_key}"}
 
     response = requests.request("POST", url, headers=headers, data=payload)
     return response.text

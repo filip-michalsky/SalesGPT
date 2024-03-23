@@ -1,41 +1,55 @@
-import pytest
-from unittest.mock import patch, MagicMock
-from salesgpt.salesgptapi import SalesGPTAPI
 import os
+from unittest.mock import MagicMock, patch
+
+import pytest
 from dotenv import load_dotenv
+
+from salesgpt.salesgptapi import SalesGPTAPI
+
 dotenv_path = os.path.join(os.path.dirname(__file__), "..", ".env")
 load_dotenv(dotenv_path)
 
 from unittest.mock import patch
 
+
 @pytest.fixture
 def mock_salesgpt_step():
-    with patch('salesgpt.salesgptapi.SalesGPT.step') as mock_step:
-        mock_step.return_value =  "Mock response"
+    with patch("salesgpt.salesgptapi.SalesGPT.step") as mock_step:
+        mock_step.return_value = "Mock response"
         yield
 
 
 class TestSalesGPTAPI:
     def test_initialize_agent_with_tools(self):
         api = SalesGPTAPI(config_path="", use_tools=True)
-        assert api.sales_agent.use_tools == True, "SalesGPTAPI should initialize SalesGPT with tools enabled."
+        assert (
+            api.sales_agent.use_tools == True
+        ), "SalesGPTAPI should initialize SalesGPT with tools enabled."
 
     def test_initialize_agent_without_tools(self):
         api = SalesGPTAPI(config_path="", use_tools=False)
-        assert api.sales_agent.use_tools == False, "SalesGPTAPI should initialize SalesGPT with tools disabled."
+        assert (
+            api.sales_agent.use_tools == False
+        ), "SalesGPTAPI should initialize SalesGPT with tools disabled."
 
     def test_do_method_with_human_input(self, mock_salesgpt_step):
         api = SalesGPTAPI(config_path="", use_tools=False)
         payload = api.do(human_input="Hello")
         # TODO patch conversation_history to be able to check correctly
-        assert "User: Hello <END_OF_TURN>" in api.sales_agent.conversation_history, "Human input should be added to the conversation history."
-        assert payload["response"] == "Hello ", "The payload response should match the mock response. {}".format(payload)
+        assert (
+            "User: Hello <END_OF_TURN>" in api.sales_agent.conversation_history
+        ), "Human input should be added to the conversation history."
+        assert (
+            payload["response"] == "Hello "
+        ), "The payload response should match the mock response. {}".format(payload)
 
     def test_do_method_without_human_input(self, mock_salesgpt_step):
         api = SalesGPTAPI(config_path="", use_tools=False)
         payload = api.do()
         # TODO patch conversation_history to be able to check correctly
-        assert payload["response"] == "", "The payload response should match the mock response when no human input is provided."
+        assert (
+            payload["response"] == ""
+        ), "The payload response should match the mock response when no human input is provided."
 
     # @pytest.mark.asyncio
     # async def test_do_stream_method(self):
@@ -47,6 +61,14 @@ class TestSalesGPTAPI:
     def test_payload_structure(self):
         api = SalesGPTAPI(config_path="", use_tools=False)
         payload = api.do(human_input="Test input")
-        expected_keys = ["bot_name", "response", "conversational_stage", "tool", "tool_input", "action_output", "action_input"]
+        expected_keys = [
+            "bot_name",
+            "response",
+            "conversational_stage",
+            "tool",
+            "tool_input",
+            "action_output",
+            "action_input",
+        ]
         for key in expected_keys:
             assert key in payload, f"Payload missing expected key: {key}"
