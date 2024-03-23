@@ -63,9 +63,12 @@ class SalesGPTAPI:
 
         ai_log = self.sales_agent.step(stream=False)
         self.sales_agent.determine_conversation_stage()
+        # TODO - handle end of conversation in the API - send a special token to the client?
         if "<END_OF_CALL>" in self.sales_agent.conversation_history[-1]:
             print("Sales Agent determined it is time to end the conversation.")
-            return ["BOT","In case you'll have any questions - just text me one more time!"]
+            # strip end of call for now
+            self.sales_agent.conversation_history[-1] = self.sales_agent.conversation_history[-1].replace("<END_OF_CALL>","")
+        #     return ["BOT","In case you'll have any questions - just text me one more time!"]
 
         reply = self.sales_agent.conversation_history[-1]
 

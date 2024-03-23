@@ -4,6 +4,8 @@ import { Input } from "@/components/ui/input";
 import BotIcon from '@/components/ui/bot-icon';
 import LoaderIcon from '@/components/ui/loader-icon';
 import styles from './ChatInterface.module.css';
+import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
 
 
 type Message = {
@@ -166,7 +168,13 @@ export function ChatInterface() {
             style={{ width: 24, height: 24, objectFit: "cover" }}
           />
           <span className={`text-frame p-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-900`}>
-            {message.text}
+          <ReactMarkdown 
+            children={message.text} 
+            rehypePlugins={[rehypeRaw]}
+            components={{
+              a: ({node, ...props}) => <a {...props} className="text-blue-500 hover:text-blue-700" />
+            }}
+          />
           </span>
         </div>
         {message.sender === 'bot' && (
