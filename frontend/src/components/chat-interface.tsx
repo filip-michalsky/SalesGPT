@@ -4,6 +4,8 @@ import { Input } from "@/components/ui/input";
 import BotIcon from '@/components/ui/bot-icon';
 import LoaderIcon from '@/components/ui/loader-icon';
 import styles from './ChatInterface.module.css';
+import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
 
 
 type Message = {
@@ -37,6 +39,7 @@ export function ChatInterface() {
     actionInput?: string
   }[]>([]);
   const [maxHeight, setMaxHeight] = useState('80vh'); // Default to 100% of the viewport height
+  const [isBotTyping, setIsBotTyping] = useState(false);
 
   useEffect(() => {
     // This function will be called on resize events
@@ -53,17 +56,18 @@ export function ChatInterface() {
     // Return a cleanup function to remove the event listener when the component unmounts
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-
+  
   useEffect(() => {
     // Function to fetch the bot name
     const fetchBotName = async () => {
+      console.log("REACT_APP_API_URL:", process.env.NEXT_PUBLIC_API_URL); // Added console logging for debugging
       try {
-        const response = await fetch('http://localhost:8000/botname');
-
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/botname`);
+  
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.statusText}`);
         }
-
+  
         const data = await response.json();
         setBotName(data.name); // Save the bot name in the state
         console.log(botName)
@@ -95,9 +99,10 @@ export function ChatInterface() {
       human_say: userMessage,
       stream,
     };
-  
+    setIsBotTyping(true); // Start showing the typing indicator
+
     try {
-      const response = await fetch('http://localhost:8000/chat', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -132,6 +137,8 @@ export function ChatInterface() {
         }}
       } catch (error) {
         console.error("Failed to fetch bot's response:", error);
+      } finally {
+        setIsBotTyping(false); // Stop showing the typing indicator
       }
   };  
   return (
@@ -166,7 +173,11 @@ export function ChatInterface() {
             style={{ width: 24, height: 24, objectFit: "cover" }}
           />
           <span className={`text-frame p-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-900`}>
+          <ReactMarkdown rehypePlugins={[rehypeRaw]} components={{
+            a: ({node, ...props}) => <a {...props} className="text-blue-500 hover:text-blue-700" />
+          }}>
             {message.text}
+          </ReactMarkdown>
           </span>
         </div>
         {message.sender === 'bot' && (
@@ -181,6 +192,16 @@ export function ChatInterface() {
     )}
   </div>
 ))}
+  {isBotTyping && (
+    <div className="flex items-center justify-start">
+      <img alt="Bot" className="rounded-full mr-2" src="/maskot.png" style={{ width: 24, height: 24, objectFit: "cover" }} />
+      <div className={`${styles.typingBubble}`}>
+      <span className={`${styles.typingDot}`}></span>
+      <span className={`${styles.typingDot}`}></span>
+      <span className={`${styles.typingDot}`}></span>
+    </div>
+    </div>
+  )}
           </div>
           <div className="mt-4">
             <Input

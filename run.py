@@ -1,6 +1,8 @@
 import argparse
 import json
+import logging
 import os
+import warnings
 
 from dotenv import load_dotenv
 from langchain_community.chat_models import ChatLiteLLM
@@ -8,6 +10,12 @@ from langchain_community.chat_models import ChatLiteLLM
 from salesgpt.agents import SalesGPT
 
 load_dotenv()  # loads .env file
+
+# Suppress warnings
+warnings.filterwarnings("ignore")
+
+# Suppress logging
+logging.getLogger().setLevel(logging.CRITICAL)
 
 # LangSmith settings section, set TRACING_V2 to "true" to enable it
 # or leave it as it is, if you don't need tracing (more info in README)
@@ -24,7 +32,9 @@ if __name__ == "__main__":
     parser.add_argument(
         "--config", type=str, help="Path to agent config file", default=""
     )
-    parser.add_argument("--verbose", action='store_true', help="Verbosity", default=False)
+    parser.add_argument(
+        "--verbose", action="store_true", help="Verbosity", default=False
+    )
     parser.add_argument(
         "--max_num_turns",
         type=int,
@@ -52,10 +62,12 @@ if __name__ == "__main__":
         }
 
         if USE_TOOLS:
-            sales_agent_kwargs.update({
-                "product_catalog": "examples/sample_product_catalog.txt",
-                "salesperson_name": "Ted Lasso",
-            })
+            sales_agent_kwargs.update(
+                {
+                    "product_catalog": "examples/sample_product_catalog.txt",
+                    "salesperson_name": "Ted Lasso",
+                }
+            )
 
         sales_agent = SalesGPT.from_llm(llm, **sales_agent_kwargs)
     else:
