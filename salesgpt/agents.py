@@ -494,7 +494,6 @@ class SalesGPT(Chain):
         
         if use_tools:
             product_catalog = kwargs.pop("product_catalog", None)
-            # knowledge_base = setup_knowledge_base(product_catalog)
             tools = get_tools(product_catalog)
 
             prompt = CustomPromptTemplateForTools(

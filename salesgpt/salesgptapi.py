@@ -4,47 +4,43 @@ from langchain_community.chat_models import ChatLiteLLM
 import asyncio
 from salesgpt.agents import SalesGPT
 import re
-GPT_MODEL = "gpt-4-0125-preview"
+
 
 class SalesGPTAPI:
-    USE_TOOLS = True
-
-    def __init__(self, config_path: str, verbose: bool = True, max_num_turns: int = 20,use_tools=True):
+    
+    def __init__(self, config_path: str, verbose: bool = True, max_num_turns: int = 20, 
+                 model_name: str ="gpt-3.5-turbo", product_catalog: str = "examples/sample_product_catalog.txt", use_tools=True):
         self.config_path = config_path
         self.verbose = verbose
         self.max_num_turns = max_num_turns
-        self.llm = ChatLiteLLM(temperature=0.2, model_name=GPT_MODEL)
+        self.llm = ChatLiteLLM(temperature=0.2, model_name=model_name)
+        self.product_catalog = product_catalog
         self.conversation_history = []
         self.use_tools = use_tools
         self.sales_agent = self.initialize_agent()
         self.current_turn = 0
+
     def initialize_agent(self):
-        if self.config_path == "":
-            print("No agent config specified, using a standard config")
-            if self.use_tools:
-                print("USING TOOLS")
-                sales_agent = SalesGPT.from_llm(
-                    self.llm,
-                    use_tools=True,
-                    product_catalog="examples/sample_product_catalog.txt",
-                    salesperson_name="Ted Lasso",
-                    verbose=self.verbose,
-                )
-            else:
-                sales_agent = SalesGPT.from_llm(self.llm, verbose=self.verbose)
-        else:
+        config = {"verbose": self.verbose}
+        if self.config_path:
             with open(self.config_path, "r") as f:
-                config = json.load(f)
+                config.update(json.load(f))
             if self.verbose:
-                print(f"Agent config {config}")
-            if self.use_tools:
-                print("USING TOOLS")
-                config["use_tools"] = True
-                config["product_catalog"] = "examples/sample_product_catalog.txt"
-            else:
-                config.pop("use_tools", None)  # Remove the use_tools key from config if it exists
-            sales_agent = SalesGPT.from_llm(self.llm, verbose=self.verbose, **config)
-        print(f"SalesGPT use_tools: {sales_agent.use_tools}")  # Print the use_tools value of the SalesGPT instance
+                print(f"Loaded agent config: {config}")
+        else:
+            print("Default agent config in use")
+        
+        if self.use_tools:
+            print("USING TOOLS")
+            config.update({
+                "use_tools": True,
+                "product_catalog": self.product_catalog,
+                "salesperson_name": "Ted Lasso" if not self.config_path else config.get("salesperson_name", "Ted Lasso"),
+            })
+        
+        sales_agent = SalesGPT.from_llm(self.llm, **config)
+
+        print(f"SalesGPT use_tools: {sales_agent.use_tools}")
         sales_agent.seed_agent()
         return sales_agent
 
@@ -55,28 +51,23 @@ class SalesGPTAPI:
             print("Maximum number of turns reached - ending the conversation.")
             return ["BOT","In case you'll have any questions - just text me one more time!"]
 
-        #self.sales_agent.seed_agent() why do we seeding at each turn? put to agent_init
-        #self.sales_agent.conversation_history = conversation_history
-
         if human_input is not None:
             self.sales_agent.human_step(human_input)
 
         ai_log = self.sales_agent.step(stream=False)
         self.sales_agent.determine_conversation_stage()
         # TODO - handle end of conversation in the API - send a special token to the client?
-        if "<END_OF_CALL>" in self.sales_agent.conversation_history[-1]:
-            print("Sales Agent determined it is time to end the conversation.")
-            # strip end of call for now
-            self.sales_agent.conversation_history[-1] = self.sales_agent.conversation_history[-1].replace("<END_OF_CALL>","")
-        #     return ["BOT","In case you'll have any questions - just text me one more time!"]
-
-        reply = self.sales_agent.conversation_history[-1]
-
         if self.verbose:
             print("=" * 10)
             print(ai_log)
-        ''''''
-        if ai_log['intermediate_steps'][1]['outputs']['intermediate_steps'] is not []:
+        if self.sales_agent.conversation_history and "<END_OF_CALL>" in self.sales_agent.conversation_history[-1]:
+            print("Sales Agent determined it is time to end the conversation.")
+            # strip end of call for now
+            self.sales_agent.conversation_history[-1] = self.sales_agent.conversation_history[-1].replace("<END_OF_CALL>","")
+
+        reply = self.sales_agent.conversation_history[-1] if self.sales_agent.conversation_history else ""
+
+        if self.use_tools and ai_log['intermediate_steps'][1]['outputs']['intermediate_steps'] is not []:
             try:
                 res_str = ai_log['intermediate_steps'][1]['outputs']['intermediate_steps'][0]
                 tool_search_result = res_str[0]
@@ -103,6 +94,7 @@ class SalesGPTAPI:
         return payload
     
     async def do_stream(self, conversation_history: [str], human_input=None):
+        # TODO
         current_turns = len(conversation_history) + 1
         if current_turns >= self.max_num_turns:
             print("Maximum number of turns reached - ending the conversation.")
