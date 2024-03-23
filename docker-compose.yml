@@ -7,13 +7,15 @@ services:
     volumes:
       - ./frontend:/usr/src/app
     container_name: frontend
-    env_file:
-      - .env
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
     ports:
       - "3000:3000"
     depends_on:
       - backend
-
+    stdin_open: true
+    tty: true
+    
   backend:
     build:
       context: ./

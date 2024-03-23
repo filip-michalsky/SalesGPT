@@ -55,17 +55,18 @@ export function ChatInterface() {
     // Return a cleanup function to remove the event listener when the component unmounts
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-
+  
   useEffect(() => {
     // Function to fetch the bot name
     const fetchBotName = async () => {
+      console.log("REACT_APP_API_URL:", process.env.NEXT_PUBLIC_API_URL); // Added console logging for debugging
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/botname`);
-
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/botname`);
+  
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.statusText}`);
         }
-
+  
         const data = await response.json();
         setBotName(data.name); // Save the bot name in the state
         console.log(botName)
@@ -99,7 +100,7 @@ export function ChatInterface() {
     };
   
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/chat`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
