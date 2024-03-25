@@ -67,3 +67,12 @@
     transform: scale(1);
   }
 }
+
+.hideScrollbar {
+  scrollbar-width: none; 
+  -ms-overflow-style: none;  
+}
+
+.hideScrollbar::-webkit-scrollbar {
+  display: none;
+}
