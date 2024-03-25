@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid'; // For generating unique session_id
 import { Input } from "@/components/ui/input";
 import BotIcon from '@/components/ui/bot-icon';
@@ -40,7 +40,25 @@ export function ChatInterface() {
   }[]>([]);
   const [maxHeight, setMaxHeight] = useState('80vh'); // Default to 100% of the viewport height
   const [isBotTyping, setIsBotTyping] = useState(false);
+  const messagesEndRef = useRef<null | HTMLDivElement>(null);
+  const thinkingProcessEndRef = useRef<null | HTMLDivElement>(null);
+  const [botHasResponded, setBotHasResponded] = useState(false);
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+  
+  useEffect(() => {
+    thinkingProcessEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [thinkingProcess]);
 
+  useEffect(() => {
+    if (botHasResponded) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      thinkingProcessEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      setBotHasResponded(false); // Reset the flag
+    }
+  }, [botHasResponded]);
+  
   useEffect(() => {
     // This function will be called on resize events
     const handleResize = () => {
@@ -139,6 +157,7 @@ export function ChatInterface() {
         console.error("Failed to fetch bot's response:", error);
       } finally {
         setIsBotTyping(false); // Stop showing the typing indicator
+        setBotHasResponded(true);
       }
   };  
   return (
@@ -153,7 +172,7 @@ export function ChatInterface() {
             <BotIcon className="h-6 w-6 text-gray-500 mr-2" />
             <h2 className="text-lg font-semibold">Chat Interface</h2>
           </div>
-        <div className="flex-1 overflow-y-auto">
+          <div className={`flex-1 overflow-y-auto ${styles.hideScrollbar}`}>
         {messages.map((message, index) => (
   <div key={message.id} className="flex items-center p-2">
     {message.sender === 'user' ? (
@@ -164,6 +183,7 @@ export function ChatInterface() {
         </span>
       </>
     ) : (
+      
       <div className="flex w-full justify-between">
         <div className="flex items-center">
           <img
@@ -190,6 +210,7 @@ export function ChatInterface() {
         )}
       </div>
     )}
+    <div ref={messagesEndRef} />
   </div>
 ))}
   {isBotTyping && (
@@ -222,7 +243,7 @@ export function ChatInterface() {
     <BotIcon className="h-6 w-6 text-gray-500 mr-2" />
     <h2 className="text-lg font-semibold">{botName} Thinking Process</h2>
   </div>
-  <div className="flex-1 overflow-y-auto hide-scroll" style={{ overflowX: 'hidden' }}>
+  <div className={`flex-1 overflow-y-auto hide-scroll ${styles.hideScrollbar}`} style={{ overflowX: 'hidden' }}>
             <div>
               {thinkingProcess.map((process, index) => (
                 <div key={index} className="break-words my-2">
@@ -243,8 +264,10 @@ export function ChatInterface() {
                 </div>
               ))}
             </div>
+            <div ref={thinkingProcessEndRef} />
 </div></div>
       </main>
     </div>
   );
 }
+
