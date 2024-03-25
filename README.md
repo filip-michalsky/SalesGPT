@@ -37,9 +37,14 @@ We are building SalesGPT to power your best AI Sales Agents. Hence, we would lov
 
 <i>Unload AI Sales Agent Demo - Powered by SalesGPT:</i> *A New Way to Sell?* 🤔
 
-**Demo #1: Rachel - Mattress Sales Field Representative**
+**Demo #1: Rachel - Mattress Sales Field Representative Outbound Sales**
 
 [![Rachel - Mattress Sales Field Representative](https://cdn.loom.com/sessions/thumbnails/f0fac42954904471b266980e4948b07d-with-play.gif)](https://www.loom.com/share/f0fac42954904471b266980e4948b07d)
+
+**Demo #2: Ted - Autonomously create payment links and collect customer payments**
+
+[![Ted - Mattress Sales Representative Closing Deals](https://cdn.loom.com/sessions/thumbnails/440086e17aff42d79881a6eca147ae5e-with-play.gif)](https://www.loom.com/share/440086e17aff42d79881a6eca147ae5e)
+
 
 # Contact Us for Suggestions, Questions, or Help
 
