@@ -87,7 +87,7 @@ def generate_stripe_payment_link(query: str) -> str:
 
     # example testing payment gateway url
     PAYMENT_GATEWAY_URL = os.getenv("PAYMENT_GATEWAY_URL", "https://agent-payments-gateway.vercel.app/payment")
-    PRODUCT_PRICE_MAPPING = "example_product_price_id_mapping.json"
+    PRODUCT_PRICE_MAPPING = os.getenv("PRODUCT_PRICE_MAPPING","example_product_price_id_mapping.json")
     
     # use LLM to get the price_id from query
     price_id = get_product_id_from_query(query, PRODUCT_PRICE_MAPPING)
