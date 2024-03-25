@@ -1,5 +1,11 @@
 Updates to the SalesGPT project: Building the world's best AI Sales Agents and virtual workers.
 
+March 22, 2024
+---------------
+Version 0.1.2
+- SalesGPT can now sell by negotiation with users and then sending them a stripe link to pay.
+- Added SalesGPT frontend for testing
+
 January 29, 2024
 ---------------
 Version 0.1.1
