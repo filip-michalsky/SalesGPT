@@ -35,11 +35,13 @@ We are building SalesGPT to power your best AI Sales Agents. Hence, we would lov
 
 # Demos and Use Cases
 
-<i>Unload AI Sales Agent Demo - Powered by SalesGPT:</i> *A New Way to Sell?* 🤔
+<i>Unload AI Sales Agent Demos - Powered by SalesGPT:</i> *Our new virtual workforce?* 🤔
 
-**Demo #1: Rachel - Mattress Sales Field Representative Outbound Sales**
+**Demo #1: Sarah - Patient Coordinator at South Orange Pediatrics**
 
-[![Rachel - Mattress Sales Field Representative](https://cdn.loom.com/sessions/thumbnails/f0fac42954904471b266980e4948b07d-with-play.gif)](https://www.loom.com/share/f0fac42954904471b266980e4948b07d)
+- 100X Your Healthcare Admin with our Virtual Workforce 
+
+[![Sarah - South Orange Pediatrics Patient Coordinator](https://cdn.loom.com/sessions/thumbnails/314eb0562fda41ea94e25b267acda6f9-with-play.gif)](https://www.loom.com/share/314eb0562fda41ea94e25b267acda6f9)
 
 **Demo #2: Ted - Autonomously create payment links and collect customer payments**
 
