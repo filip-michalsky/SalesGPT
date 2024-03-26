@@ -175,7 +175,7 @@ export function ChatInterface() {
         <div className="flex flex-col w-1/2 h-full bg-white rounded-lg shadow-md p-4 mr-4 chat-messages" style={{maxHeight}}>
           <div className="flex items-center mb-4">
             <BotIcon className="h-6 w-6 text-gray-500 mr-2" />
-            <h2 className="text-lg font-semibold">Chat Interface</h2>
+            <h2 className="text-lg font-semibold">Chat Interface With The Customer</h2>
           </div>
           <div className={`flex-1 overflow-y-auto ${styles.hideScrollbar}`}>
         {messages.map((message, index) => (
@@ -246,7 +246,7 @@ export function ChatInterface() {
         <div className="flex flex-col w-1/2 h-full bg-white rounded-lg shadow-md p-4 thinking-process" style={{maxHeight}}>
   <div className="flex items-center mb-4">
     <BotIcon className="h-6 w-6 text-gray-500 mr-2" />
-    <h2 className="text-lg font-semibold">{botName} Thinking Process</h2>
+    <h2 className="text-lg font-semibold">AI Sales Agent {botName} Thought Process</h2>
   </div>
   <div className={`flex-1 overflow-y-auto hide-scroll ${styles.hideScrollbar}`} style={{ overflowX: 'hidden' }}>
             <div>
