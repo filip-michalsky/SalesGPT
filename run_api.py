@@ -33,16 +33,16 @@ app.add_middleware(
 
 from fastapi import Header, HTTPException, Depends
 
-def get_auth_key():
+class AuthenticatedResponse(BaseModel):
+    message: str
+
+def get_auth_key(authorization: str = Header(...)) -> None:
     auth_key = os.getenv("AUTH_KEY")
     if not auth_key:
         raise HTTPException(status_code=500, detail="AUTH_KEY not configured")
-
-    def verify_authorization(authorization: str = Header(...)):
-        expected_header = f"Bearer {auth_key}"
-        if authorization != expected_header:
-            raise HTTPException(status_code=401, detail="Unauthorized")
-    return verify_authorization
+    expected_header = f"Bearer {auth_key}"
+    if authorization != expected_header:
+        raise HTTPException(status_code=401, detail="Unauthorized")
 
 @app.get("/")
 async def say_hello():
@@ -57,9 +57,10 @@ class MessageList(BaseModel):
 sessions = {}
 
 
-@app.get("/botname")
-async def get_bot_name(verify: Depends(get_auth_key())):
+@app.get("/botname", response_model=None)
+async def get_bot_name(authorization: str = Header(...)):
     load_dotenv()
+    get_auth_key(authorization)
     sales_api = SalesGPTAPI(
         config_path=os.getenv("CONFIG_PATH", "examples/example_agent_setup.json"),
         product_catalog=os.getenv(
@@ -73,7 +74,7 @@ async def get_bot_name(verify: Depends(get_auth_key())):
 
 
 @app.post("/chat")
-async def chat_with_sales_agent(verify: Depends(get_auth_key()), req: MessageList, stream: bool = Query(False)):
+async def chat_with_sales_agent(req: MessageList, stream: bool = Query(False), authorization: str = Header(...)):
     """
     Handles chat interactions with the sales agent.
 
@@ -90,6 +91,7 @@ async def chat_with_sales_agent(verify: Depends(get_auth_key()), req: MessageLis
         Streaming functionality is planned but not yet available. The current implementation only supports synchronous responses.
     """
     sales_api = None
+    get_auth_key(authorization)
     # print(f"Received request: {req}")
     if req.session_id in sessions:
         print("Session is found!")
