@@ -53,9 +53,10 @@ async def get_bot_name():
             "PRODUCT_CATALOG", "examples/sample_product_catalog.txt"
         ),
         verbose=True,
+        model_name=os.getenv("GPT_MODEL", "gpt-3.5-turbo-0613"),
     )
     name = sales_api.sales_agent.salesperson_name
-    return {"name": name}
+    return {"name": name, "model": sales_api.sales_agent.model_name}
 
 
 @app.post("/chat")

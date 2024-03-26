@@ -9,13 +9,39 @@ from langchain_community.vectorstores import Chroma
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_community.chat_models import BedrockChat
 from litellm import completion
+    
+
+def setup_knowledge_base(
+    product_catalog: str = None, model_name: str = "gpt-3.5-turbo"
+):
+    """
+    We assume that the product catalog is simply a text string.
+    """
+    # load product catalog
+    with open(product_catalog, "r") as f:
+        product_catalog = f.read()
+
+    text_splitter = CharacterTextSplitter(chunk_size=10, chunk_overlap=0)
+    texts = text_splitter.split_text(product_catalog)
+
+    llm = ChatOpenAI(model_name='gpt-4-turbo-preview', temperature=0)
+    
+    embeddings = OpenAIEmbeddings()
+    docsearch = Chroma.from_texts(
+        texts, embeddings, collection_name="product-knowledge-base"
+    )
+
+    knowledge_base = RetrievalQA.from_chain_type(
+        llm=llm, chain_type="stuff", retriever=docsearch.as_retriever()
+    )
+    return knowledge_base
 
 
 def completion_bedrock(model_id, system_prompt, messages, max_tokens=1000):
     """
     High-level API call to generate a message with Anthropic Claude.
     """
-    bedrock_runtime = boto3.client(service_name='bedrock-runtime')
+    bedrock_runtime = boto3.client(service_name='bedrock-runtime',region_name=os.environ.get('AWS_REGION_NAME'))
     
     body = json.dumps({
         "anthropic_version": "bedrock-2023-05-31",
@@ -31,34 +57,6 @@ def completion_bedrock(model_id, system_prompt, messages, max_tokens=1000):
     response_body = json.loads(response.get('body').read())
     
     return response_body
-    
-
-def setup_knowledge_base(
-    product_catalog: str = None, model_name: str = "gpt-3.5-turbo"
-):
-    """
-    We assume that the product catalog is simply a text string.
-    """
-    # load product catalog
-    with open(product_catalog, "r") as f:
-        product_catalog = f.read()
-
-    text_splitter = CharacterTextSplitter(chunk_size=10, chunk_overlap=0)
-    texts = text_splitter.split_text(product_catalog)
-    if 'anthropic' in model_name:
-        llm = BedrockChat(model_name=model_name, temperature=0)
-    else:
-        llm = ChatOpenAI(model_name=model_name, temperature=0)
-    
-    embeddings = OpenAIEmbeddings()
-    docsearch = Chroma.from_texts(
-        texts, embeddings, collection_name="product-knowledge-base"
-    )
-
-    knowledge_base = RetrievalQA.from_chain_type(
-        llm=llm, chain_type="stuff", retriever=docsearch.as_retriever()
-    )
-    return knowledge_base
 
 
 def get_product_id_from_query(query, product_price_id_mapping_path):
@@ -106,6 +104,9 @@ def get_product_id_from_query(query, product_price_id_mapping_path):
             messages=[{"content": prompt, "role": "user"}],
             max_tokens=1000
         )
+        
+        product_id = response['content'][0]['text']
+        
     else:
         response = completion(
             model=model_name,
@@ -113,9 +114,9 @@ def get_product_id_from_query(query, product_price_id_mapping_path):
             max_tokens=1000,
             temperature=0
         )
-
-    product_id = response.choices[0].message.content.strip()
+        product_id = response.choices[0].message.content.strip()
     return product_id
+
 
 
 def generate_stripe_payment_link(query: str) -> str:
