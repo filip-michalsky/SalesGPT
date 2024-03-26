@@ -9,6 +9,8 @@ services:
     container_name: frontend
     environment:
       - NEXT_PUBLIC_API_URL=http://localhost:8000
+    env_file:  # Added line for specifying an environment file
+      - .env.fe  # Specifying the .env.fe file
     ports:
       - "3000:3000"
     depends_on:
