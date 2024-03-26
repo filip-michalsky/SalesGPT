@@ -47,6 +47,7 @@ sessions = {}
 
 @app.get("/botname")
 async def get_bot_name():
+    load_dotenv()
     sales_api = SalesGPTAPI(
         config_path=os.getenv("CONFIG_PATH", "examples/example_agent_setup.json"),
         product_catalog=os.getenv(
