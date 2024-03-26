@@ -2,9 +2,11 @@ import asyncio
 import json
 import re
 
-from langchain_community.chat_models import ChatLiteLLM
+from langchain_community.chat_models import BedrockChat, ChatLiteLLM
+from langchain_openai import ChatOpenAI
 
 from salesgpt.agents import SalesGPT
+from salesgpt.models import BedrockCustomModel
 
 
 class SalesGPTAPI:
@@ -20,7 +22,15 @@ class SalesGPTAPI:
         self.config_path = config_path
         self.verbose = verbose
         self.max_num_turns = max_num_turns
-        self.llm = ChatLiteLLM(temperature=0.2, model_name=model_name)
+        self.model_name = model_name
+        if "anthropic" in model_name:
+            self.llm = BedrockCustomModel(
+                type="bedrock-model",
+                model=model_name,
+                system_prompt="You are a helpful assistant.",
+            )
+        else:
+            self.llm = ChatLiteLLM(temperature=0.2, model=model_name)
         self.product_catalog = product_catalog
         self.conversation_history = []
         self.use_tools = use_tools
@@ -131,6 +141,7 @@ class SalesGPTAPI:
             "tool_input": tool_input,
             "action_output": action_output,
             "action_input": action_input,
+            "model_name": self.model_name,
         }
         return payload
 

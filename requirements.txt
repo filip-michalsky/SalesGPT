@@ -6,3 +6,4 @@ pydantic>=2.5.2
 litellm>=1.10.2
 ipykernel>=6.27.1
 langchain-openai==0.0.2
+boto3

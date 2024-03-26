@@ -43,6 +43,16 @@ class TestSalesGPTAPI:
             payload["response"] == "Hello "
         ), "The payload response should match the mock response. {}".format(payload)
 
+    def test_do_method_with_human_input_anthropic(self, mock_salesgpt_step):
+        api = SalesGPTAPI(config_path="", use_tools=False, model_name="anthropic.claude-3-sonnet-20240229-v1:0")
+        payload = api.do(human_input="Hello")
+        assert (
+            "User: Hello <END_OF_TURN>" in api.sales_agent.conversation_history
+        ), "Human input should be added to the conversation history."
+        assert (
+            payload["response"] == "Hello "
+        ), "The payload response should match the mock response. {}".format(payload)
+
     def test_do_method_without_human_input(self, mock_salesgpt_step):
         api = SalesGPTAPI(config_path="", use_tools=False)
         payload = api.do()

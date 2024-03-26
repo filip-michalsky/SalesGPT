@@ -47,15 +47,17 @@ sessions = {}
 
 @app.get("/botname")
 async def get_bot_name():
+    load_dotenv()
     sales_api = SalesGPTAPI(
         config_path=os.getenv("CONFIG_PATH", "examples/example_agent_setup.json"),
         product_catalog=os.getenv(
             "PRODUCT_CATALOG", "examples/sample_product_catalog.txt"
         ),
         verbose=True,
+        model_name=os.getenv("GPT_MODEL", "gpt-3.5-turbo-0613"),
     )
     name = sales_api.sales_agent.salesperson_name
-    return {"name": name}
+    return {"name": name, "model": sales_api.sales_agent.model_name}
 
 
 @app.post("/chat")
