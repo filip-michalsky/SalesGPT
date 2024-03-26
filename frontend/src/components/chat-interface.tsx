@@ -7,6 +7,15 @@ import styles from './ChatInterface.module.css';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 
+import { PostHog } from 'posthog-node'
+
+const client = new PostHog(
+  `${process.env.NEXT_PUBLIC_POSTHOG_ID}`,    
+  { host: 'https://app.posthog.com',
+    disableGeoip: false, 
+    requestTimeout: 30000
+  }
+)
 
 type Message = {
   id: string;
@@ -21,6 +30,7 @@ type Message = {
     actionInput?: string
   };
 };
+
 
 export function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -78,7 +88,14 @@ export function ChatInterface() {
   useEffect(() => {
     // Function to fetch the bot name
     const fetchBotName = async () => {
-      console.log("REACT_APP_API_URL:", process.env.NEXT_PUBLIC_API_URL); // Added console logging for debugging
+      // console.log("REACT_APP_API_URL:", process.env.NEXT_PUBLIC_API_URL); // Added console logging for debugging
+      client.capture({
+        distinctId: session_id,
+        event: 'fetched-bot-name',
+        properties: {
+          $current_url: window.location.href,
+        },
+    })
       try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/botname`, {
           method: 'GET', // Method is optional since GET is the default value
@@ -116,6 +133,13 @@ export function ChatInterface() {
   };
 
   const handleBotResponse = async (userMessage: string) => {
+    client.capture({
+      distinctId: session_id,
+      event: 'sent-message',
+      properties: {
+        $current_url: window.location.href,
+      },
+  })
     const requestData = {
       session_id,
       human_say: userMessage,
