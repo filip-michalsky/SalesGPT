@@ -1,5 +1,5 @@
 import os
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock, patch, AsyncMock
 
 import pytest
 from dotenv import load_dotenv
@@ -17,11 +17,20 @@ def mock_salesgpt_step():
     with patch("salesgpt.salesgptapi.SalesGPT.step") as mock_step:
         mock_step.return_value = "Mock response"
         yield
-
+'''
 @pytest.fixture
-def mock_salesgpt_step():
+def mock_salesgpt_astep():
     with patch("salesgpt.salesgptapi.SalesGPT.astep") as mock_step:
         mock_step.return_value = "Mock response"
+        yield
+'''     
+@pytest.fixture
+def mock_salesgpt_astep():
+    with patch("salesgpt.salesgptapi.SalesGPT.astep", new_callable=AsyncMock) as mock_step:
+        mock_step.return_value = AsyncMock(return_value={
+            "response": "Mock response",
+            "intermediate_steps": []  # Ensure this key is present
+        })
         yield
 
 class TestSalesGPTAPI:
@@ -38,7 +47,7 @@ class TestSalesGPTAPI:
         ), "SalesGPTAPI should initialize SalesGPT with tools disabled."
 
     @pytest.mark.asyncio
-    async def test_do_method_with_human_input(self, mock_salesgpt_step):
+    async def test_do_method_with_human_input(self, mock_salesgpt_astep):
         api = SalesGPTAPI(config_path="", use_tools=False)
         payload = await api.do(human_input="Hello")
         # TODO patch conversation_history to be able to check correctly
@@ -51,7 +60,7 @@ class TestSalesGPTAPI:
         ), "The payload response should match the mock response. {}".format(payload)
 
     @pytest.mark.asyncio
-    async def test_do_method_with_human_input_anthropic(self, mock_salesgpt_step):
+    async def test_do_method_with_human_input_anthropic(self, mock_salesgpt_astep):
         api = SalesGPTAPI(config_path="", use_tools=False, model_name="anthropic.claude-3-sonnet-20240229-v1:0")
         payload = await api.do(human_input="Hello")
         assert (
@@ -62,9 +71,9 @@ class TestSalesGPTAPI:
         ), "The payload response should match the mock response. {}".format(payload)
 
     @pytest.mark.asyncio
-    async def test_do_method_without_human_input(self, mock_salesgpt_step):
+    async def test_do_method_without_human_input(self, mock_salesgpt_astep):
         api = SalesGPTAPI(config_path="", use_tools=False)
-        payload = api.do()
+        payload = await api.do()
         # TODO patch conversation_history to be able to check correctly
         assert (
             payload["response"] == ""
