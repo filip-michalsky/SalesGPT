@@ -65,7 +65,7 @@ class SalesGPTAPI:
         sales_agent.seed_agent()
         return sales_agent
 
-    async def do(self, human_input=None):
+    def do(self, human_input=None):
         self.current_turn += 1
         current_turns = self.current_turn
         if current_turns >= self.max_num_turns:
@@ -78,8 +78,8 @@ class SalesGPTAPI:
         if human_input is not None:
             self.sales_agent.human_step(human_input)
 
-        ai_log = await self.sales_agent.astep(stream=False)
-        await self.sales_agent.adetermine_conversation_stage()
+        ai_log = self.sales_agent.step(stream=False)
+        self.sales_agent.determine_conversation_stage()
         # TODO - handle end of conversation in the API - send a special token to the client?
         if self.verbose:
             print("=" * 10)

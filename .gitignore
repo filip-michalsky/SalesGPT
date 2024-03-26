@@ -2,7 +2,6 @@
 
 /my-app/node_modules
 
-examples/sales_agent_bedrock.ipynb
 
 *.log
 **.env
