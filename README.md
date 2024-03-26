@@ -47,7 +47,7 @@ We are building SalesGPT to power your best AI Sales Agents. Hence, we would lov
 
 [![Ted - Mattress Sales Representative Closing Deals](https://cdn.loom.com/sessions/thumbnails/440086e17aff42d79881a6eca147ae5e-with-play.gif)](https://www.loom.com/share/440086e17aff42d79881a6eca147ae5e)
 
->**Try it yourself on our [SalesGPT hosted frontend demo](https://sales-gpt-frontend.vercel.app/chat).**
+>**Try it yourself on our [SalesGPT hosted frontend demo](https://sales-gpt-frontend-git-main-filip-odysseypartns-projects.vercel.app/chat).**
 
 # Contact Us for Suggestions, Questions, or Help
 
