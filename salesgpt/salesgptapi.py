@@ -83,7 +83,8 @@ class SalesGPTAPI:
         # TODO - handle end of conversation in the API - send a special token to the client?
         if self.verbose:
             print("=" * 10)
-            print(ai_log)
+            print(f"AI LOG {ai_log}")
+            
         if (
             self.sales_agent.conversation_history
             and "<END_OF_CALL>" in self.sales_agent.conversation_history[-1]
