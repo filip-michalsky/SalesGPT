@@ -42,6 +42,7 @@ class TestSalesGPTAPI:
         api = SalesGPTAPI(config_path="", use_tools=False)
         payload = await api.do(human_input="Hello")
         # TODO patch conversation_history to be able to check correctly
+        print(payload)
         assert (
             "User: Hello <END_OF_TURN>" in api.sales_agent.conversation_history
         ), "Human input should be added to the conversation history."
@@ -52,7 +53,7 @@ class TestSalesGPTAPI:
     @pytest.mark.asyncio
     async def test_do_method_with_human_input_anthropic(self, mock_salesgpt_step):
         api = SalesGPTAPI(config_path="", use_tools=False, model_name="anthropic.claude-3-sonnet-20240229-v1:0")
-        payload = api.do(human_input="Hello")
+        payload = await api.do(human_input="Hello")
         assert (
             "User: Hello <END_OF_TURN>" in api.sales_agent.conversation_history
         ), "Human input should be added to the conversation history."

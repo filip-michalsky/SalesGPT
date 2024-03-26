@@ -25,7 +25,7 @@ def setup_knowledge_base(
     text_splitter = CharacterTextSplitter(chunk_size=10, chunk_overlap=0)
     texts = text_splitter.split_text(product_catalog)
 
-    llm = ChatOpenAI(model_name="gpt-4-turbo-preview", temperature=0)
+    llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
 
     embeddings = OpenAIEmbeddings()
     docsearch = Chroma.from_texts(
