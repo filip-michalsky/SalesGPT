@@ -30,7 +30,6 @@ class SalesGPTAPI:
                 system_prompt="You are a helpful assistant.",
             )
         else:
-            # self.llm = ChatOpenAI(model_name=model_name, temperature=0)
             self.llm = ChatLiteLLM(temperature=0.2, model=model_name)
         self.product_catalog = product_catalog
         self.conversation_history = []
