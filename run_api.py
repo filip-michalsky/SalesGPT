@@ -110,7 +110,7 @@ async def chat_with_sales_agent(req: MessageList, stream: bool = Query(False)):
 
         return StreamingResponse(stream_response())
     else:
-        response = sales_api.do(req.human_say)
+        response = await sales_api.do(req.human_say)
         return response
 
 

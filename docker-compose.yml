@@ -8,7 +8,9 @@ services:
       - ./frontend:/usr/src/app
     container_name: frontend
     environment:
-      - NEXT_PUBLIC_API_URL=http://localhost:8000
+      - NEXT_PUBLIC_API_URL_OLD=http://localhost:8000
+      - NEXT_PUBLIC_API_URL=https://q9i8zv2cu1.execute-api.us-east-1.amazonaws.com/mystage
+      
     ports:
       - "3000:3000"
     depends_on:
