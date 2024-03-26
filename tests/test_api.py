@@ -100,3 +100,4 @@ class TestSalesGPTAPI:
         ]
         for key in expected_keys:
             assert key in payload, f"Payload missing expected key: {key}"
+            

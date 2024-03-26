@@ -100,7 +100,7 @@ class SalesGPTAPI:
             if self.sales_agent.conversation_history
             else ""
         )
-        print("AI LOG INTERMEDIATE STEPS: ", ai_log["intermediate_steps"])
+        #print("AI LOG INTERMEDIATE STEPS: ", ai_log["intermediate_steps"])
 
         if (
             self.use_tools and 
