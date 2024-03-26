@@ -71,3 +71,72 @@ class BedrockCustomModel(ChatOpenAI):
         message = AIMessage(content=content)
         generation = ChatGeneration(message=message)
         return ChatResult(generations=[generation])
+    
+    async def _agenerate(
+        self,
+        messages: List[BaseMessage],
+        stop: Optional[List[str]] = None,
+        run_manager: Optional[AsyncCallbackManagerForLLMRun] = None,
+        stream: Optional[bool] = None,
+        **kwargs: Any,
+    ) -> ChatResult:
+        should_stream = stream if stream is not None else self.streaming
+        if should_stream:
+            raise NotImplementedError("Streaming not implemented")
+        
+        last_message = messages[-1]
+
+        print(messages)
+        response = await acompletion_bedrock(
+            model_id=self.model,
+            system_prompt=self.system_prompt,
+            messages=[{"content": last_message.content, "role": "user"}],
+            max_tokens=1000,
+        )
+        print("output", response)
+        content = response["content"][0]["text"]
+        message = AIMessage(content=content)
+        generation = ChatGeneration(message=message)
+        return ChatResult(generations=[generation])
+
+        # message_dicts, params = self._create_message_dicts(messages, stop)
+        # params = {
+        #     **params,
+        #     **({"stream": stream} if stream is not None else {}),
+        #     **kwargs,
+        # }
+        # response = await self.async_client.create(messages=message_dicts, **params)
+        # return self._create_chat_result(response)
+
+import aioboto3
+import os
+import json
+
+async def acompletion_bedrock(model_id, system_prompt, messages, max_tokens=1000):
+    """
+    High-level API call to generate a message with Anthropic Claude, refactored for async.
+    """
+    session = aioboto3.Session()
+    async with session.client(service_name="bedrock-runtime", region_name=os.environ.get("AWS_REGION_NAME")) as bedrock_runtime:
+
+        body = json.dumps(
+            {
+                "anthropic_version": "bedrock-2023-05-31",
+                "max_tokens": max_tokens,
+                "system": system_prompt,
+                "messages": messages,
+            }
+        )
+
+        response = await bedrock_runtime.invoke_model(body=body, modelId=model_id)
+
+        # print('RESPONSE', response)
+
+        # Correctly handle the streaming body
+        response_body_bytes = await response['body'].read()
+        # print('RESPONSE BODY', response_body_bytes)
+        response_body = json.loads(response_body_bytes.decode("utf-8"))
+        # print('RESPONSE BODY', response_body)
+
+        return response_body
+
