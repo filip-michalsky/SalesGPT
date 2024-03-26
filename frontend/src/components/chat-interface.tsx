@@ -80,8 +80,12 @@ export function ChatInterface() {
     const fetchBotName = async () => {
       console.log("REACT_APP_API_URL:", process.env.NEXT_PUBLIC_API_URL); // Added console logging for debugging
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/botname`);
-  
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/botname`, {
+          method: 'GET', // Method is optional since GET is the default value
+          headers: {
+            'Authorization': `Bearer ${process.env.NEXT_PUBLIC_AUTH_KEY}`
+          },
+        });
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.statusText}`);
         }
@@ -124,6 +128,7 @@ export function ChatInterface() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_AUTH_KEY}`
         },
         body: JSON.stringify(requestData),
       });
