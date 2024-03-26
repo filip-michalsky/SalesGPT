@@ -1,14 +1,37 @@
 import json
 import os
-
+import boto3
 import requests
 from langchain.agents import Tool
 from langchain.chains import RetrievalQA
 from langchain.text_splitter import CharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langchain_community.chat_models import BedrockChat
 from litellm import completion
 
+
+def completion_bedrock(model_id, system_prompt, messages, max_tokens=1000):
+    """
+    High-level API call to generate a message with Anthropic Claude.
+    """
+    bedrock_runtime = boto3.client(service_name='bedrock-runtime')
+    
+    body = json.dumps({
+        "anthropic_version": "bedrock-2023-05-31",
+        "max_tokens": max_tokens,
+        "system": system_prompt,
+        "messages": messages
+    })
+    
+    response = bedrock_runtime.invoke_model(
+        body=body,
+        modelId=model_id
+    )
+    response_body = json.loads(response.get('body').read())
+    
+    return response_body
+    
 
 def setup_knowledge_base(
     product_catalog: str = None, model_name: str = "gpt-3.5-turbo"
@@ -22,8 +45,11 @@ def setup_knowledge_base(
 
     text_splitter = CharacterTextSplitter(chunk_size=10, chunk_overlap=0)
     texts = text_splitter.split_text(product_catalog)
-
-    llm = ChatOpenAI(model_name=model_name, temperature=0)
+    if 'anthropic' in model_name:
+        llm = BedrockChat(model_name=model_name, temperature=0)
+    else:
+        llm = ChatOpenAI(model_name=model_name, temperature=0)
+    
     embeddings = OpenAIEmbeddings()
     docsearch = Chroma.from_texts(
         texts, embeddings, collection_name="product-knowledge-base"
@@ -71,12 +97,22 @@ def get_product_id_from_query(query, product_price_id_mapping_path):
     Return a valid directly parsable json, dont return in it within a code snippet or add any kind of explanation!!
     """
     prompt+='{'
-    response = completion(
-        model=os.getenv("GPT_MODEL", "gpt-3.5-turbo-1106"),
-        messages=[{"content": prompt, "role": "user"}],
-        max_tokens=1000,
-        temperature=0
-    )
+    model_name = os.getenv("GPT_MODEL", "gpt-3.5-turbo-1106")
+
+    if 'anthropic' in model_name:
+        response = completion_bedrock(
+            model_id=model_name,
+            system_prompt="You are a helpful assistant.",
+            messages=[{"content": prompt, "role": "user"}],
+            max_tokens=1000
+        )
+    else:
+        response = completion(
+            model=model_name,
+            messages=[{"content": prompt, "role": "user"}],
+            max_tokens=1000,
+            temperature=0
+        )
 
     product_id = response.choices[0].message.content.strip()
     return product_id

@@ -3,7 +3,8 @@ import json
 import re
 
 from langchain_community.chat_models import ChatLiteLLM
-
+from langchain_community.chat_models import BedrockChat
+from langchain_openai import ChatOpenAI
 from salesgpt.agents import SalesGPT
 
 
@@ -20,7 +21,11 @@ class SalesGPTAPI:
         self.config_path = config_path
         self.verbose = verbose
         self.max_num_turns = max_num_turns
-        self.llm = ChatLiteLLM(temperature=0.2, model_name=model_name)
+        if 'anthropic' in model_name:
+            self.llm = BedrockChat(model_name=model_name, temperature=0)
+        else:
+            # self.llm = ChatOpenAI(model_name=model_name, temperature=0)
+            self.llm = ChatLiteLLM(temperature=0.2, model_name=model_name)
         self.product_catalog = product_catalog
         self.conversation_history = []
         self.use_tools = use_tools
