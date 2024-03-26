@@ -175,6 +175,51 @@ class SalesGPT(Chain):
 
         print(f"Conversation Stage: {self.current_conversation_stage}")
 
+    @time_logger
+    async def adetermine_conversation_stage(self):
+        """
+        Determines the current conversation stage based on the conversation history.
+
+        This method uses the stage_analyzer_chain to analyze the conversation history and determine the current stage.
+        The conversation history is joined into a single string, with each entry separated by a newline character.
+        The current conversation stage ID is also passed to the stage_analyzer_chain.
+
+        The method then prints the determined conversation stage ID and retrieves the corresponding conversation stage
+        from the conversation_stage_dict dictionary using the retrieve_conversation_stage method.
+
+        Finally, the method prints the determined conversation stage.
+
+        Returns:
+            None
+        """
+        print(f"Conversation Stage ID before analysis: {self.conversation_stage_id}")
+        print("Conversation history:")
+        print(self.conversation_history)
+        stage_analyzer_output = await self.stage_analyzer_chain.ainvoke(
+            input={
+                "conversation_history": "\n".join(self.conversation_history).rstrip(
+                    "\n"
+                ),
+                "conversation_stage_id": self.conversation_stage_id,
+                "conversation_stages": "\n".join(
+                    [
+                        str(key) + ": " + str(value)
+                        for key, value in CONVERSATION_STAGES.items()
+                    ]
+                ),
+            },
+            return_only_outputs=False,
+        )
+        print("Stage analyzer output")
+        print(stage_analyzer_output)
+        self.conversation_stage_id = stage_analyzer_output.get("text")
+
+        self.current_conversation_stage = self.retrieve_conversation_stage(
+            self.conversation_stage_id
+        )
+
+        print(f"Conversation Stage: {self.current_conversation_stage}")
+
     def human_step(self, human_input):
         """
         Processes the human input and appends it to the conversation history.
