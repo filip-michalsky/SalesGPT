@@ -100,17 +100,17 @@ class SalesGPTAPI:
             if self.sales_agent.conversation_history
             else ""
         )
+        print("AI LOG INTERMEDIATE STEPS: ", ai_log["intermediate_steps"])
 
         if (
-            self.use_tools
-            and ai_log["intermediate_steps"][1]["outputs"]["intermediate_steps"]
-            is not []
+            self.use_tools and 
+            "intermediate_steps" in ai_log and 
+            len(ai_log["intermediate_steps"]) > 0
         ):
+            
             try:
-                res_str = ai_log["intermediate_steps"][1]["outputs"][
-                    "intermediate_steps"
-                ][0]
-                tool_search_result = res_str[0]
+                res_str = ai_log["intermediate_steps"][0]
+                print("RES STR: ", res_str)
                 agent_action = res_str[0]
                 tool, tool_input, log = (
                     agent_action.tool,
@@ -119,10 +119,9 @@ class SalesGPTAPI:
                 )
                 actions = re.search(r"Action: (.*?)[\n]*Action Input: (.*)", log)
                 action_input = actions.group(2)
-                action_output = ai_log["intermediate_steps"][1]["outputs"][
-                    "intermediate_steps"
-                ][0][1]
-            except:
+                action_output =  res_str[1]
+            except Exception as e:
+                print("ERROR: ", e)
                 tool, tool_input, action, action_input, action_output = (
                     "",
                     "",
