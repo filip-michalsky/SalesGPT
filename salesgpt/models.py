@@ -5,11 +5,9 @@ from langchain_core.callbacks import (
     CallbackManagerForLLMRun,
 )
 from langchain_core.language_models import BaseChatModel, SimpleChatModel
-from langchain_core.messages import AIMessageChunk, BaseMessage, HumanMessage
+from langchain_core.messages import AIMessage, AIMessageChunk, BaseMessage, HumanMessage
 from langchain_core.outputs import ChatGeneration, ChatGenerationChunk, ChatResult
 from langchain_core.runnables import run_in_executor
-from langchain_core.messages import (
-    AIMessage)
 from langchain_openai import ChatOpenAI
 
 from salesgpt.tools import completion_bedrock
@@ -60,17 +58,16 @@ class BedrockCustomModel(ChatOpenAI):
             run_manager: A run manager with callbacks for the LLM.
         """
         last_message = messages[-1]
-        
+
         print(messages)
         response = completion_bedrock(
             model_id=self.model,
             system_prompt=self.system_prompt,
             messages=[{"content": last_message.content, "role": "user"}],
-            max_tokens=1000
+            max_tokens=1000,
         )
-        print('output', response)
-        content = response['content'][0]['text']
+        print("output", response)
+        content = response["content"][0]["text"]
         message = AIMessage(content=content)
         generation = ChatGeneration(message=message)
         return ChatResult(generations=[generation])
-

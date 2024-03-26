@@ -1,13 +1,18 @@
 from copy import deepcopy
 from typing import Any, Callable, Dict, List, Union
 
-from langchain.agents import (AgentExecutor, LLMSingleActionAgent,
-                              create_openai_tools_agent)
+from langchain.agents import (
+    AgentExecutor,
+    LLMSingleActionAgent,
+    create_openai_tools_agent,
+)
 from langchain.chains import LLMChain, RetrievalQA
 from langchain.chains.base import Chain
 from langchain_community.chat_models import ChatLiteLLM
-from langchain_core.agents import (_convert_agent_action_to_messages,
-                                   _convert_agent_observation_to_messages)
+from langchain_core.agents import (
+    _convert_agent_action_to_messages,
+    _convert_agent_observation_to_messages,
+)
 from langchain_core.language_models.llms import create_base_retry_decorator
 from litellm import acompletion
 from pydantic import Field
