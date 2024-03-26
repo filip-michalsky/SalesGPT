@@ -65,7 +65,7 @@ class SalesGPTAPI:
         sales_agent.seed_agent()
         return sales_agent
 
-    def do(self, human_input=None):
+    async def do(self, human_input=None):
         self.current_turn += 1
         current_turns = self.current_turn
         if current_turns >= self.max_num_turns:
@@ -78,12 +78,13 @@ class SalesGPTAPI:
         if human_input is not None:
             self.sales_agent.human_step(human_input)
 
-        ai_log = self.sales_agent.step(stream=False)
-        self.sales_agent.determine_conversation_stage()
+        ai_log = await self.sales_agent.astep(stream=False)
+        await self.sales_agent.adetermine_conversation_stage()
         # TODO - handle end of conversation in the API - send a special token to the client?
         if self.verbose:
             print("=" * 10)
-            print(ai_log)
+            print(f"AI LOG {ai_log}")
+            
         if (
             self.sales_agent.conversation_history
             and "<END_OF_CALL>" in self.sales_agent.conversation_history[-1]
@@ -99,17 +100,17 @@ class SalesGPTAPI:
             if self.sales_agent.conversation_history
             else ""
         )
+        #print("AI LOG INTERMEDIATE STEPS: ", ai_log["intermediate_steps"])
 
         if (
-            self.use_tools
-            and ai_log["intermediate_steps"][1]["outputs"]["intermediate_steps"]
-            is not []
+            self.use_tools and 
+            "intermediate_steps" in ai_log and 
+            len(ai_log["intermediate_steps"]) > 0
         ):
+            
             try:
-                res_str = ai_log["intermediate_steps"][1]["outputs"][
-                    "intermediate_steps"
-                ][0]
-                tool_search_result = res_str[0]
+                res_str = ai_log["intermediate_steps"][0]
+                print("RES STR: ", res_str)
                 agent_action = res_str[0]
                 tool, tool_input, log = (
                     agent_action.tool,
@@ -118,10 +119,9 @@ class SalesGPTAPI:
                 )
                 actions = re.search(r"Action: (.*?)[\n]*Action Input: (.*)", log)
                 action_input = actions.group(2)
-                action_output = ai_log["intermediate_steps"][1]["outputs"][
-                    "intermediate_steps"
-                ][0][1]
-            except:
+                action_output =  res_str[1]
+            except Exception as e:
+                print("ERROR: ", e)
                 tool, tool_input, action, action_input, action_output = (
                     "",
                     "",
