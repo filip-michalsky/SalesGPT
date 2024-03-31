@@ -53,7 +53,7 @@ We are building SalesGPT to power your best AI Sales Agents. Hence, we would lov
 
 We are building SalesGPT to power your best AI Sales Agents. Hence, we would love to learn more about use cases you are building towards which will fuel SalesGPT development roadmap.
 
-**If you want us to build better towards your needs, or need help with your AI Sales Agents, please reach out to chat with us: [SalesGPT Use Case Intake Survey](https://5b7mfhwiany.typeform.com/to/xxiEzPjy?utm_source=github-salesgpt&utm_medium=readme&utm_campaign=leads)**
+**If you want us to build better towards your needs, or need help with your AI Sales Agents, please reach out to chat with us: [SalesGPT Use Case Intake Survey](https://5b7mfhwiany.typeform.com/to/n6CbtxJm?utm_source=github-salesgpt&utm_medium=readme&utm_campaign=leads)**
 
 
 # Features
