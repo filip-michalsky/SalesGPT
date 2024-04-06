@@ -10,7 +10,9 @@ from langchain_community.chat_models import BedrockChat
 from langchain_community.vectorstores import Chroma
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from litellm import completion
-
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 def setup_knowledge_base(
     product_catalog: str = None, model_name: str = "gpt-3.5-turbo"
@@ -148,6 +150,67 @@ def generate_stripe_payment_link(query: str) -> str:
     )
     return response.text
 
+def get_mail_body_subject_from_query(query):
+    prompt = f"""
+    Given the query: "{query}", analyze the content and extract the necessary information to send an email. The information needed includes the recipient's email address, the subject of the email, and the body content of the email. 
+    Based on the analysis, return a dictionary in Python format where the keys are 'recipient', 'subject', and 'body', and the values are the corresponding pieces of information extracted from the query. 
+    For example, if the query was about sending an email to notify someone of an upcoming event, the output should look like this:
+    {{
+        "recipient": "example@example.com",
+        "subject": "Upcoming Event Notification",
+        "body": "Dear [Name], we would like to remind you of the upcoming event happening next week. We look forward to seeing you there."
+    }}
+    Now, based on the provided query, return the structured information as described.
+    Return a valid directly parsable json, dont return in it within a code snippet or add any kind of explanation!!
+    """
+    model_name = os.getenv("GPT_MODEL", "gpt-3.5-turbo-1106")
+
+    if "anthropic" in model_name:
+        response = completion_bedrock(
+            model_id=model_name,
+            system_prompt="You are a helpful assistant.",
+            messages=[{"content": prompt, "role": "user"}],
+            max_tokens=1000,
+        )
+
+        mail_body_subject = response["content"][0]["text"]
+
+    else:
+        response = completion(
+            model=model_name,
+            messages=[{"content": prompt, "role": "user"}],
+            max_tokens=1000,
+            temperature=0.2,
+        )
+        mail_body_subject = response.choices[0].message.content.strip()
+    return mail_body_subject
+
+def send_email_with_gmail(query, recipient_email):
+    sender_email = os.getenv("GMAIL_MAIL")
+    app_password = os.getenv("GMAIL_APP_PASSWORD")
+
+    # Create MIME message
+    msg = MIMEMultipart()
+    msg['From'] = sender_email
+    msg['To'] = recipient_email
+    msg['Subject'] = "Query Response"
+    body = query
+    msg.attach(MIMEText(body, 'plain'))
+
+    # Create server object with SSL option
+    server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+    server.login(sender_email, app_password)
+    text = msg.as_string()
+    server.sendmail(sender_email, recipient_email, text)
+    server.quit()
+    return "Email sent successfully."
+
+def send_email_tool(query):
+    email_details = get_mail_body_subject_from_query(query)
+    if isinstance(email_details, str):
+        email_details = json.loads(email_details)  # Ensure it's a dictionary
+    result = send_email_with_gmail(email_details)
+    return result
 
 def get_tools(product_catalog):
     # query to get_tools can be used to be embedded and relevant tools found
@@ -165,6 +228,11 @@ def get_tools(product_catalog):
             name="GeneratePaymentLink",
             func=generate_stripe_payment_link,
             description="useful to close a transaction with a customer. You need to include product name and quantity and customer name in the query input.",
+        ),
+        Tool(
+            name="SendEmail",
+            func=send_email_tool,
+            description="Sends an email based on the query input. The query should specify the recipient, subject, and body of the email.",
         ),
     ]
 
