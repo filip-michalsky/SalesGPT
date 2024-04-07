@@ -183,18 +183,20 @@ def get_mail_body_subject_from_query(query):
             temperature=0.2,
         )
         mail_body_subject = response.choices[0].message.content.strip()
+    print(mail_body_subject)
     return mail_body_subject
 
-def send_email_with_gmail(query, recipient_email):
+def send_email_with_gmail(email_details):
     sender_email = os.getenv("GMAIL_MAIL")
     app_password = os.getenv("GMAIL_APP_PASSWORD")
-
+    recipient_email = email_details["recipient"]
+    subject = email_details["subject"]
+    body = email_details["body"]
     # Create MIME message
     msg = MIMEMultipart()
     msg['From'] = sender_email
     msg['To'] = recipient_email
-    msg['Subject'] = "Query Response"
-    body = query
+    msg['Subject'] = subject
     msg.attach(MIMEText(body, 'plain'))
 
     # Create server object with SSL option
@@ -209,6 +211,8 @@ def send_email_tool(query):
     email_details = get_mail_body_subject_from_query(query)
     if isinstance(email_details, str):
         email_details = json.loads(email_details)  # Ensure it's a dictionary
+    print("EMAIL DETAILS")
+    print(email_details)
     result = send_email_with_gmail(email_details)
     return result
 
