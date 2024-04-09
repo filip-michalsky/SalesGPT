@@ -77,6 +77,9 @@ The AI Sales Agent understands the conversation stage (you can define your own s
 ### Close sales:
 -  The AI Agent can actually close sales by generating Stripe payment link and closing orders from customers.
 
+### Automated Email Communication:
+- Enhance your sales process with automated email communication. SalesGPT can now send personalized emails to prospects, including follow-ups or product information. 
+
 ### Use Any LLM to Power Your AI Sales Agent
 - Thanks to our integration with [LiteLLM](https://github.com/BerriAI/litellm), you can choose *any closed/open-sourced LLM* to work with SalesGPT! Thanks to LiteLLM maintainers for this contribution!
 

@@ -187,27 +187,32 @@ def get_mail_body_subject_from_query(query):
     return mail_body_subject
 
 def send_email_with_gmail(email_details):
-    sender_email = os.getenv("GMAIL_MAIL")
-    app_password = os.getenv("GMAIL_APP_PASSWORD")
-    recipient_email = email_details["recipient"]
-    subject = email_details["subject"]
-    body = email_details["body"]
-    # Create MIME message
-    msg = MIMEMultipart()
-    msg['From'] = sender_email
-    msg['To'] = recipient_email
-    msg['Subject'] = subject
-    msg.attach(MIMEText(body, 'plain'))
+    '''.env should include GMAIL_MAIL and GMAIL_APP_PASSWORD to work correctly'''
+    try:
+        sender_email = os.getenv("GMAIL_MAIL")
+        app_password = os.getenv("GMAIL_APP_PASSWORD")
+        recipient_email = email_details["recipient"]
+        subject = email_details["subject"]
+        body = email_details["body"]
+        # Create MIME message
+        msg = MIMEMultipart()
+        msg['From'] = sender_email
+        msg['To'] = recipient_email
+        msg['Subject'] = subject
+        msg.attach(MIMEText(body, 'plain'))
 
-    # Create server object with SSL option
-    server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-    server.login(sender_email, app_password)
-    text = msg.as_string()
-    server.sendmail(sender_email, recipient_email, text)
-    server.quit()
-    return "Email sent successfully."
+        # Create server object with SSL option
+        server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+        server.login(sender_email, app_password)
+        text = msg.as_string()
+        server.sendmail(sender_email, recipient_email, text)
+        server.quit()
+        return "Email sent successfully."
+    except Exception as e:
+        return f"Email was not sent successfully, error: {e}"
 
 def send_email_tool(query):
+    '''Sends an email based on the single query string'''
     email_details = get_mail_body_subject_from_query(query)
     if isinstance(email_details, str):
         email_details = json.loads(email_details)  # Ensure it's a dictionary
@@ -220,7 +225,7 @@ def get_tools(product_catalog):
     # query to get_tools can be used to be embedded and relevant tools found
     # see here: https://langchain-langchain.vercel.app/docs/use_cases/agents/custom_agent_with_plugin_retrieval#tool-retriever
 
-    # we only use two tools for now, but this is highly extensible!
+    # we only use three tools for now, but this is highly extensible!
     knowledge_base = setup_knowledge_base(product_catalog)
     tools = [
         Tool(
