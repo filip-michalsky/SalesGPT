@@ -221,6 +221,30 @@ def send_email_tool(query):
     result = send_email_with_gmail(email_details)
     return result
 
+
+def generate_calendly_invitation_link(query):
+    '''Generate a calendly invitation link based on the single query string'''
+    event_type_uuid = os.getenv("CALENDLY_EVENT_UUID")
+    api_key = os.getenv('CALENDLY_API_KEY')
+    headers = {
+        'Authorization': f'Bearer {api_key}',
+        'Content-Type': 'application/json'
+    }
+    url = 'https://api.calendly.com/scheduling_links'
+    payload = {
+    "max_event_count": 1,
+    "owner": f"https://api.calendly.com/event_types/{event_type_uuid}",
+    "owner_type": "EventType"
+    }
+    
+    
+    response = requests.post(url, json=payload, headers=headers)
+    if response.status_code == 201:
+        data = response.json()
+        return f"url: {data['resource']['booking_url']}"
+    else:
+        return "Failed to create Calendly link: "
+
 def get_tools(product_catalog):
     # query to get_tools can be used to be embedded and relevant tools found
     # see here: https://langchain-langchain.vercel.app/docs/use_cases/agents/custom_agent_with_plugin_retrieval#tool-retriever
@@ -243,6 +267,12 @@ def get_tools(product_catalog):
             func=send_email_tool,
             description="Sends an email based on the query input. The query should specify the recipient, subject, and body of the email.",
         ),
+        Tool(
+            name="SendCalendlyInvitation",
+            func=generate_calendly_invitation_link,
+            description='''Useful for when you need to create invite for a personal meeting in Sleep Heaven shop. 
+            Sends a calendly invitation based on the query input.''',
+        )
     ]
 
     return tools
