@@ -223,7 +223,7 @@ export function ChatInterface() {
           />
           <span className={`text-frame p-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-900`}>
           <ReactMarkdown rehypePlugins={[rehypeRaw]} components={{
-            a: ({node, ...props}) => <a {...props} className="text-blue-500 hover:text-blue-700" />
+            a: ({node, ...props}) => <a {...props} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-700" />
           }}>
             {message.text}
           </ReactMarkdown>
