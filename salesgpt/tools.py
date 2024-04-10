@@ -249,7 +249,7 @@ def get_tools(product_catalog):
     # query to get_tools can be used to be embedded and relevant tools found
     # see here: https://langchain-langchain.vercel.app/docs/use_cases/agents/custom_agent_with_plugin_retrieval#tool-retriever
 
-    # we only use three tools for now, but this is highly extensible!
+    # we only use four tools for now, but this is highly extensible!
     knowledge_base = setup_knowledge_base(product_catalog)
     tools = [
         Tool(

@@ -80,6 +80,9 @@ The AI Sales Agent understands the conversation stage (you can define your own s
 ### Automated Email Communication:
 - Enhance your sales process with automated email communication. SalesGPT can now send personalized emails to prospects, including follow-ups or product information. 
 
+### Calendly Meeting Scheduling
+- The AI Agent can now facilitate scheduling meetings by generating Calendly links.
+
 ### Use Any LLM to Power Your AI Sales Agent
 - Thanks to our integration with [LiteLLM](https://github.com/BerriAI/litellm), you can choose *any closed/open-sourced LLM* to work with SalesGPT! Thanks to LiteLLM maintainers for this contribution!
 
