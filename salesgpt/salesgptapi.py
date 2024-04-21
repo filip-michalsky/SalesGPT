@@ -120,6 +120,10 @@ class SalesGPTAPI:
                 actions = re.search(r"Action: (.*?)[\n]*Action Input: (.*)", log)
                 action_input = actions.group(2)
                 action_output =  res_str[1]
+                if tool_input == action_input:
+                    action_input=""
+                    action_output = action_output.replace("<web_search>", "<a href='https://www.google.com/search?q=")
+                    action_output = action_output.replace("</web_search>", "' target='_blank' rel='noopener noreferrer'>")
             except Exception as e:
                 print("ERROR: ", e)
                 tool, tool_input, action, action_input, action_output = (

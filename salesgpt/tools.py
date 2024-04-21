@@ -10,7 +10,9 @@ from langchain_community.chat_models import BedrockChat
 from langchain_community.vectorstores import Chroma
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from litellm import completion
-
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 def setup_knowledge_base(
     product_catalog: str = None, model_name: str = "gpt-3.5-turbo"
@@ -148,12 +150,106 @@ def generate_stripe_payment_link(query: str) -> str:
     )
     return response.text
 
+def get_mail_body_subject_from_query(query):
+    prompt = f"""
+    Given the query: "{query}", analyze the content and extract the necessary information to send an email. The information needed includes the recipient's email address, the subject of the email, and the body content of the email. 
+    Based on the analysis, return a dictionary in Python format where the keys are 'recipient', 'subject', and 'body', and the values are the corresponding pieces of information extracted from the query. 
+    For example, if the query was about sending an email to notify someone of an upcoming event, the output should look like this:
+    {{
+        "recipient": "example@example.com",
+        "subject": "Upcoming Event Notification",
+        "body": "Dear [Name], we would like to remind you of the upcoming event happening next week. We look forward to seeing you there."
+    }}
+    Now, based on the provided query, return the structured information as described.
+    Return a valid directly parsable json, dont return in it within a code snippet or add any kind of explanation!!
+    """
+    model_name = os.getenv("GPT_MODEL", "gpt-3.5-turbo-1106")
+
+    if "anthropic" in model_name:
+        response = completion_bedrock(
+            model_id=model_name,
+            system_prompt="You are a helpful assistant.",
+            messages=[{"content": prompt, "role": "user"}],
+            max_tokens=1000,
+        )
+
+        mail_body_subject = response["content"][0]["text"]
+
+    else:
+        response = completion(
+            model=model_name,
+            messages=[{"content": prompt, "role": "user"}],
+            max_tokens=1000,
+            temperature=0.2,
+        )
+        mail_body_subject = response.choices[0].message.content.strip()
+    print(mail_body_subject)
+    return mail_body_subject
+
+def send_email_with_gmail(email_details):
+    '''.env should include GMAIL_MAIL and GMAIL_APP_PASSWORD to work correctly'''
+    try:
+        sender_email = os.getenv("GMAIL_MAIL")
+        app_password = os.getenv("GMAIL_APP_PASSWORD")
+        recipient_email = email_details["recipient"]
+        subject = email_details["subject"]
+        body = email_details["body"]
+        # Create MIME message
+        msg = MIMEMultipart()
+        msg['From'] = sender_email
+        msg['To'] = recipient_email
+        msg['Subject'] = subject
+        msg.attach(MIMEText(body, 'plain'))
+
+        # Create server object with SSL option
+        server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+        server.login(sender_email, app_password)
+        text = msg.as_string()
+        server.sendmail(sender_email, recipient_email, text)
+        server.quit()
+        return "Email sent successfully."
+    except Exception as e:
+        return f"Email was not sent successfully, error: {e}"
+
+def send_email_tool(query):
+    '''Sends an email based on the single query string'''
+    email_details = get_mail_body_subject_from_query(query)
+    if isinstance(email_details, str):
+        email_details = json.loads(email_details)  # Ensure it's a dictionary
+    print("EMAIL DETAILS")
+    print(email_details)
+    result = send_email_with_gmail(email_details)
+    return result
+
+
+def generate_calendly_invitation_link(query):
+    '''Generate a calendly invitation link based on the single query string'''
+    event_type_uuid = os.getenv("CALENDLY_EVENT_UUID")
+    api_key = os.getenv('CALENDLY_API_KEY')
+    headers = {
+        'Authorization': f'Bearer {api_key}',
+        'Content-Type': 'application/json'
+    }
+    url = 'https://api.calendly.com/scheduling_links'
+    payload = {
+    "max_event_count": 1,
+    "owner": f"https://api.calendly.com/event_types/{event_type_uuid}",
+    "owner_type": "EventType"
+    }
+    
+    
+    response = requests.post(url, json=payload, headers=headers)
+    if response.status_code == 201:
+        data = response.json()
+        return f"url: {data['resource']['booking_url']}"
+    else:
+        return "Failed to create Calendly link: "
 
 def get_tools(product_catalog):
     # query to get_tools can be used to be embedded and relevant tools found
     # see here: https://langchain-langchain.vercel.app/docs/use_cases/agents/custom_agent_with_plugin_retrieval#tool-retriever
 
-    # we only use two tools for now, but this is highly extensible!
+    # we only use four tools for now, but this is highly extensible!
     knowledge_base = setup_knowledge_base(product_catalog)
     tools = [
         Tool(
@@ -166,6 +262,17 @@ def get_tools(product_catalog):
             func=generate_stripe_payment_link,
             description="useful to close a transaction with a customer. You need to include product name and quantity and customer name in the query input.",
         ),
+        Tool(
+            name="SendEmail",
+            func=send_email_tool,
+            description="Sends an email based on the query input. The query should specify the recipient, subject, and body of the email.",
+        ),
+        Tool(
+            name="SendCalendlyInvitation",
+            func=generate_calendly_invitation_link,
+            description='''Useful for when you need to create invite for a personal meeting in Sleep Heaven shop. 
+            Sends a calendly invitation based on the query input.''',
+        )
     ]
 
     return tools
