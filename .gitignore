@@ -2,9 +2,11 @@
 
 /my-app/node_modules
 
+examples/sales_agent_bedrock.ipynb
 
 *.log
 **.env
+.env.fe
 .DS_Store
 **__pycache__
 /scratch
@@ -122,6 +124,8 @@ celerybeat-schedule
 
 # Environments
 .env
+.env.local
+.env.production
 .venv
 env/
 venv/

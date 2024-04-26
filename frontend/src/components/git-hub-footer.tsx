@@ -3,6 +3,7 @@
  * @see https://v0.dev/t/WhR4kNrAN2M
  */
 import Link from "next/link"
+import React from 'react'; // Ensure React is imported if not already
 
 export function GitHubFooter() {
   return (
@@ -22,7 +23,7 @@ export function GitHubFooter() {
 
 
 
-function GithubIcon(props) {
+function GithubIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}

@@ -1,17 +1,24 @@
 from copy import deepcopy
 from typing import Any, Callable, Dict, List, Union
 
-from langchain.agents import (AgentExecutor, LLMSingleActionAgent,
-                              create_openai_tools_agent)
+from langchain.agents import (
+    AgentExecutor,
+    LLMSingleActionAgent,
+    create_openai_tools_agent,
+)
 from langchain.chains import LLMChain, RetrievalQA
 from langchain.chains.base import Chain
 from langchain_community.chat_models import ChatLiteLLM
+from langchain_core.agents import (
+    _convert_agent_action_to_messages,
+    _convert_agent_observation_to_messages,
+)
 from langchain_core.language_models.llms import create_base_retry_decorator
 from litellm import acompletion
 from pydantic import Field
-from langchain_core.agents import _convert_agent_action_to_messages,_convert_agent_observation_to_messages
 
 from salesgpt.chains import SalesConversationChain, StageAnalyzerChain
+from salesgpt.custom_invoke import CustomAgentExecutor
 from salesgpt.logger import time_logger
 from salesgpt.parsers import SalesConvoOutputParser
 from salesgpt.prompts import SALES_AGENT_TOOLS_PROMPT
@@ -19,7 +26,7 @@ from salesgpt.stages import CONVERSATION_STAGES
 from salesgpt.templates import CustomPromptTemplateForTools
 from salesgpt.tools import get_tools, setup_knowledge_base
 
-from salesgpt.custom_invoke import CustomAgentExecutor
+
 def _create_retry_decorator(llm: Any) -> Callable[[Any], Any]:
     """
     Creates a retry decorator for handling OpenAI API errors.
@@ -58,7 +65,7 @@ class SalesGPT(Chain):
     sales_conversation_utterance_chain: SalesConversationChain = Field(...)
     conversation_stage_dict: Dict = CONVERSATION_STAGES
 
-    model_name: str = "gpt-3.5-turbo-0613" # TODO - make this an env variable
+    model_name: str = "gpt-3.5-turbo-0613"  # TODO - make this an env variable
 
     use_tools: bool = False
     salesperson_name: str = "Ted Lasso"
@@ -141,24 +148,72 @@ class SalesGPT(Chain):
             None
         """
         print(f"Conversation Stage ID before analysis: {self.conversation_stage_id}")
-        print('Conversation history:')
+        print("Conversation history:")
         print(self.conversation_history)
-        stage_analyzer_output = self.stage_analyzer_chain.invoke(input = {
-            "conversation_history":"\n".join(self.conversation_history).rstrip("\n"),
-            "conversation_stage_id":self.conversation_stage_id,
-            "conversation_stages":"\n".join(
-                [
-                    str(key) + ": " + str(value)
-                    for key, value in CONVERSATION_STAGES.items()
-                ]
-            ),
+        stage_analyzer_output = self.stage_analyzer_chain.invoke(
+            input={
+                "conversation_history": "\n".join(self.conversation_history).rstrip(
+                    "\n"
+                ),
+                "conversation_stage_id": self.conversation_stage_id,
+                "conversation_stages": "\n".join(
+                    [
+                        str(key) + ": " + str(value)
+                        for key, value in CONVERSATION_STAGES.items()
+                    ]
+                ),
             },
-            return_only_outputs=False
+            return_only_outputs=False,
         )
-        print('Stage analyzer output')
+        print("Stage analyzer output")
         print(stage_analyzer_output)
         self.conversation_stage_id = stage_analyzer_output.get("text")
-        
+
+        self.current_conversation_stage = self.retrieve_conversation_stage(
+            self.conversation_stage_id
+        )
+
+        print(f"Conversation Stage: {self.current_conversation_stage}")
+
+    @time_logger
+    async def adetermine_conversation_stage(self):
+        """
+        Determines the current conversation stage based on the conversation history.
+
+        This method uses the stage_analyzer_chain to analyze the conversation history and determine the current stage.
+        The conversation history is joined into a single string, with each entry separated by a newline character.
+        The current conversation stage ID is also passed to the stage_analyzer_chain.
+
+        The method then prints the determined conversation stage ID and retrieves the corresponding conversation stage
+        from the conversation_stage_dict dictionary using the retrieve_conversation_stage method.
+
+        Finally, the method prints the determined conversation stage.
+
+        Returns:
+            None
+        """
+        print(f"Conversation Stage ID before analysis: {self.conversation_stage_id}")
+        print("Conversation history:")
+        print(self.conversation_history)
+        stage_analyzer_output = await self.stage_analyzer_chain.ainvoke(
+            input={
+                "conversation_history": "\n".join(self.conversation_history).rstrip(
+                    "\n"
+                ),
+                "conversation_stage_id": self.conversation_stage_id,
+                "conversation_stages": "\n".join(
+                    [
+                        str(key) + ": " + str(value)
+                        for key, value in CONVERSATION_STAGES.items()
+                    ]
+                ),
+            },
+            return_only_outputs=False,
+        )
+        print("Stage analyzer output")
+        print(stage_analyzer_output)
+        self.conversation_stage_id = stage_analyzer_output.get("text")
+
         self.current_conversation_stage = self.retrieve_conversation_stage(
             self.conversation_stage_id
         )
@@ -183,12 +238,12 @@ class SalesGPT(Chain):
     @time_logger
     def step(self, stream: bool = False):
         """
-        Executes a step in the conversation. If the stream argument is set to True, 
-        it returns a streaming generator object for manipulating streaming chunks in downstream applications. 
+        Executes a step in the conversation. If the stream argument is set to True,
+        it returns a streaming generator object for manipulating streaming chunks in downstream applications.
         If the stream argument is set to False, it calls the _call method with an empty dictionary as input.
 
         Args:
-            stream (bool, optional): A flag indicating whether to return a streaming generator object. 
+            stream (bool, optional): A flag indicating whether to return a streaming generator object.
             Defaults to False.
 
         Returns:
@@ -202,41 +257,83 @@ class SalesGPT(Chain):
     @time_logger
     async def astep(self, stream: bool = False):
         """
-        Executes an asynchronous step in the conversation. 
+        Executes an asynchronous step in the conversation.
 
         If the stream argument is set to False, it calls the _acall method with an empty dictionary as input.
         If the stream argument is set to True, it returns a streaming generator object for manipulating streaming chunks in downstream applications.
 
         Args:
-            stream (bool, optional): A flag indicating whether to return a streaming generator object. 
+            stream (bool, optional): A flag indicating whether to return a streaming generator object.
             Defaults to False.
 
         Returns:
             Generator: A streaming generator object if stream is set to True. Otherwise, it returns None.
         """
         if not stream:
-            self._acall(inputs={})
+            return await self.acall(inputs={})
         else:
             return await self._astreaming_generator()
 
     @time_logger
-    def acall(self, *args, **kwargs):
+    async def acall(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
+    
         """
-        This method is currently not implemented.
+        Executes one step of the sales agent.
+
+        This function overrides the input temporarily with the current state of the conversation,
+        generates the agent's utterance using either the sales agent executor or the sales conversation utterance chain,
+        adds the agent's response to the conversation history, and returns the AI message.
 
         Parameters
         ----------
-        \*args : tuple
-            Variable length argument list.
-        \*\*kwargs : dict
-            Arbitrary keyword arguments.
+        inputs : Dict[str, Any]
+            The initial inputs for the sales agent.
 
-        Raises
-        ------
-        NotImplementedError
-            Indicates that this method has not been implemented yet.
+        Returns
+        -------
+        Dict[str, Any]
+            The AI message generated by the sales agent.
+
         """
-        raise NotImplementedError("This method has not been implemented yet.")
+        # override inputs temporarily
+        inputs = {
+            "input": "",
+            "conversation_stage": self.current_conversation_stage,
+            "conversation_history": "\n".join(self.conversation_history),
+            "salesperson_name": self.salesperson_name,
+            "salesperson_role": self.salesperson_role,
+            "company_name": self.company_name,
+            "company_business": self.company_business,
+            "company_values": self.company_values,
+            "conversation_purpose": self.conversation_purpose,
+            "conversation_type": self.conversation_type,
+        }
+
+        # Generate agent's utterance
+        if self.use_tools:
+            ai_message = await self.sales_agent_executor.ainvoke(inputs)
+            output = ai_message["output"]
+        else:
+            ai_message = await self.sales_conversation_utterance_chain.ainvoke(
+                inputs, return_intermediate_steps=True
+            )
+            output = ai_message["text"]
+
+        # Add agent's response to conversation history
+        agent_name = self.salesperson_name
+        output = agent_name + ": " + output
+        if "<END_OF_TURN>" not in output:
+            output += " <END_OF_TURN>"
+        self.conversation_history.append(output)
+
+        if self.verbose:
+            tool_status = "USE TOOLS INVOKE:" if self.use_tools else "WITHOUT TOOLS:"
+            print(f"{tool_status}\n#\n#\n#\n#\n------------------")
+            print(f"AI Message: {ai_message}")
+            print()
+            print(f"Output: {output.replace('<END_OF_TURN>', '')}")
+
+        return ai_message
 
     @time_logger
     def _prep_messages(self):
@@ -251,7 +348,7 @@ class SalesGPT(Chain):
         Returns:
             list: A list of prepared messages to be passed to a streaming generator.
         """
-        
+
         prompt = self.sales_conversation_utterance_chain.prep_prompts(
             [
                 dict(
@@ -274,7 +371,7 @@ class SalesGPT(Chain):
 
         if self.sales_conversation_utterance_chain.verbose:
             pass
-            #print("\033[92m" + inception_messages[0].content + "\033[0m")
+            # print("\033[92m" + inception_messages[0].content + "\033[0m")
         return [message_dict]
 
     @time_logger
@@ -317,7 +414,7 @@ class SalesGPT(Chain):
         Use tenacity to retry the async completion call.
 
         This method uses the tenacity library to retry the asynchronous completion call in case of failure.
-        It creates a retry decorator using the '_create_retry_decorator' method and applies it to the 
+        It creates a retry decorator using the '_create_retry_decorator' method and applies it to the
         '_completion_with_retry' function which makes the actual asynchronous completion call.
 
         Parameters
@@ -352,7 +449,7 @@ class SalesGPT(Chain):
         clients simultaneously.
 
         This function returns a streaming generator which can manipulate partial output from an LLM
-        in-flight of the generation. This is useful in scenarios where the sales agent wants to take an action 
+        in-flight of the generation. This is useful in scenarios where the sales agent wants to take an action
         before the full LLM output is available. For instance, if we want to do text to speech on the partial LLM output.
 
         Returns
@@ -381,7 +478,6 @@ class SalesGPT(Chain):
             stream=True,
             model=self.model_name,
         )
-            
 
     def _call(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
         """
@@ -421,7 +517,9 @@ class SalesGPT(Chain):
             ai_message = self.sales_agent_executor.invoke(inputs)
             output = ai_message["output"]
         else:
-            ai_message = self.sales_conversation_utterance_chain.invoke(inputs, return_intermediate_steps=True)
+            ai_message = self.sales_conversation_utterance_chain.invoke(
+                inputs, return_intermediate_steps=True
+            )
             output = ai_message["text"]
 
         # Add agent's response to conversation history
@@ -466,12 +564,14 @@ class SalesGPT(Chain):
             The initialized SalesGPT Controller.
         """
         stage_analyzer_chain = StageAnalyzerChain.from_llm(llm, verbose=verbose)
-        sales_conversation_utterance_chain = SalesConversationChain.from_llm(llm, verbose=verbose)
-        
+        sales_conversation_utterance_chain = SalesConversationChain.from_llm(
+            llm, verbose=verbose
+        )
+
         # Handle custom prompts
         use_custom_prompt = kwargs.pop("use_custom_prompt", False)
         custom_prompt = kwargs.pop("custom_prompt", None)
-        
+
         sales_conversation_utterance_chain = SalesConversationChain.from_llm(
             llm,
             verbose=verbose,
@@ -488,14 +588,15 @@ class SalesGPT(Chain):
         elif isinstance(use_tools_value, bool):
             use_tools = use_tools_value
         else:
-            raise ValueError("use_tools must be a boolean or a string ('True' or 'False')")
+            raise ValueError(
+                "use_tools must be a boolean or a string ('True' or 'False')"
+            )
         sales_agent_executor = None
         knowledge_base = None
-        
+
         if use_tools:
             product_catalog = kwargs.pop("product_catalog", None)
-            knowledge_base = setup_knowledge_base(product_catalog)
-            tools = get_tools(knowledge_base)
+            tools = get_tools(product_catalog)
 
             prompt = CustomPromptTemplateForTools(
                 template=SALES_AGENT_TOOLS_PROMPT,
@@ -515,7 +616,9 @@ class SalesGPT(Chain):
             )
             llm_chain = LLMChain(llm=llm, prompt=prompt, verbose=verbose)
             tool_names = [tool.name for tool in tools]
-            output_parser = SalesConvoOutputParser(ai_prefix=kwargs.get("salesperson_name", ""))
+            output_parser = SalesConvoOutputParser(
+                ai_prefix=kwargs.get("salesperson_name", ""), verbose=verbose
+            )
             sales_agent_with_tools = LLMSingleActionAgent(
                 llm_chain=llm_chain,
                 output_parser=output_parser,
@@ -524,7 +627,10 @@ class SalesGPT(Chain):
             )
 
             sales_agent_executor = CustomAgentExecutor.from_agent_and_tools(
-                agent=sales_agent_with_tools, tools=tools, verbose=verbose, return_intermediate_steps=True
+                agent=sales_agent_with_tools,
+                tools=tools,
+                verbose=verbose,
+                return_intermediate_steps=True,
             )
 
         return cls(

@@ -1,10 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid'; // For generating unique session_id
 import { Input } from "@/components/ui/input";
 import BotIcon from '@/components/ui/bot-icon';
 import LoaderIcon from '@/components/ui/loader-icon';
 import styles from './ChatInterface.module.css';
+import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
 
+import { PostHog } from 'posthog-node'
+
+const client = new PostHog(
+  `${process.env.NEXT_PUBLIC_POSTHOG_ID}`,    
+  { host: 'https://app.posthog.com',
+    disableGeoip: false, 
+    requestTimeout: 30000
+  }
+)
 
 type Message = {
   id: string;
@@ -19,6 +30,7 @@ type Message = {
     actionInput?: string
   };
 };
+
 
 export function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -37,7 +49,26 @@ export function ChatInterface() {
     actionInput?: string
   }[]>([]);
   const [maxHeight, setMaxHeight] = useState('80vh'); // Default to 100% of the viewport height
+  const [isBotTyping, setIsBotTyping] = useState(false);
+  const messagesEndRef = useRef<null | HTMLDivElement>(null);
+  const thinkingProcessEndRef = useRef<null | HTMLDivElement>(null);
+  const [botHasResponded, setBotHasResponded] = useState(false);
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+  
+  useEffect(() => {
+    thinkingProcessEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [thinkingProcess]);
 
+  useEffect(() => {
+    if (botHasResponded) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      thinkingProcessEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      setBotHasResponded(false); // Reset the flag
+    }
+  }, [botHasResponded]);
+  
   useEffect(() => {
     // This function will be called on resize events
     const handleResize = () => {
@@ -53,17 +84,29 @@ export function ChatInterface() {
     // Return a cleanup function to remove the event listener when the component unmounts
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-
+  
   useEffect(() => {
     // Function to fetch the bot name
     const fetchBotName = async () => {
+      // console.log("REACT_APP_API_URL:", process.env.NEXT_PUBLIC_API_URL); // Added console logging for debugging
+      client.capture({
+        distinctId: session_id,
+        event: 'fetched-bot-name',
+        properties: {
+          $current_url: window.location.href,
+        },
+    })
       try {
-        const response = await fetch('http://localhost:8000/botname');
-
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/botname`, {
+          method: 'GET', // Method is optional since GET is the default value
+          headers: {
+            'Authorization': `Bearer ${process.env.NEXT_PUBLIC_AUTH_KEY}`
+          },
+        });
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.statusText}`);
         }
-
+  
         const data = await response.json();
         setBotName(data.name); // Save the bot name in the state
         console.log(botName)
@@ -90,17 +133,26 @@ export function ChatInterface() {
   };
 
   const handleBotResponse = async (userMessage: string) => {
+    client.capture({
+      distinctId: session_id,
+      event: 'sent-message',
+      properties: {
+        $current_url: window.location.href,
+      },
+  })
     const requestData = {
       session_id,
       human_say: userMessage,
       stream,
     };
-  
+    setIsBotTyping(true); // Start showing the typing indicator
+
     try {
-      const response = await fetch('http://localhost:8000/chat', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_AUTH_KEY}`
         },
         body: JSON.stringify(requestData),
       });
@@ -132,6 +184,9 @@ export function ChatInterface() {
         }}
       } catch (error) {
         console.error("Failed to fetch bot's response:", error);
+      } finally {
+        setIsBotTyping(false); // Stop showing the typing indicator
+        setBotHasResponded(true);
       }
   };  
   return (
@@ -144,9 +199,9 @@ export function ChatInterface() {
         <div className="flex flex-col w-1/2 h-full bg-white rounded-lg shadow-md p-4 mr-4 chat-messages" style={{maxHeight}}>
           <div className="flex items-center mb-4">
             <BotIcon className="h-6 w-6 text-gray-500 mr-2" />
-            <h2 className="text-lg font-semibold">Chat Interface</h2>
+            <h2 className="text-lg font-semibold">Chat Interface With The Customer</h2>
           </div>
-        <div className="flex-1 overflow-y-auto">
+          <div className={`flex-1 overflow-y-auto ${styles.hideScrollbar}`}>
         {messages.map((message, index) => (
   <div key={message.id} className="flex items-center p-2">
     {message.sender === 'user' ? (
@@ -157,6 +212,7 @@ export function ChatInterface() {
         </span>
       </>
     ) : (
+      
       <div className="flex w-full justify-between">
         <div className="flex items-center">
           <img
@@ -166,7 +222,11 @@ export function ChatInterface() {
             style={{ width: 24, height: 24, objectFit: "cover" }}
           />
           <span className={`text-frame p-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-900`}>
+          <ReactMarkdown rehypePlugins={[rehypeRaw]} components={{
+            a: ({node, ...props}) => <a {...props} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-700" />
+          }}>
             {message.text}
+          </ReactMarkdown>
           </span>
         </div>
         {message.sender === 'bot' && (
@@ -179,8 +239,19 @@ export function ChatInterface() {
         )}
       </div>
     )}
+    <div ref={messagesEndRef} />
   </div>
 ))}
+  {isBotTyping && (
+    <div className="flex items-center justify-start">
+      <img alt="Bot" className="rounded-full mr-2" src="/maskot.png" style={{ width: 24, height: 24, objectFit: "cover" }} />
+      <div className={`${styles.typingBubble}`}>
+      <span className={`${styles.typingDot}`}></span>
+      <span className={`${styles.typingDot}`}></span>
+      <span className={`${styles.typingDot}`}></span>
+    </div>
+    </div>
+  )}
           </div>
           <div className="mt-4">
             <Input
@@ -199,9 +270,9 @@ export function ChatInterface() {
         <div className="flex flex-col w-1/2 h-full bg-white rounded-lg shadow-md p-4 thinking-process" style={{maxHeight}}>
   <div className="flex items-center mb-4">
     <BotIcon className="h-6 w-6 text-gray-500 mr-2" />
-    <h2 className="text-lg font-semibold">{botName} Thinking Process</h2>
+    <h2 className="text-lg font-semibold">AI Sales Agent {botName} Thought Process</h2>
   </div>
-  <div className="flex-1 overflow-y-auto hide-scroll" style={{ overflowX: 'hidden' }}>
+  <div className={`flex-1 overflow-y-auto hide-scroll ${styles.hideScrollbar}`} style={{ overflowX: 'hidden' }}>
             <div>
               {thinkingProcess.map((process, index) => (
                 <div key={index} className="break-words my-2">
@@ -222,8 +293,10 @@ export function ChatInterface() {
                 </div>
               ))}
             </div>
+            <div ref={thinkingProcessEndRef} />
 </div></div>
       </main>
     </div>
   );
 }
+

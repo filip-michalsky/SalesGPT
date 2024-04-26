@@ -29,8 +29,8 @@ def time_logger(func):
     """
     Decorator function to log the time taken by any function.
 
-    This decorator logs the execution time of the decorated function. It logs the start time before the function 
-    execution, the end time after the function execution, and calculates the execution time. The function name and 
+    This decorator logs the execution time of the decorated function. It logs the start time before the function
+    execution, the end time after the function execution, and calculates the execution time. The function name and
     execution time are then logged at the INFO level.
 
     Args:

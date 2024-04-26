@@ -18,24 +18,14 @@ class SalesConvoOutputParser(AgentOutputParser):
             print("TEXT")
             print(text)
             print("-------")
-        if f"{self.ai_prefix}:" in text:
-            return AgentFinish(
-                {"output": text.split(f"{self.ai_prefix}:")[-1].strip()}, text
-            )
         regex = r"Action: (.*?)[\n]*Action Input: (.*)"
         match = re.search(regex, text)
         if not match:
-            ## TODO - this is not entirely reliable, sometimes results in an error.
             return AgentFinish(
-                {
-                    "output": "I apologize, I was unable to find the answer to your question. Is there anything else I can help with?"
-                },
-                text,
+                {"output": text.split(f"{self.ai_prefix}:")[-1].strip()}, text
             )
-            # raise OutputParserException(f"Could not parse LLM output: `{text}`")
         action = match.group(1)
         action_input = match.group(2)
-        print(f"AAACT:{action}\n\n\n{action_input}")
         return AgentAction(action.strip(), action_input.strip(" ").strip('"'), text)
 
     @property

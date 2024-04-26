@@ -2,7 +2,6 @@
 
 # :robot: SalesGPT - Open Source AI Agent for Sales
 
-
 <img src="https://demo-bucket-45.s3.amazonaws.com/filtr145_simple_robot_mascot_for_a_sales_company_professional_5282c6e6-40c1-4576-95c8-e4ba3c389f3f.png"  width="200">
 
 ![GitHub Repo stars](https://img.shields.io/github/stars/filip-michalsky/SalesGPT?style=social)
@@ -28,6 +27,35 @@ Morever, SalesGPT has access to tools, such as your own pre-defined product know
 
 We are building SalesGPT to power your best AI Sales Agents. Hence, we would love to learn more about use cases you are building towards which will fuel SalesGPT development roadmap, so please don't hesitate to reach out.
 
+## :red_circle: Latest News
+
+- AI Sales Agents can now ACTUALLY sell! They autonomously generate Stripe payment links to sell products and services to customers.
+- You can now test your AI Sales Agents via our frontend.
+- Sales Agent can now take advantage of **tools**, such as look up products in a product catalog!
+
+# Demos and Use Cases
+
+<i>Unload AI Sales Agent Demos - Powered by SalesGPT:</i> *Our new virtual workforce?* 🤔
+
+**Demo #1: Sarah - Patient Coordinator at South Orange Pediatrics**
+
+- 100X Your Healthcare Admin with our Virtual Workforce 
+
+[![Sarah - South Orange Pediatrics Patient Coordinator](https://cdn.loom.com/sessions/thumbnails/314eb0562fda41ea94e25b267acda6f9-with-play.gif)](https://www.loom.com/share/314eb0562fda41ea94e25b267acda6f9)
+
+**Demo #2: Ted - Autonomously create payment links and collect customer payments**
+
+[![Ted - Mattress Sales Representative Closing Deals](https://cdn.loom.com/sessions/thumbnails/440086e17aff42d79881a6eca147ae5e-with-play.gif)](https://www.loom.com/share/440086e17aff42d79881a6eca147ae5e)
+
+>**Try it yourself on our [SalesGPT hosted frontend demo](https://sales-gpt-frontend-git-main-filip-odysseypartns-projects.vercel.app/chat).**
+
+# Contact Us for Suggestions, Questions, or Help
+
+We are building SalesGPT to power your best AI Sales Agents. Hence, we would love to learn more about use cases you are building towards which will fuel SalesGPT development roadmap.
+
+**If you want us to build better towards your needs, or need help with your AI Sales Agents, please reach out to chat with us: [SalesGPT Use Case Intake Survey](https://5b7mfhwiany.typeform.com/to/n6CbtxJm?utm_source=github-salesgpt&utm_medium=readme&utm_campaign=leads)**
+
+
 # Features
 
 ### Contextual Understanding: Sales Stage Awareness
@@ -45,6 +73,15 @@ The AI Sales Agent understands the conversation stage (you can define your own s
 
 ### Business & Product Knowledge:
 -  Reference only your business information & products and significantly reduce hallucinations!
+
+### Close sales:
+-  The AI Agent can actually close sales by generating Stripe payment link and closing orders from customers.
+
+### Automated Email Communication:
+- Enhance your sales process with automated email communication. SalesGPT can now send personalized emails to prospects, including follow-ups or product information. 
+
+### Calendly Meeting Scheduling
+- The AI Agent can now facilitate scheduling meetings by generating Calendly links.
 
 ### Use Any LLM to Power Your AI Sales Agent
 - Thanks to our integration with [LiteLLM](https://github.com/BerriAI/litellm), you can choose *any closed/open-sourced LLM* to work with SalesGPT! Thanks to LiteLLM maintainers for this contribution!
@@ -65,19 +102,6 @@ The AI Sales Agent understands the conversation stage (you can define your own s
 ### Enterprise-Grade Security
 
 - Upcoming integration with [PromptArmor](https://promptarmor.com/) to protect your AI Sales Agents against security vulnerabilities (see our roadmap).
-# Demos and Use Cases
-
-<i>Crusty AI Sales Agent Demo - Powered by SalesGPT:</i> *A New Way to Sell?* 🤔
-
-**Demo #1: Rachel - Mattress Sales Field Representative**
-
-[![Rachel - Mattress Sales Field Representative](https://cdn.loom.com/sessions/thumbnails/f0fac42954904471b266980e4948b07d-with-play.gif)](https://www.loom.com/share/f0fac42954904471b266980e4948b07d)
-
-# Contact Us for Suggestions, Questions, or Help
-
-We are building SalesGPT to power your best AI Sales Agents. Hence, we would love to learn more about use cases you are building towards which will fuel SalesGPT development roadmap.
-
-**If you want us to build better towards your needs, or need help with your AI Sales Agents, please reach out to chat with us: [SalesGPT Use Case Intake Survey](https://5b7mfhwiany.typeform.com/to/n6CbtxJm?utm_source=github-salesgpt&utm_medium=readme&utm_campaign=leads)**
 
 # Quick Start
 
@@ -87,10 +111,10 @@ from salesgpt.agents import SalesGPT
 from langchain_community.chat_models import ChatLiteLLM
 
 from dotenv import load_dotenv
-load_dotenv() # make sure you have .env file with your API keys, eg., OPENAI_API_KEY=sk-xxx
+load_dotenv() # make sure you have .env file with your API keys, eg., OPENAI_API_KEY=sk-xxx, MINDWARE_API_KEY etc.
 
 # select your model - we support 50+ LLMs via LiteLLM https://docs.litellm.ai/docs/providers
-llm = ChatLiteLLM(temperature=0.4, model_name="gpt-3.5-turbo") 
+llm = ChatLiteLLM(temperature=0.4, model_name="gpt-4-0125-preview") 
                             
 sales_agent = SalesGPT.from_llm(llm, use_tools=True, verbose=False,
                             product_catalog = "examples/sample_product_catalog.txt",
@@ -148,22 +172,24 @@ sales_agent.step()
 > Action: ProductSearch<br>
 > ActionInput pricing for mattresses<br>
 > Observation: Sleep Haven offers three mattresses: the Classic Harmony Spring Mattress for $1,299, the Plush Serenity Bamboo Mattress for $2,599, and the Luxury Cloud-Comfort Memory Foam Mattress for $999. The sizes available vary by mattress.<br>
+
+> Thought: Do I need to use a tool? No <br>
 > Ted Lasso: Sleep Haven offers three mattresses at different price points. The Classic Harmony Spring Mattress is priced at $1,299, the Plush Serenity Bamboo Mattress is priced at $2,599, and the Luxury Cloud-Comfort Memory Foam Mattress is priced at $999. The prices may vary depending on the size you choose. Would you like more information about the specific sizes and features of each mattress? 
+
+> User:  No, I will take two Classic Harmony Spring Mattress please. <br>
+> Thought: Do I need to use a tool? Yes --> AI Agent uses tools here.<br>
+> Action: GeneratePaymentLink<br>
+> Action Input: Classic Harmony Spring Mattress, 2, John Doe
+> Observation: {"response":"https://buy.stripe.com/test_9AQ6rygc397Bbv228p"}
+
+> Thought: Do I need to use a tool? No <br>
+> Ted Lasso: Fantastic choice! I've generated a payment link for you to order two Classic Harmony Spring Mattresses. You can complete your purchase by clicking on this link: https://buy.stripe.com/test_9AQ6rygc397Bbv228p. Is there anything else I can assist you with today? 
 
 
 
 ## Architecture
 
-<img src="https://singularity-assets-public.s3.amazonaws.com/new_flow.png"  width="800" height="440">
-
-
-
-## :red_circle: Latest News
-
-- Sales Agent can now take advantage of **tools**, such as look up products in a product catalog!
-- SalesGPT is now compatible with [LiteLLM](https://github.com/BerriAI/litellm), choose *any closed/open-sourced LLM* to work with SalesGPT! Thanks to LiteLLM maintainers for this contribution!
-- SalesGPT works with synchronous and asynchronous completion, as well as synchronous/asynchronous streaming. Scale your Sales Agents up!
-
+<img src="https://demo-bucket-45.s3.amazonaws.com/new_flow2.png"  width="800" height="440">
 
 
 # Setup
@@ -198,8 +224,6 @@ Navigate to the repository and in case you used a different venv name rename the
 
 `cd SalesGPT`
 
-
-
 If you simply want to work with SalesGPT as an end user without local changes you can install from PyPI using: 
 
 `pip install salesgpt`
@@ -213,32 +237,83 @@ For more detailed installation steps along with the reasons for doing each pleas
 Finally, for use of SalesGPT create an `.env` file just as our `.env.example` and put your API keys there by specifying a new line just as we have done.
 
 ## Run an Example AI Sales agent
-If you used a local installation of SalesGPT skip the next two steps and directly run either script: 
-
-`git clone https://github.com/filip-michalsky/SalesGPT.git`
+Navigate into the SalesGPT directory: 
 
 `cd SalesGPT`
 
-### Docker utilization 
-If you have Docker installed or would prefer to use Docker, follow these simple steps:
-Before proceeding with the Docker steps, ensure you have Docker installed on your system. If not, please follow the installation instructions on the [official Docker website](https://docs.docker.com/get-docker/).
+SalesGPT can be run in various ways, tailored to your preferences and setup. Below are the methods available:
 
-1. Clone the SalesGPT Github repository:
+### 1. Using Docker
+For those who prefer containerization, Docker offers an isolated and consistent environment. Ensure Docker is installed on your system by following the [official Docker installation guide](https://docs.docker.com/get-docker/).
 
-   `git clone https://github.com/filip-michalsky/SalesGPT.git`
+To run SalesGPT with Docker, execute the following steps:
 
-2. Navigate to the SalesGPT directory:
+1. **Start the Application with Docker Compose:**
 
-   `cd SalesGPT`
+   Use the command below to start SalesGPT in detached mode:
+   ```
+   docker-compose up -d
+   ```
+   If you've made changes and want them to reflect, append `--build` to the command above.
 
-3. Run the application using Docker Compose:
+2. **Stopping the Application:**
 
-   `docker-compose up`
+   To stop and remove all running containers related to SalesGPT, execute:
+   ```
+   docker-compose down
+   ```
 
-This will build and start the necessary Docker containers for SalesGPT. You can then access the application by opening the following link in any of your browsers: [localhost:3000/chat](http://localhost:3000/chat)
+**Troubleshooting:**
 
-### Direct user interface launch
-If you do not have Docker installed please use the README.md file in the frontend directory to launch the user interface.
+- **Clean Up Docker Resources:** If you encounter errors, you can clean up Docker by removing all unused containers, networks, images, and volumes with caution:
+  ```
+  docker system prune --volumes
+  ```
+- **Rebuild Without Cache:** To rebuild and start the services afresh without using cache, run:
+  ```
+  docker-compose up -d --build --no-cache
+  ```
+
+After successful setup, access SalesGPT at [localhost:3000/chat](http://localhost:3000/chat) in your browser.
+
+### 2. Direct User Interface Launch
+If Docker is not part of your workflow, you can directly launch the SalesGPT user interface. Please refer to the `README.md` file in the frontend directory for instructions on setting up the UI locally.
+
+### 3. Using the Terminal
+For terminal enthusiasts or automation scripts, run SalesGPT with the following command:
+`python run.py --verbose True --config examples/example_agent_setup.json`
+
+### 4. Running Only the Backend
+For those who wish to integrate SalesGPT's backend with their own user interface or application, running only the backend is a straightforward process. This allows you to leverage the powerful features of SalesGPT while maintaining full control over the user experience.
+
+To run only the backend of SalesGPT, follow these steps:
+1. **Start the Backend Service:**
+
+   Use the following command to start the backend service. This will initiate the server on port 8000 by default, making the API accessible:
+   ```
+   docker-compose up -d backend
+   ```
+
+   If you need to rebuild the backend image, perhaps after making changes, you can add `--build` to the command above.
+
+2. **Accessing the Backend:**
+
+   With the backend running, you can access the API endpoints at `http://localhost:8000`. Refer to the API documentation for details on available endpoints and their usage.
+
+3. **Stopping the Backend:**
+
+   To stop the backend service, execute:
+   ```
+   docker-compose stop backend
+   ```
+
+   If you wish to remove the backend container entirely, use:
+   ```
+   docker-compose down
+   ```
+
+This setup is ideal for developers looking to integrate SalesGPT's backend into custom applications or those who prefer to use a different frontend technology.
+
 
 ## Test your setup
 
@@ -280,7 +355,7 @@ For futher reading take a look at the [docs](https://docs.smith.langchain.com/)
 1) Write more documentation
 3) Better code documentation
 4) Refactor
-5) Improve reliability of the parser [issue here](https://github.com/filip-michalsky/SalesGPT/issues/26) and [here](https://github.com/filip-michalsky/SalesGPT/issues/25)
+5) ~~Improve reliability of the parser [issue here](https://github.com/filip-michalsky/SalesGPT/issues/26) and [here](https://github.com/filip-michalsky/SalesGPT/issues/25)~~
 7) Improve Deployment Instructions
 8) Calling Functionality - sample code
 9) Enterprise-Grade Security - integration with [PromptArmor](https://promptarmor.com/) to protect your AI Sales Agents against security vulnerabilities
