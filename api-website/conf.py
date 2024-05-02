@@ -37,14 +37,24 @@ extensions = ['sphinx.ext.autodoc',
               'sphinxcontrib.googleanalytics',
               #'sphinxcontrib.gtagjs'
 ]
+GTAG_JS = """
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VH1ZNBVHSP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'G-VH1ZNBVHSP');
+</script>
+"""
 googleanalytics_id = "G-VH1ZNBVHSP"
-"""
+
 def setup(app):
-    
-    app.add_javascript("https://www.googletagmanager.com/gtag/js?id=GTM-TTQZ3ZJ9")
-    app.add_javascript("google_analytics_tracker.js")
-"""
+    app.add_js_file(None, body=GTAG_JS)
+    #app.add_javascript("https://www.googletagmanager.com/gtag/js?id=GTM-TTQZ3ZJ9")
+    #app.add_javascript("google_analytics_tracker.js")
+
 templates_path = ['_templates']
 
 # List of patterns, relative to source directory, that match files and
