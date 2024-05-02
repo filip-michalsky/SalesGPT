@@ -9,7 +9,7 @@ import rehypeRaw from 'rehype-raw';
 
 import { PostHog } from 'posthog-node'
 
-let client;
+let client: PostHog | undefined;
 if (process.env.ENVIRONMENT === "production") {
   client = new PostHog(
     `${process.env.NEXT_PUBLIC_POSTHOG_ID}`,    
