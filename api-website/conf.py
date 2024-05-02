@@ -81,3 +81,5 @@ html_static_path = ["_static"]
 html_css_files = [
     "custom.css",  # add your custom CSS file here
 ]
+
+html_additional_pages = {'layout': '../_templates/layout.html'}
