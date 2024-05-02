@@ -38,21 +38,15 @@ extensions = ['sphinx.ext.autodoc',
               #'sphinxcontrib.gtagjs'
 ]
 
-static_before = """
+GOOGLE_TAG_MANAGER_SNIPPET = """
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({
 'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','"""
-
-dynamic_part = f"{GTAG_API}"
-
-static_after = """');</script>
+})(window,document,'script','dataLayer','GTM-NX3SZD79');</script>
 <!-- End Google Tag Manager -->
 """
-
-GOOGLE_TAG_MANAGER_SNIPPET = static_before + dynamic_part + static_after
 
 # 2. Create a setup() function if you don't already have one.
 #    (If you do, just add to your existing setup() function.)
@@ -61,11 +55,7 @@ def setup(app):
     #    the `body` into the html inside a <script> tag:
     app.add_js_file(None, body=GOOGLE_TAG_MANAGER_SNIPPET)# Add any paths that contain templates here, relative to this directory.
 
-
 templates_path = ['_templates']
-
-
-
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
