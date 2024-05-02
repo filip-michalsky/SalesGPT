@@ -7,7 +7,7 @@ import styles from './ChatInterface.module.css';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 
-import { PostHog, PostHogConfig } from 'posthog-node'
+import { PostHog } from 'posthog-node'
 
 let client: PostHog | undefined;
 if (process.env.ENVIRONMENT === "production") {
@@ -16,7 +16,7 @@ if (process.env.ENVIRONMENT === "production") {
     { host: 'https://app.posthog.com',
       disableGeoip: false, 
       requestTimeout: 30000
-    } as PostHogConfig
+    }
   );
 }
 
