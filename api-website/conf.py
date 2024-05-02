@@ -38,7 +38,7 @@ extensions = ['sphinx.ext.autodoc',
               #'sphinxcontrib.gtagjs'
 ]
 
-googleanalytics_id = "G-N73Z2D8W81"
+googleanalytics_id = "GTM-NX3SZD79"
 
 GOOGLE_TAG_MANAGER_SNIPPET = """
 <!-- Google Tag Manager -->
