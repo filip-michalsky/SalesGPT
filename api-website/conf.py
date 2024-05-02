@@ -44,7 +44,7 @@ def setup(app):
     """Insert Google Analytics tracker
     Based on this Stackoverflow suggestion: https://stackoverflow.com/a/41885884
     """
-    app.add_javascript("https://www.googletagmanager.com/gtag/js?id=G-N73Z2D8W81")
+    app.add_javascript("https://www.googletagmanager.com/gtag/js?id=GTM-NX3SZD79")
     app.add_javascript("google_analytics_tracker.js")
 
 templates_path = ['_templates']
