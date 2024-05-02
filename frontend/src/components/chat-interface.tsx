@@ -54,7 +54,7 @@ export function ChatInterface() {
   const [maxHeight, setMaxHeight] = useState('80vh'); // Default to 100% of the viewport height
   const [isBotTyping, setIsBotTyping] = useState(false);
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
-  the thinkingProcessEndRef = useRef<null | HTMLDivElement>(null);
+  const thinkingProcessEndRef = useRef<null | HTMLDivElement>(null);
   const [botHasResponded, setBotHasResponded] = useState(false);
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
