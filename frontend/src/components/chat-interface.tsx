@@ -9,7 +9,7 @@ import rehypeRaw from 'rehype-raw';
 
 import { PostHog } from 'posthog-node'
 
-let client: PostHog | undefined;
+let client;
 if (process.env.ENVIRONMENT === "production") {
   client = new PostHog(
     `${process.env.NEXT_PUBLIC_POSTHOG_ID}`,    
@@ -91,7 +91,7 @@ export function ChatInterface() {
   useEffect(() => {
     // Function to fetch the bot name
     const fetchBotName = async () => {
-      if (process.env.ENVIRONMENT === "production" && client) {
+      if (process.env.ENVIRONMENT === "production") {
         client.capture({
           distinctId: session_id,
           event: 'fetched-bot-name',
@@ -141,7 +141,7 @@ export function ChatInterface() {
   };
 
   const handleBotResponse = async (userMessage: string) => {
-    if (process.env.ENVIRONMENT === "production" && client) {
+    if (process.env.ENVIRONMENT === "production") {
       client.capture({
         distinctId: session_id,
         event: 'sent-message',
@@ -160,9 +160,12 @@ export function ChatInterface() {
 
     try {
       const headers = {
-        'Content-Type': 'application/json',
-        ...(process.env.ENVIRONMENT === "production" ? { 'Authorization': `Bearer ${process.env.NEXT_PUBLIC_AUTH_KEY}` } : {})
+        'Content-Type': 'application/json'
       };
+
+      if (process.env.ENVIRONMENT === "production") {
+        headers['Authorization'] = `Bearer ${process.env.NEXT_PUBLIC_AUTH_KEY}`;
+      }
 
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat`, {
         method: 'POST',
@@ -311,4 +314,3 @@ export function ChatInterface() {
     </div>
   );
 }
-
