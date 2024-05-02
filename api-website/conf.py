@@ -38,6 +38,7 @@ extensions = ['sphinx.ext.autodoc',
               'sphinxcontrib.gtagjs'
 ]
 
+GTAG_API = 'GTM-NX3SZD79'
 gtagjs_ids = [
     'GTM-NX3SZD79',
 ]
