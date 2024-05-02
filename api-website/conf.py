@@ -38,7 +38,7 @@ extensions = ['sphinx.ext.autodoc',
               #'sphinxcontrib.gtagjs'
 ]
 
-googleanalytics_id = "GTM-TTQZ3ZJ9"
+googleanalytics_id = "G-VH1ZNBVHSP"
 """
 def setup(app):
     
