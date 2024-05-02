@@ -7,16 +7,16 @@ import styles from './ChatInterface.module.css';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 
-import { PostHog } from 'posthog-node'
+import { PostHog, PostHogConfig } from 'posthog-node'
 
-let client;
+let client: PostHog | undefined;
 if (process.env.ENVIRONMENT === "production") {
   client = new PostHog(
     `${process.env.NEXT_PUBLIC_POSTHOG_ID}`,    
     { host: 'https://app.posthog.com',
       disableGeoip: false, 
       requestTimeout: 30000
-    }
+    } as PostHogConfig
   );
 }
 
@@ -54,7 +54,7 @@ export function ChatInterface() {
   const [maxHeight, setMaxHeight] = useState('80vh'); // Default to 100% of the viewport height
   const [isBotTyping, setIsBotTyping] = useState(false);
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
-  const thinkingProcessEndRef = useRef<null | HTMLDivElement>(null);
+  the thinkingProcessEndRef = useRef<null | HTMLDivElement>(null);
   const [botHasResponded, setBotHasResponded] = useState(false);
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -91,7 +91,7 @@ export function ChatInterface() {
   useEffect(() => {
     // Function to fetch the bot name
     const fetchBotName = async () => {
-      if (process.env.ENVIRONMENT === "production") {
+      if (process.env.ENVIRONMENT === "production" && client) {
         client.capture({
           distinctId: session_id,
           event: 'fetched-bot-name',
@@ -141,7 +141,7 @@ export function ChatInterface() {
   };
 
   const handleBotResponse = async (userMessage: string) => {
-    if (process.env.ENVIRONMENT === "production") {
+    if (process.env.ENVIRONMENT === "production" && client) {
       client.capture({
         distinctId: session_id,
         event: 'sent-message',
