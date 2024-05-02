@@ -54,7 +54,7 @@ export function ChatInterface() {
   const [maxHeight, setMaxHeight] = useState('80vh'); // Default to 100% of the viewport height
   const [isBotTyping, setIsBotTyping] = useState(false);
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
-  the thinkingProcessEndRef = useRef<null | HTMLDivElement>(null);
+  const thinkingProcessEndRef = useRef<null | HTMLDivElement>(null);
   const [botHasResponded, setBotHasResponded] = useState(false);
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -245,7 +245,7 @@ export function ChatInterface() {
           <div className="flex items-center justify-end ml-2">
             {/* Style the index similar to the thinking process and position it near the border */}
             <div className="text-sm text-gray-500" style={{minWidth: '20px', textAlign: 'right'}}>
-              <strong>({messages.filter((m, i) => m.sender === 'bot' and i <= index).length})</strong>
+              <strong>({messages.filter((m, i) => m.sender === 'bot' && i <= index).length})</strong>
             </div>
           </div>
         )}
