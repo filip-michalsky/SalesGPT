@@ -34,28 +34,18 @@ author = "Filip-Michalsky"
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = ['sphinx.ext.autodoc',
-              "sphinxcontrib.googleanalytics",
+              #"sphinxcontrib.googleanalytics",
               #'sphinxcontrib.gtagjs'
 ]
 
 googleanalytics_id = "GTM-NX3SZD79"
 
-GOOGLE_TAG_MANAGER_SNIPPET = """
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-NX3SZD79');</script>
-<!-- End Google Tag Manager -->
-"""
-
-# 2. Create a setup() function if you don't already have one.
-#    (If you do, just add to your existing setup() function.)
 def setup(app):
-    # 3. Tell Sphinx to add your JS code. Sphinx will insert
-    #    the `body` into the html inside a <script> tag:
-    app.add_js_file(None, body=GOOGLE_TAG_MANAGER_SNIPPET)# Add any paths that contain templates here, relative to this directory.
+    """Insert Google Analytics tracker
+    Based on this Stackoverflow suggestion: https://stackoverflow.com/a/41885884
+    """
+    app.add_javascript("https://www.googletagmanager.com/gtag/js?id=GTM-NX3SZD79")
+    app.add_javascript("google_analytics_tracker.js")
 
 templates_path = ['_templates']
 
