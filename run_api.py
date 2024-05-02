@@ -1,10 +1,10 @@
 import json
 import os
-from typing import List
+from typing import List, Optional
 
 import uvicorn
 from dotenv import load_dotenv
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query, Header, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
@@ -34,8 +34,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-from fastapi import Header, HTTPException, Depends
-
 class AuthenticatedResponse(BaseModel):
     message: str
 
@@ -61,9 +59,11 @@ sessions = {}
 
 
 @app.get("/botname", response_model=None)
-async def get_bot_name(authorization: str = Header(...)):
+async def get_bot_name(authorization: Optional[str] = Header(None)):
     load_dotenv()
-    get_auth_key(authorization)
+    if os.getenv("ENVIRONMENT") == "production":
+        get_auth_key(authorization)
+        
     sales_api = SalesGPTAPI(
         config_path=os.getenv("CONFIG_PATH", "examples/example_agent_setup.json"),
         product_catalog=os.getenv(
@@ -77,7 +77,7 @@ async def get_bot_name(authorization: str = Header(...)):
 
 
 @app.post("/chat")
-async def chat_with_sales_agent(req: MessageList, stream: bool = Query(False), authorization: str = Header(...)):
+async def chat_with_sales_agent(req: MessageList, stream: bool = Query(False), authorization: Optional[str] = Header(None)):
     """
     Handles chat interactions with the sales agent.
 
@@ -94,7 +94,8 @@ async def chat_with_sales_agent(req: MessageList, stream: bool = Query(False), a
         Streaming functionality is planned but not yet available. The current implementation only supports synchronous responses.
     """
     sales_api = None
-    get_auth_key(authorization)
+    if os.getenv("ENVIRONMENT") == "production":
+        get_auth_key(authorization)
     # print(f"Received request: {req}")
     if req.session_id in sessions:
         print("Session is found!")

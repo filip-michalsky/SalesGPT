@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "nodemon --watch pages --watch components --exec \"next dev\"",
+    "dev": "./start-dev.sh",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
