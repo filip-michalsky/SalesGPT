@@ -3,8 +3,10 @@
 // (when paired with `@ts-check`).
 // There are various equivalent ways to declare your Docusaurus config.
 // See: https://docusaurus.io/docs/api/docusaurus-config
-const dotenv = require('dotenv');
-dotenv.config({ path: '../.env' });
+
+// Removed dotenv require and config as it's causing module not found error
+// const dotenv = require('dotenv');
+// dotenv.config({ path: '../.env' });
 
 const GTAG_DOC = process.env.GTAG_DOC;
 const GTMAN_DOC = process.env.GTMAN_DOC;
