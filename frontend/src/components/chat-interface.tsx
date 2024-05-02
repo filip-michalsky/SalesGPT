@@ -102,9 +102,13 @@ export function ChatInterface() {
       }
 
       try {
-        const headers = process.env.ENVIRONMENT === "production" ? {
-          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_AUTH_KEY}`
-        } : {};
+        const headers: Record<string, string> = {
+          'Content-Type': 'application/json'
+        };
+
+        if (process.env.ENVIRONMENT === "production") {
+          headers['Authorization'] = `Bearer ${process.env.NEXT_PUBLIC_AUTH_KEY}`;
+        }
 
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/botname`, {
           method: 'GET',
@@ -159,7 +163,7 @@ export function ChatInterface() {
     setIsBotTyping(true); // Start showing the typing indicator
 
     try {
-      const headers = {
+      const headers: Record<string, string> = {
         'Content-Type': 'application/json'
       };
 
