@@ -34,19 +34,17 @@ author = "Filip-Michalsky"
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = ['sphinx.ext.autodoc',
-              #"sphinxcontrib.googleanalytics",
+              "sphinxcontrib.googleanalytics",
               #'sphinxcontrib.gtagjs'
 ]
 
 googleanalytics_id = "GTM-NX3SZD79"
-
+"""
 def setup(app):
-    """Insert Google Analytics tracker
-    Based on this Stackoverflow suggestion: https://stackoverflow.com/a/41885884
-    """
+    
     app.add_javascript("https://www.googletagmanager.com/gtag/js?id=GTM-NX3SZD79")
     app.add_javascript("google_analytics_tracker.js")
-
+"""
 templates_path = ['_templates']
 
 # List of patterns, relative to source directory, that match files and
