@@ -2,15 +2,6 @@
 <html class="writer-html5" lang="en" data-content_root="./">
 <head>
   <meta charset="utf-8" />
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N73Z2D8W81"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-N73Z2D8W81');
-    </script>
-    
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Index &mdash; SalesGPT  documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
@@ -27,6 +18,15 @@
         <script src="_static/documentation_options.js?v=5929fcd5"></script>
         <script src="_static/doctools.js?v=888ff710"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({
+'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer',GTM-NX3SZD79);</script>
+<!-- End Google Tag Manager -->
+</script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" /> 
@@ -123,6 +123,8 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="salesgpt/salesgpt.agents.html#salesgpt.agents.SalesGPT.adetermine_conversation_stage">adetermine_conversation_stage() (salesgpt.agents.SalesGPT method)</a>
+</li>
       <li><a href="salesgpt/salesgpt.parsers.html#salesgpt.parsers.SalesConvoOutputParser.ai_prefix">ai_prefix (salesgpt.parsers.SalesConvoOutputParser attribute)</a>
 </li>
       <li><a href="salesgpt/salesgpt.agents.html#salesgpt.agents.SalesGPT.astep">astep() (salesgpt.agents.SalesGPT method)</a>
@@ -139,12 +141,14 @@
 </li>
       <li><a href="salesgpt/salesgpt.agents.html#salesgpt.agents.SalesGPT.company_values">company_values (salesgpt.agents.SalesGPT attribute)</a>
 </li>
-      <li><a href="salesgpt/salesgpt.agents.html#salesgpt.agents.SalesGPT.conversation_history">conversation_history (salesgpt.agents.SalesGPT attribute)</a>
+      <li><a href="salesgpt/salesgpt.tools.html#salesgpt.tools.completion_bedrock">completion_bedrock() (in module salesgpt.tools)</a>
 </li>
-      <li><a href="salesgpt/salesgpt.agents.html#salesgpt.agents.SalesGPT.conversation_purpose">conversation_purpose (salesgpt.agents.SalesGPT attribute)</a>
+      <li><a href="salesgpt/salesgpt.agents.html#salesgpt.agents.SalesGPT.conversation_history">conversation_history (salesgpt.agents.SalesGPT attribute)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="salesgpt/salesgpt.agents.html#salesgpt.agents.SalesGPT.conversation_purpose">conversation_purpose (salesgpt.agents.SalesGPT attribute)</a>
+</li>
       <li><a href="salesgpt/salesgpt.agents.html#salesgpt.agents.SalesGPT.conversation_stage_dict">conversation_stage_dict (salesgpt.agents.SalesGPT attribute)</a>
 </li>
       <li><a href="salesgpt/salesgpt.agents.html#salesgpt.agents.SalesGPT.conversation_stage_id">conversation_stage_id (salesgpt.agents.SalesGPT attribute)</a>
@@ -195,10 +199,18 @@
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="salesgpt/salesgpt.tools.html#salesgpt.tools.generate_calendly_invitation_link">generate_calendly_invitation_link() (in module salesgpt.tools)</a>
+</li>
+      <li><a href="salesgpt/salesgpt.tools.html#salesgpt.tools.generate_stripe_payment_link">generate_stripe_payment_link() (in module salesgpt.tools)</a>
+</li>
       <li><a href="salesgpt/salesgpt.parsers.html#salesgpt.parsers.SalesConvoOutputParser.get_format_instructions">get_format_instructions() (salesgpt.parsers.SalesConvoOutputParser method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="salesgpt/salesgpt.tools.html#salesgpt.tools.get_mail_body_subject_from_query">get_mail_body_subject_from_query() (in module salesgpt.tools)</a>
+</li>
+      <li><a href="salesgpt/salesgpt.tools.html#salesgpt.tools.get_product_id_from_query">get_product_id_from_query() (in module salesgpt.tools)</a>
+</li>
       <li><a href="salesgpt/salesgpt.tools.html#salesgpt.tools.get_tools">get_tools() (in module salesgpt.tools)</a>
 </li>
   </ul></td>
@@ -400,6 +412,10 @@
 </li>
       <li><a href="salesgpt/salesgpt.agents.html#salesgpt.agents.SalesGPT.seed_agent">seed_agent() (salesgpt.agents.SalesGPT method)</a>
 </li>
+      <li><a href="salesgpt/salesgpt.tools.html#salesgpt.tools.send_email_tool">send_email_tool() (in module salesgpt.tools)</a>
+</li>
+      <li><a href="salesgpt/salesgpt.tools.html#salesgpt.tools.send_email_with_gmail">send_email_with_gmail() (in module salesgpt.tools)</a>
+</li>
       <li><a href="salesgpt/salesgpt.tools.html#salesgpt.tools.setup_knowledge_base">setup_knowledge_base() (in module salesgpt.tools)</a>
 </li>
       <li><a href="salesgpt/salesgpt.agents.html#salesgpt.agents.SalesGPT.stage_analyzer_chain">stage_analyzer_chain (salesgpt.agents.SalesGPT attribute)</a>
@@ -431,10 +447,6 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="salesgpt/salesgpt.agents.html#salesgpt.agents.SalesGPT.use_tools">use_tools (salesgpt.agents.SalesGPT attribute)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="salesgpt/salesgpt.salesgptapi.html#salesgpt.salesgptapi.SalesGPTAPI.USE_TOOLS">USE_TOOLS (salesgpt.salesgptapi.SalesGPTAPI attribute)</a>
 </li>
   </ul></td>
 </tr></table>

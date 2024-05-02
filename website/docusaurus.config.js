@@ -3,6 +3,11 @@
 // (when paired with `@ts-check`).
 // There are various equivalent ways to declare your Docusaurus config.
 // See: https://docusaurus.io/docs/api/docusaurus-config
+const dotenv = require('dotenv');
+dotenv.config({ path: '../.env' });
+
+const GTAG_DOC = process.env.GTAG_DOC;
+const GTMAN_DOC = process.env.GTMAN_DOC;
 
 import {themes as prismThemes} from 'prism-react-renderer';
 
@@ -59,11 +64,11 @@ const config = {
           customCss: './src/css/custom.css',
         },
         gtag: {
-          trackingID: 'G-EP3BJCDSBW',
+          trackingID: GTAG_DOC,
           anonymizeIP: true,
         },
         googleTagManager: {
-            containerId: 'GTM-W7H24KQZ',
+            containerId: GTMAN_DOC,
         },
       }),
     ],

@@ -3,15 +3,6 @@
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N73Z2D8W81"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-N73Z2D8W81');
-    </script>
-    
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>salesgpt.tools module &mdash; SalesGPT  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
@@ -28,6 +19,15 @@
         <script src="../_static/documentation_options.js?v=5929fcd5"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({
+'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer',GTM-NX3SZD79);</script>
+<!-- End Google Tag Manager -->
+</script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -69,7 +69,14 @@
 <li class="toctree-l1"><a class="reference internal" href="salesgpt.stages.html">Stages</a></li>
 <li class="toctree-l1"><a class="reference internal" href="salesgpt.templates.html">Templates</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#salesgpt.tools.completion_bedrock"><code class="docutils literal notranslate"><span class="pre">completion_bedrock()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#salesgpt.tools.generate_calendly_invitation_link"><code class="docutils literal notranslate"><span class="pre">generate_calendly_invitation_link()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#salesgpt.tools.generate_stripe_payment_link"><code class="docutils literal notranslate"><span class="pre">generate_stripe_payment_link()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#salesgpt.tools.get_mail_body_subject_from_query"><code class="docutils literal notranslate"><span class="pre">get_mail_body_subject_from_query()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#salesgpt.tools.get_product_id_from_query"><code class="docutils literal notranslate"><span class="pre">get_product_id_from_query()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#salesgpt.tools.get_tools"><code class="docutils literal notranslate"><span class="pre">get_tools()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#salesgpt.tools.send_email_tool"><code class="docutils literal notranslate"><span class="pre">send_email_tool()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#salesgpt.tools.send_email_with_gmail"><code class="docutils literal notranslate"><span class="pre">send_email_with_gmail()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#salesgpt.tools.setup_knowledge_base"><code class="docutils literal notranslate"><span class="pre">setup_knowledge_base()</span></code></a></li>
 </ul>
 </li>
@@ -103,9 +110,49 @@
   <section id="module-salesgpt.tools">
 <span id="salesgpt-tools-module"></span><h1>salesgpt.tools module<a class="headerlink" href="#module-salesgpt.tools" title="Link to this heading"></a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="salesgpt.tools.get_tools">
-<span class="sig-prename descclassname"><span class="pre">salesgpt.tools.</span></span><span class="sig-name descname"><span class="pre">get_tools</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">knowledge_base</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#salesgpt.tools.get_tools" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="salesgpt.tools.completion_bedrock">
+<span class="sig-prename descclassname"><span class="pre">salesgpt.tools.</span></span><span class="sig-name descname"><span class="pre">completion_bedrock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system_prompt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">messages</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_tokens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#salesgpt.tools.completion_bedrock" title="Link to this definition"></a></dt>
+<dd><p>High-level API call to generate a message with Anthropic Claude.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="salesgpt.tools.generate_calendly_invitation_link">
+<span class="sig-prename descclassname"><span class="pre">salesgpt.tools.</span></span><span class="sig-name descname"><span class="pre">generate_calendly_invitation_link</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#salesgpt.tools.generate_calendly_invitation_link" title="Link to this definition"></a></dt>
+<dd><p>Generate a calendly invitation link based on the single query string</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="salesgpt.tools.generate_stripe_payment_link">
+<span class="sig-prename descclassname"><span class="pre">salesgpt.tools.</span></span><span class="sig-name descname"><span class="pre">generate_stripe_payment_link</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#salesgpt.tools.generate_stripe_payment_link" title="Link to this definition"></a></dt>
+<dd><p>Generate a stripe payment link for a customer based on a single query string.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="salesgpt.tools.get_mail_body_subject_from_query">
+<span class="sig-prename descclassname"><span class="pre">salesgpt.tools.</span></span><span class="sig-name descname"><span class="pre">get_mail_body_subject_from_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#salesgpt.tools.get_mail_body_subject_from_query" title="Link to this definition"></a></dt>
 <dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="salesgpt.tools.get_product_id_from_query">
+<span class="sig-prename descclassname"><span class="pre">salesgpt.tools.</span></span><span class="sig-name descname"><span class="pre">get_product_id_from_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">product_price_id_mapping_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#salesgpt.tools.get_product_id_from_query" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="salesgpt.tools.get_tools">
+<span class="sig-prename descclassname"><span class="pre">salesgpt.tools.</span></span><span class="sig-name descname"><span class="pre">get_tools</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">product_catalog</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#salesgpt.tools.get_tools" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="salesgpt.tools.send_email_tool">
+<span class="sig-prename descclassname"><span class="pre">salesgpt.tools.</span></span><span class="sig-name descname"><span class="pre">send_email_tool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#salesgpt.tools.send_email_tool" title="Link to this definition"></a></dt>
+<dd><p>Sends an email based on the single query string</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="salesgpt.tools.send_email_with_gmail">
+<span class="sig-prename descclassname"><span class="pre">salesgpt.tools.</span></span><span class="sig-name descname"><span class="pre">send_email_with_gmail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">email_details</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#salesgpt.tools.send_email_with_gmail" title="Link to this definition"></a></dt>
+<dd><p>.env should include GMAIL_MAIL and GMAIL_APP_PASSWORD to work correctly</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="salesgpt.tools.setup_knowledge_base">

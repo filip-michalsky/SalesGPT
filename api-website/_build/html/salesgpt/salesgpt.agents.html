@@ -3,15 +3,6 @@
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N73Z2D8W81"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-N73Z2D8W81');
-    </script>
-    
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>salesgpt.agents module &mdash; SalesGPT  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
@@ -28,6 +19,15 @@
         <script src="../_static/documentation_options.js?v=5929fcd5"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({
+'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer',GTM-NX3SZD79);</script>
+<!-- End Google Tag Manager -->
+</script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -63,6 +63,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#salesgpt.agents.SalesGPT"><code class="docutils literal notranslate"><span class="pre">SalesGPT</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.acall"><code class="docutils literal notranslate"><span class="pre">SalesGPT.acall()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.acompletion_with_retry"><code class="docutils literal notranslate"><span class="pre">SalesGPT.acompletion_with_retry()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.adetermine_conversation_stage"><code class="docutils literal notranslate"><span class="pre">SalesGPT.adetermine_conversation_stage()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.astep"><code class="docutils literal notranslate"><span class="pre">SalesGPT.astep()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.company_business"><code class="docutils literal notranslate"><span class="pre">SalesGPT.company_business</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#salesgpt.agents.SalesGPT.company_name"><code class="docutils literal notranslate"><span class="pre">SalesGPT.company_name</span></code></a></li>
@@ -138,21 +139,22 @@
 <p>Controller model for the Sales Agent.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="salesgpt.agents.SalesGPT.acall">
-<span class="sig-name descname"><span class="pre">acall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#salesgpt.agents.SalesGPT.acall" title="Link to this definition"></a></dt>
-<dd><p>This method is currently not implemented.</p>
+<span class="sig-name descname"><span class="pre">acall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#salesgpt.agents.SalesGPT.acall" title="Link to this definition"></a></dt>
+<dd><p>Executes one step of the sales agent.</p>
+<p>This function overrides the input temporarily with the current state of the conversation,
+generates the agent’s utterance using either the sales agent executor or the sales conversation utterance chain,
+adds the agent’s response to the conversation history, and returns the AI message.</p>
 <section id="parameters">
 <h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading"></a></h2>
 <dl class="simple">
-<dt>*args<span class="classifier">tuple</span></dt><dd><p>Variable length argument list.</p>
-</dd>
-<dt>**kwargs<span class="classifier">dict</span></dt><dd><p>Arbitrary keyword arguments.</p>
+<dt>inputs<span class="classifier">Dict[str, Any]</span></dt><dd><p>The initial inputs for the sales agent.</p>
 </dd>
 </dl>
 </section>
-<section id="raises">
-<h2>Raises<a class="headerlink" href="#raises" title="Link to this heading"></a></h2>
+<section id="returns">
+<h2>Returns<a class="headerlink" href="#returns" title="Link to this heading"></a></h2>
 <dl class="simple">
-<dt>NotImplementedError</dt><dd><p>Indicates that this method has not been implemented yet.</p>
+<dt>Dict[str, Any]</dt><dd><p>The AI message generated by the sales agent.</p>
 </dd>
 </dl>
 </section>
@@ -163,7 +165,7 @@
 <em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">acompletion_with_retry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">llm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#salesgpt.agents.SalesGPT.acompletion_with_retry" title="Link to this definition"></a></dt>
 <dd><p>Use tenacity to retry the async completion call.</p>
 <p>This method uses the tenacity library to retry the asynchronous completion call in case of failure.
-It creates a retry decorator using the ‘_create_retry_decorator’ method and applies it to the 
+It creates a retry decorator using the ‘_create_retry_decorator’ method and applies it to the
 ‘_completion_with_retry’ function which makes the actual asynchronous completion call.</p>
 <section id="id1">
 <h2>Parameters<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
@@ -174,20 +176,36 @@ It creates a retry decorator using the ‘_create_retry_decorator’ method and 
 </dd>
 </dl>
 </section>
-<section id="returns">
-<h2>Returns<a class="headerlink" href="#returns" title="Link to this heading"></a></h2>
+<section id="id2">
+<h2>Returns<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
 <dl class="simple">
 <dt>Any</dt><dd><p>The result of the completion function call.</p>
 </dd>
 </dl>
 </section>
-<section id="id2">
-<h2>Raises<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<section id="raises">
+<h2>Raises<a class="headerlink" href="#raises" title="Link to this heading"></a></h2>
 <dl class="simple">
 <dt>Exception</dt><dd><p>If the completion function call fails after the maximum number of retries.</p>
 </dd>
 </dl>
 </section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="salesgpt.agents.SalesGPT.adetermine_conversation_stage">
+<span class="sig-name descname"><span class="pre">adetermine_conversation_stage</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#salesgpt.agents.SalesGPT.adetermine_conversation_stage" title="Link to this definition"></a></dt>
+<dd><p>Determines the current conversation stage based on the conversation history.</p>
+<p>This method uses the stage_analyzer_chain to analyze the conversation history and determine the current stage.
+The conversation history is joined into a single string, with each entry separated by a newline character.
+The current conversation stage ID is also passed to the stage_analyzer_chain.</p>
+<p>The method then prints the determined conversation stage ID and retrieves the corresponding conversation stage
+from the conversation_stage_dict dictionary using the retrieve_conversation_stage method.</p>
+<p>Finally, the method prints the determined conversation stage.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -197,7 +215,7 @@ It creates a retry decorator using the ‘_create_retry_decorator’ method and 
 <p>If the stream argument is set to False, it calls the _acall method with an empty dictionary as input.
 If the stream argument is set to True, it returns a streaming generator object for manipulating streaming chunks in downstream applications.</p>
 <dl class="simple">
-<dt>Args:</dt><dd><p>stream (bool, optional): A flag indicating whether to return a streaming generator object. 
+<dt>Args:</dt><dd><p>stream (bool, optional): A flag indicating whether to return a streaming generator object.
 Defaults to False.</p>
 </dd>
 <dt>Returns:</dt><dd><p>Generator: A streaming generator object if stream is set to True. Otherwise, it returns None.</p>
@@ -394,11 +412,11 @@ If the key is not found in the dictionary, it defaults to “1”.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="salesgpt.agents.SalesGPT.step">
 <span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#salesgpt.agents.SalesGPT.step" title="Link to this definition"></a></dt>
-<dd><p>Executes a step in the conversation. If the stream argument is set to True, 
-it returns a streaming generator object for manipulating streaming chunks in downstream applications. 
+<dd><p>Executes a step in the conversation. If the stream argument is set to True,
+it returns a streaming generator object for manipulating streaming chunks in downstream applications.
 If the stream argument is set to False, it calls the _call method with an empty dictionary as input.</p>
 <dl class="simple">
-<dt>Args:</dt><dd><p>stream (bool, optional): A flag indicating whether to return a streaming generator object. 
+<dt>Args:</dt><dd><p>stream (bool, optional): A flag indicating whether to return a streaming generator object.
 Defaults to False.</p>
 </dd>
 <dt>Returns:</dt><dd><p>Generator: A streaming generator object if stream is set to True. Otherwise, it returns None.</p>

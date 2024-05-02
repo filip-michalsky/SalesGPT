@@ -3,15 +3,6 @@
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N73Z2D8W81"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-N73Z2D8W81');
-    </script>
-    
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>salesgpt.salesgptapi module &mdash; SalesGPT  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
@@ -28,6 +19,15 @@
         <script src="../_static/documentation_options.js?v=5929fcd5"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({
+'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer',GTM-NX3SZD79);</script>
+<!-- End Google Tag Manager -->
+</script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -67,7 +67,6 @@
 <li class="toctree-l1"><a class="reference internal" href="salesgpt.prompts_cn.html">Prompts_cn</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">SalesGPT API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#salesgpt.salesgptapi.SalesGPTAPI"><code class="docutils literal notranslate"><span class="pre">SalesGPTAPI</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#salesgpt.salesgptapi.SalesGPTAPI.USE_TOOLS"><code class="docutils literal notranslate"><span class="pre">SalesGPTAPI.USE_TOOLS</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#salesgpt.salesgptapi.SalesGPTAPI.do"><code class="docutils literal notranslate"><span class="pre">SalesGPTAPI.do()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#salesgpt.salesgptapi.SalesGPTAPI.do_stream"><code class="docutils literal notranslate"><span class="pre">SalesGPTAPI.do_stream()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#salesgpt.salesgptapi.SalesGPTAPI.initialize_agent"><code class="docutils literal notranslate"><span class="pre">SalesGPTAPI.initialize_agent()</span></code></a></li>
@@ -109,16 +108,11 @@
 <span id="salesgpt-salesgptapi-module"></span><h1>salesgpt.salesgptapi module<a class="headerlink" href="#module-salesgpt.salesgptapi" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="salesgpt.salesgptapi.SalesGPTAPI">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">salesgpt.salesgptapi.</span></span><span class="sig-name descname"><span class="pre">SalesGPTAPI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_num_turns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_tools</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#salesgpt.salesgptapi.SalesGPTAPI" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">salesgpt.salesgptapi.</span></span><span class="sig-name descname"><span class="pre">SalesGPTAPI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_num_turns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'gpt-3.5-turbo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">product_catalog</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'examples/sample_product_catalog.txt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_tools</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#salesgpt.salesgptapi.SalesGPTAPI" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="salesgpt.salesgptapi.SalesGPTAPI.USE_TOOLS">
-<span class="sig-name descname"><span class="pre">USE_TOOLS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#salesgpt.salesgptapi.SalesGPTAPI.USE_TOOLS" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="salesgpt.salesgptapi.SalesGPTAPI.do">
-<span class="sig-name descname"><span class="pre">do</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">human_input</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#salesgpt.salesgptapi.SalesGPTAPI.do" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">do</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">human_input</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#salesgpt.salesgptapi.SalesGPTAPI.do" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

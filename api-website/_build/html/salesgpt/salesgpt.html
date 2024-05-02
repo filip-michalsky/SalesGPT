@@ -3,15 +3,6 @@
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N73Z2D8W81"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-N73Z2D8W81');
-    </script>
-    
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>salesgpt package &mdash; SalesGPT  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
@@ -28,6 +19,15 @@
         <script src="../_static/documentation_options.js?v=5929fcd5"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({
+'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer',GTM-NX3SZD79);</script>
+<!-- End Google Tag Manager -->
+</script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
@@ -105,6 +105,7 @@
 <li class="toctree-l2"><a class="reference internal" href="salesgpt.agents.html#salesgpt.agents.SalesGPT"><code class="docutils literal notranslate"><span class="pre">SalesGPT</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="salesgpt.agents.html#salesgpt.agents.SalesGPT.acall"><code class="docutils literal notranslate"><span class="pre">SalesGPT.acall()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="salesgpt.agents.html#salesgpt.agents.SalesGPT.acompletion_with_retry"><code class="docutils literal notranslate"><span class="pre">SalesGPT.acompletion_with_retry()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="salesgpt.agents.html#salesgpt.agents.SalesGPT.adetermine_conversation_stage"><code class="docutils literal notranslate"><span class="pre">SalesGPT.adetermine_conversation_stage()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="salesgpt.agents.html#salesgpt.agents.SalesGPT.astep"><code class="docutils literal notranslate"><span class="pre">SalesGPT.astep()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="salesgpt.agents.html#salesgpt.agents.SalesGPT.company_business"><code class="docutils literal notranslate"><span class="pre">SalesGPT.company_business</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="salesgpt.agents.html#salesgpt.agents.SalesGPT.company_name"><code class="docutils literal notranslate"><span class="pre">SalesGPT.company_name</span></code></a></li>
@@ -168,7 +169,6 @@
 <li class="toctree-l1"><a class="reference internal" href="salesgpt.prompts_cn.html">salesgpt.prompts_cn module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="salesgpt.salesgptapi.html">salesgpt.salesgptapi module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="salesgpt.salesgptapi.html#salesgpt.salesgptapi.SalesGPTAPI"><code class="docutils literal notranslate"><span class="pre">SalesGPTAPI</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="salesgpt.salesgptapi.html#salesgpt.salesgptapi.SalesGPTAPI.USE_TOOLS"><code class="docutils literal notranslate"><span class="pre">SalesGPTAPI.USE_TOOLS</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="salesgpt.salesgptapi.html#salesgpt.salesgptapi.SalesGPTAPI.do"><code class="docutils literal notranslate"><span class="pre">SalesGPTAPI.do()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="salesgpt.salesgptapi.html#salesgpt.salesgptapi.SalesGPTAPI.do_stream"><code class="docutils literal notranslate"><span class="pre">SalesGPTAPI.do_stream()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="salesgpt.salesgptapi.html#salesgpt.salesgptapi.SalesGPTAPI.initialize_agent"><code class="docutils literal notranslate"><span class="pre">SalesGPTAPI.initialize_agent()</span></code></a></li>
@@ -187,7 +187,14 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="salesgpt.tools.html">salesgpt.tools module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="salesgpt.tools.html#salesgpt.tools.completion_bedrock"><code class="docutils literal notranslate"><span class="pre">completion_bedrock()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="salesgpt.tools.html#salesgpt.tools.generate_calendly_invitation_link"><code class="docutils literal notranslate"><span class="pre">generate_calendly_invitation_link()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="salesgpt.tools.html#salesgpt.tools.generate_stripe_payment_link"><code class="docutils literal notranslate"><span class="pre">generate_stripe_payment_link()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="salesgpt.tools.html#salesgpt.tools.get_mail_body_subject_from_query"><code class="docutils literal notranslate"><span class="pre">get_mail_body_subject_from_query()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="salesgpt.tools.html#salesgpt.tools.get_product_id_from_query"><code class="docutils literal notranslate"><span class="pre">get_product_id_from_query()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="salesgpt.tools.html#salesgpt.tools.get_tools"><code class="docutils literal notranslate"><span class="pre">get_tools()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="salesgpt.tools.html#salesgpt.tools.send_email_tool"><code class="docutils literal notranslate"><span class="pre">send_email_tool()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="salesgpt.tools.html#salesgpt.tools.send_email_with_gmail"><code class="docutils literal notranslate"><span class="pre">send_email_with_gmail()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="salesgpt.tools.html#salesgpt.tools.setup_knowledge_base"><code class="docutils literal notranslate"><span class="pre">setup_knowledge_base()</span></code></a></li>
 </ul>
 </li>

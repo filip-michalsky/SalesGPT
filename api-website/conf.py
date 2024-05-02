@@ -14,6 +14,11 @@ import os
 import sys
 
 sys.path.insert(0, os.path.abspath(".."))  # Source path
+# Load environment variables from .env file in the parent directory
+from dotenv import load_dotenv
+load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
+# Load GTAG_API from the .env file
+GTAG_API = os.getenv("GTAG_API", "")
 
 
 # -- Project information -----------------------------------------------------
@@ -28,23 +33,18 @@ author = "Filip-Michalsky"
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-<<<<<<< HEAD
 extensions = ['sphinx.ext.autodoc',
               #"sphinxcontrib.googleanalytics",
               #'sphinxcontrib.gtagjs'
 ]
 
-#googleanalytics_id = "GTM-NX3SZD79"
-
-#gtagjs_ids = ['GTM-NX3SZD79']
-
-GOOGLE_TAG_MANAGER_SNIPPET = """
+GOOGLE_TAG_MANAGER_SNIPPET = f"""
 <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({
-'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+<script>(function(w,d,s,l,i){{w[l]=w[l]||[];w[l].push({{
+'gtm.start': new Date().getTime(),event:'gtm.js'}});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-NX3SZD79');</script>
+}})(window,document,'script','dataLayer',{GTAG_API});</script>
 <!-- End Google Tag Manager -->
 """
 
@@ -58,12 +58,9 @@ def setup(app):
 
 
 templates_path = ['_templates']
-=======
-extensions = ["sphinx.ext.autodoc"]
 
-# Add any paths that contain templates here, relative to this directory.
-templates_path = ["_templates"]
->>>>>>> 2ebf6b7e8f2cecc5d42775c72d004d428912a2fe
+
+
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
