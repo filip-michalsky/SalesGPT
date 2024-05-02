@@ -15,10 +15,10 @@ import sys
 
 sys.path.insert(0, os.path.abspath(".."))  # Source path
 # Load environment variables from .env file in the parent directory
-from dotenv import load_dotenv
-load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
+#from dotenv import load_dotenv
+#load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
 # Load GTAG_API from the .env file
-GTAG_API = os.getenv("GTAG_API", "")
+GTAG_API = os.environ.get("GTAG_API", "")
 
 
 # -- Project information -----------------------------------------------------
