@@ -323,6 +323,12 @@ This setup is ideal for developers looking to integrate SalesGPT's backend into 
 
 All tests should pass. Warnings can be ignored.
 
+## Repair your setup
+
+Regular updates are added to the SalesGPT repository. If your code is not working please check the current README file for possible changes in launch. With updates often extra environment variables are added, which are however required for certain functionality. Please check current .env.example file. 
+
+For any problems you can not solve please don't hesitate to reach out to our discord #support channel. 
+
 ## Uninstall SalesGPT
 
 To delete the virtual environment you used for SalesGPT programming and your SalesGPT repository from your system navigate to the directory where you installed your virtual environment and cloned SalesGPT and run: 
