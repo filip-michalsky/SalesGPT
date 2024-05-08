@@ -1,11 +1,30 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VH1ZNBVHSP"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-VH1ZNBVHSP');
+    </script>
+    
+        <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-NX3SZD79"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            
+            gtag('config', 'GTM-NX3SZD79');
+            
+        </script>
+    
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>salesgpt.logger module &mdash; SalesGPT  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=a36129ee" />
 
@@ -19,6 +38,17 @@
         <script src="../_static/documentation_options.js?v=5929fcd5"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NX3SZD79');</script>
+<!-- End Google Tag Manager -->
+</script>
+        <script>https://www.googletagmanager.com/gtag/js?id=GTM-NX3SZD79</script>
+        <script>google_analytics_tracker.js</script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -114,8 +144,8 @@ If deemed appropriate, the record may be modified in-place.</p>
 <dt class="sig sig-object py" id="salesgpt.logger.time_logger">
 <span class="sig-prename descclassname"><span class="pre">salesgpt.logger.</span></span><span class="sig-name descname"><span class="pre">time_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#salesgpt.logger.time_logger" title="Link to this definition"></a></dt>
 <dd><p>Decorator function to log the time taken by any function.</p>
-<p>This decorator logs the execution time of the decorated function. It logs the start time before the function 
-execution, the end time after the function execution, and calculates the execution time. The function name and 
+<p>This decorator logs the execution time of the decorated function. It logs the start time before the function
+execution, the end time after the function execution, and calculates the execution time. The function name and
 execution time are then logged at the INFO level.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>func (Callable): The function to be decorated.</p>

@@ -1,5 +1,11 @@
 Updates to the SalesGPT project: Building the world's best AI Sales Agents and virtual workers.
 
+May 8, 2024
+---------------
+Version 0.1.3
+- SalesGPT has analytics tracking built into documentation for improved understanding of important features and update necessities
+- Added option for local frontend startup with ENVIRONMENT variable
+
 March 22, 2024
 ---------------
 Version 0.1.2

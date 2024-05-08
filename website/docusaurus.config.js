@@ -4,6 +4,13 @@
 // There are various equivalent ways to declare your Docusaurus config.
 // See: https://docusaurus.io/docs/api/docusaurus-config
 
+// Removed dotenv require and config as it's causing module not found error
+// const dotenv = require('dotenv');
+// dotenv.config({ path: '../.env' });
+
+const GTAG_DOC = process.env.GTAG_DOC;
+const GTMAN_DOC = process.env.GTMAN_DOC;
+
 import {themes as prismThemes} from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
@@ -57,6 +64,13 @@ const config = {
         //},
         theme: {
           customCss: './src/css/custom.css',
+        },
+        gtag: {
+          trackingID: GTAG_DOC,
+          anonymizeIP: true,
+        },
+        googleTagManager: {
+            containerId: GTMAN_DOC,
         },
       }),
     ],
@@ -143,3 +157,4 @@ const config = {
 };
 
 export default config;
+
