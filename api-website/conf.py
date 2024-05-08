@@ -12,21 +12,17 @@
 #
 import os
 import sys
-
-sys.path.insert(0, os.path.abspath(".."))  # Source path
-# Load environment variables from .env file in the parent directory
-#from dotenv import load_dotenv
-#load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
-# Load GTAG_API from the .env file
-GTAG_API = os.environ.get("GTAG_API", "")
+sys.path.insert(0, os.path.abspath('..')) #Source path
 
 
 # -- Project information -----------------------------------------------------
 
-project = "SalesGPT"
-copyright = "2024, Filip-Michalsky"
-author = "Filip-Michalsky"
+project = 'SalesGPT'
+copyright = '2024, Filip-Michalsky'
+author = 'Filip-Michalsky'
 
+import os
+googleanalytics_id = os.getenv('googleanalytics_id')
 
 # -- General configuration ---------------------------------------------------
 
@@ -34,38 +30,18 @@ author = "Filip-Michalsky"
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = ['sphinx.ext.autodoc',
-              'sphinxcontrib.googleanalytics',
-              'sphinxcontrib.gtagjs'
+              'sphinxcontrib.googleanalytics'
 ]
 
-theme_analytics_id = 'GTM-NX3SZD79'
-GTAG_API = 'GTM-NX3SZD79'
-gtagjs_ids = [
-    'GTM-NX3SZD79',
-]
 
-GTAG_JS = """
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-NX3SZD79');</script>
-<!-- End Google Tag Manager -->
-"""
-googleanalytics_id = "G-VH1ZNBVHSP"
 
-def setup(app):
-    app.add_js_file(None, body=GTAG_JS)
-    app.add_js_file(None, body="https://www.googletagmanager.com/gtag/js?id=GTM-NX3SZD79")
-    app.add_js_file(None, body="google_analytics_tracker.js")
-
+# Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 
 # -- Options for HTML output -------------------------------------------------
@@ -73,14 +49,12 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = "sphinx_rtd_theme"
+html_theme = 'sphinx_rtd_theme'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ["_static"]
+html_static_path = ['_static']
 html_css_files = [
-    "custom.css",  # add your custom CSS file here
+    'custom.css',  # add your custom CSS file here
 ]
-
-html_additional_pages = {'layout': '../_templates/layout.html'}
