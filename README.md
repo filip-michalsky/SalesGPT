@@ -387,6 +387,7 @@ Lead Maintaner: Filip Michalsky
 Our Support Team: 
 
 - AI Engineering: Honza Michna ([LinkedIn](https://www.linkedin.com/in/jan-michna-998b78132/))
+- Software Engineer: Illia Makovoz
 
 # How to Contribute
 
