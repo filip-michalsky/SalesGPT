@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 3
 
 ---
 
@@ -25,7 +25,7 @@ To create an App Password, follow these steps:
 5. Use the generated password as the value for `GMAIL_APP_PASSWORD` in your environment variables.
 
 By setting these environment variables correctly, the sales agent will be able to send emails using the specified Gmail account.
-![Gmail Tool Functionality](/img/tools/Gmail.png)
+![Is this setup correctly?](/static/img/tools/Gmail.png)
 
 This screenshot demonstrates the Gmail tool in action, showcasing how the sales agent can seamlessly integrate and utilize Gmail for email communications directly from the platform.
 
