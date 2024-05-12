@@ -129,7 +129,7 @@ export function ChatInterface() {
 
     // Call the function to fetch the bot name
     fetchBotName();
-  }, []); // Empty dependency array means it runs once on mount
+  }, [botName, session_id]); // Include botName and session_id in the dependency array
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
