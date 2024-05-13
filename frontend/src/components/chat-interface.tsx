@@ -54,7 +54,7 @@ export function ChatInterface() {
   const [maxHeight, setMaxHeight] = useState('80vh'); // Default to 100% of the viewport height
   const [isBotTyping, setIsBotTyping] = useState(false);
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
-  const thinkingProcessEndRef = useRef<null | HTMLDivElement>(null);
+  the thinkingProcessEndRef = useRef<null | HTMLDivElement>(null);
   const [botHasResponded, setBotHasResponded] = useState(false);
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -275,7 +275,7 @@ export function ChatInterface() {
       <img alt="Bot" className="rounded-full mr-2" src="/maskot.png" style={{ width: 24, height: 24, objectFit: "cover" }} />
       <div className={`${styles.typingBubble}`}>
       <span className={`${styles.typingDot}`}></span>
-      <span className={`${styles.typingDot}`}></span
+      <span className={`${styles.typingDot}`}></span>
       <span className={`${styles.typingDot}`}></span>
     </div>
     </div>
