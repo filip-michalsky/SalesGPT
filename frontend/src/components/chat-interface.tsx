@@ -102,14 +102,15 @@ export function ChatInterface() {
       }
 
       try {
+        let response;
         if (process.env.NEXT_ENVIRONMENT === "production") {
-          const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/botname`, {
+          response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/botname`, {
             headers: {
               'Authorization': `Bearer ${process.env.NEXT_PUBLIC_AUTH_KEY}`
             },
           });
         } else {
-          const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/botname`);
+          response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/botname`);
         }
 
         if (!response.ok) {
