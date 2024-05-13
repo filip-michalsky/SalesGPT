@@ -111,6 +111,7 @@ export function ChatInterface() {
           response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/botname`, {
             headers: headers,
           });
+          
         } else {
           response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/botname`);
         }
