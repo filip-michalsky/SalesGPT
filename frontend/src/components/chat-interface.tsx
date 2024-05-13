@@ -10,7 +10,7 @@ import rehypeRaw from 'rehype-raw';
 import { PostHog } from 'posthog-node'
 
 let client: PostHog | undefined;
-if (process.env.NEXT_NEXT_ENVIRONMENT === "production") {
+if (process.env.NEXT_ENVIRONMENT === "production") {
   client = new PostHog(
     `${process.env.NEXT_PUBLIC_POSTHOG_ID}`,    
     { host: 'https://app.posthog.com',
@@ -54,7 +54,7 @@ export function ChatInterface() {
   const [maxHeight, setMaxHeight] = useState('80vh'); // Default to 100% of the viewport height
   const [isBotTyping, setIsBotTyping] = useState(false);
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
-  the thinkingProcessEndRef = useRef<null | HTMLDivElement>(null);
+  const thinkingProcessEndRef = useRef<null | HTMLDivElement>(null);
   const [botHasResponded, setBotHasResponded] = useState(false);
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -75,7 +75,7 @@ export function ChatInterface() {
   useEffect(() => {
     // This function will be called on resize events
     const handleResize = () => {
-      setMaxHeight(`${window.innerHeight}-200px`);
+      setMaxHeight(`${window.innerHeight - 200}px`);
     };
   
     // Set the initial value when the component mounts
