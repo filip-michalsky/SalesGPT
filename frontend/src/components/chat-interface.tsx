@@ -89,6 +89,10 @@ export function ChatInterface() {
   }, []);
   
   useEffect(() => {
+      console.log('NEXT_PUBLIC_AUTH_KEY:', process.env.NEXT_PUBLIC_AUTH_KEY);
+      console.log('NEXT_ENVIRONMENT:', process.env.NEXT_ENVIRONMENT);
+      console.log('NEXT_PUBLIC_API_URL:', process.env.NEXT_PUBLIC_API_URL);
+    
     // Function to fetch the bot name
     const fetchBotName = async () => {
       if (process.env.NEXT_ENVIRONMENT === "production" && client) {
