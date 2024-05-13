@@ -91,7 +91,7 @@ export function ChatInterface() {
   useEffect(() => {
     // Function to fetch the bot name
     const fetchBotName = async () => {
-      if (process.env.NEXT_ENVIRONMENT === "production" && client) {
+      if (process.env.NEXT_ENVIRONMENT === "production") {
         client.capture({
           distinctId: session_id,
           event: 'fetched-bot-name',
@@ -102,18 +102,15 @@ export function ChatInterface() {
       }
 
       try {
-        const headers: Record<string, string> = {
-          'Content-Type': 'application/json'
-        };
-
         if (process.env.NEXT_ENVIRONMENT === "production") {
-          headers['Authorization'] = `Bearer ${process.env.NEXT_PUBLIC_AUTH_KEY}`;
+          const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/botname`, {
+            headers: {
+              'Authorization': `Bearer ${process.env.NEXT_PUBLIC_AUTH_KEY}`
+            },
+          });
+        } else {
+          const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/botname`);
         }
-
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/botname`, {
-          method: 'GET',
-          headers: headers,
-        });
 
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.statusText}`);
@@ -145,7 +142,7 @@ export function ChatInterface() {
   };
 
   const handleBotResponse = async (userMessage: string) => {
-    if (process.env.NEXT_ENVIRONMENT === "production" && client) {
+    if (process.env.NEXT_ENVIRONMENT === "production") {
       client.capture({
         distinctId: session_id,
         event: 'sent-message',
