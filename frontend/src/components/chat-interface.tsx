@@ -89,9 +89,6 @@ export function ChatInterface() {
   }, []);
   
   useEffect(() => {
-      console.log('NEXT_PUBLIC_AUTH_KEY:', process.env.NEXT_PUBLIC_AUTH_KEY);
-      console.log('NEXT_ENVIRONMENT:', process.env.NEXT_ENVIRONMENT);
-      console.log('NEXT_PUBLIC_API_URL:', process.env.NEXT_PUBLIC_API_URL);
     
     // Function to fetch the bot name
     const fetchBotName = async () => {
@@ -107,11 +104,12 @@ export function ChatInterface() {
 
       try {
         let response;
+        const headers: Record<string, string> = {};
         if (process.env.NEXT_ENVIRONMENT === "production") {
+          console.log('Authorization Key:', process.env.NEXT_PUBLIC_AUTH_KEY); // Add this line
+          headers['Authorization'] = `Bearer ${process.env.NEXT_PUBLIC_AUTH_KEY}`;
           response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/botname`, {
-            headers: {
-              'Authorization': `Bearer ${process.env.NEXT_PUBLIC_AUTH_KEY}`
-            },
+            headers: headers,
           });
         } else {
           response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/botname`);
@@ -146,6 +144,13 @@ export function ChatInterface() {
     setInputValue('');
   };
 
+  useEffect(() => {
+    console.log('NEXT_PUBLIC_AUTH_KEY:', process.env.NEXT_PUBLIC_AUTH_KEY);
+    console.log('NEXT_ENVIRONMENT:', process.env.NEXT_ENVIRONMENT);
+    console.log('NEXT_PUBLIC_API_URL:', process.env.NEXT_PUBLIC_API_URL);
+  }, []);
+  
+
   const handleBotResponse = async (userMessage: string) => {
     if (process.env.NEXT_ENVIRONMENT === "production" && client) {
       client.capture({
@@ -170,6 +175,7 @@ export function ChatInterface() {
       };
 
       if (process.env.NEXT_ENVIRONMENT === "production") {
+        console.log('Authorization Key:', process.env.NEXT_PUBLIC_AUTH_KEY); // Add this line
         headers['Authorization'] = `Bearer ${process.env.NEXT_PUBLIC_AUTH_KEY}`;
       }
 
@@ -268,7 +274,7 @@ export function ChatInterface() {
       <img alt="Bot" className="rounded-full mr-2" src="/maskot.png" style={{ width: 24, height: 24, objectFit: "cover" }} />
       <div className={`${styles.typingBubble}`}>
       <span className={`${styles.typingDot}`}></span>
-      <span className={`${styles.typingDot}`}></span>
+      <span className={`${styles.typingDot}`}></span
       <span className={`${styles.typingDot}`}></span>
     </div>
     </div>
