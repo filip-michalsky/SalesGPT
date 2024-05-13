@@ -91,7 +91,7 @@ export function ChatInterface() {
   useEffect(() => {
     // Function to fetch the bot name
     const fetchBotName = async () => {
-      if (process.env.NEXT_ENVIRONMENT === "production") {
+      if (process.env.NEXT_ENVIRONMENT === "production" && client) {
         client.capture({
           distinctId: session_id,
           event: 'fetched-bot-name',
@@ -142,7 +142,7 @@ export function ChatInterface() {
   };
 
   const handleBotResponse = async (userMessage: string) => {
-    if (process.env.NEXT_ENVIRONMENT === "production") {
+    if (process.env.NEXT_ENVIRONMENT === "production" && client) {
       client.capture({
         distinctId: session_id,
         event: 'sent-message',
