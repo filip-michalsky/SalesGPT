@@ -323,6 +323,12 @@ This setup is ideal for developers looking to integrate SalesGPT's backend into 
 
 All tests should pass. Warnings can be ignored.
 
+## Repair your setup
+
+Regular updates are added to the SalesGPT repository. If your code is not working please check the current README file for possible changes in launch. With updates often extra environment variables are added, which are however required for certain functionality. Please check current .env.example file. 
+
+For any problems you can not solve please don't hesitate to reach out to our discord #support channel. 
+
 ## Uninstall SalesGPT
 
 To delete the virtual environment you used for SalesGPT programming and your SalesGPT repository from your system navigate to the directory where you installed your virtual environment and cloned SalesGPT and run: 
@@ -352,22 +358,25 @@ For futher reading take a look at the [docs](https://docs.smith.langchain.com/)
 
 # Roadmap
 
-1) Write more documentation
-3) Better code documentation
-4) Refactor
-5) ~~Improve reliability of the parser [issue here](https://github.com/filip-michalsky/SalesGPT/issues/26) and [here](https://github.com/filip-michalsky/SalesGPT/issues/25)~~
-7) Improve Deployment Instructions
-8) Calling Functionality - sample code
-9) Enterprise-Grade Security - integration with [PromptArmor](https://promptarmor.com/) to protect your AI Sales Agents against security vulnerabilities
-10) LLM evaluations 
-11) Resolve tickets and PRs (ongoing)
-12) Add example implementation of OpenAI functions agent[issue here](https://github.com/filip-michalsky/SalesGPT/issues/17)
-13) Add support for multiple tools [issue here](https://github.com/filip-michalsky/SalesGPT/issues/10)
-14) Add an agent controller for when stages need to be traversed linearly without skips [issue here](https://github.com/filip-michalsky/SalesGPT/issues/19)
-15) Add `tool_getter` to choose a tool based on vector distance to the tasks needed to be done
-16) What tools should the agent have? (e.g., the ability to search the internet)
-17) Add the ability of Sales Agent to interact with AI plugins on your website (.well-known/ai-plugin.json)
-18) More SalesGPT examples
+1) Improve SalesGPT observability
+2) Enhance prompt versioning
+3) Add prompt evaluation
+4) Write more documentation
+5) Better code documentation
+6) Refactor
+7) ~~Improve reliability of the parser [issue here](https://github.com/filip-michalsky/SalesGPT/issues/26) and [here](https://github.com/filip-michalsky/SalesGPT/issues/25)~~
+8) Improve Deployment Instructions
+9) Calling Functionality - sample code
+10) Enterprise-Grade Security - integration with [PromptArmor](https://promptarmor.com/) to protect your AI Sales Agents against security vulnerabilities
+11) LLM evaluations 
+12) Resolve tickets and PRs (ongoing)
+13) Add example implementation of OpenAI functions agent[issue here](https://github.com/filip-michalsky/SalesGPT/issues/17)
+14) Add support for multiple tools [issue here](https://github.com/filip-michalsky/SalesGPT/issues/10)
+15) Add an agent controller for when stages need to be traversed linearly without skips [issue here](https://github.com/filip-michalsky/SalesGPT/issues/19)
+16) Add `tool_getter` to choose a tool based on vector distance to the tasks needed to be done
+17) What tools should the agent have? (e.g., the ability to search the internet)
+18) Add the ability of Sales Agent to interact with AI plugins on your website (.well-known/ai-plugin.json)
+19) More SalesGPT examples
 
 
 # About the Team
@@ -381,6 +390,7 @@ Lead Maintaner: Filip Michalsky
 Our Support Team: 
 
 - AI Engineering: Honza Michna ([LinkedIn](https://www.linkedin.com/in/jan-michna-998b78132/))
+- Software Engineer: Illia Makovoz
 
 # How to Contribute
 

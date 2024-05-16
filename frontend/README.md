@@ -22,6 +22,11 @@ After starting the server, the application will be available at [localhost:3000/
 
 This frontend application is designed to work in conjunction with a FastAPI backend. To initiate the backend server, execute the following command from the SalesGPT/ directory: `uvicorn run_api:app --port 8000`
 
+
+## Setup help 
+If you want your setup to enable local startup using our frontend please make sure the ENVIRONMENT environment variable is set to a different value than "deployment". 
+
+
 ## Contributing
 
 We welcome contributions to the SalesGPT frontend application. Please feel free to submit pull requests or open issues to suggest improvements or add new features.

@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "./start-dev.sh",
+    "vercel-dev": "nodemon --watch pages --watch components --exec \"next dev\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
