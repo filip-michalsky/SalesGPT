@@ -364,19 +364,23 @@ For futher reading take a look at the [docs](https://docs.smith.langchain.com/)
 4) Write more documentation
 5) Better code documentation
 6) Refactor
-7) ~~Improve reliability of the parser [issue here](https://github.com/filip-michalsky/SalesGPT/issues/26) and [here](https://github.com/filip-michalsky/SalesGPT/issues/25)~~
-8) Improve Deployment Instructions
-9) Calling Functionality - sample code
-10) Enterprise-Grade Security - integration with [PromptArmor](https://promptarmor.com/) to protect your AI Sales Agents against security vulnerabilities
-11) LLM evaluations 
-12) Resolve tickets and PRs (ongoing)
-13) Add example implementation of OpenAI functions agent[issue here](https://github.com/filip-michalsky/SalesGPT/issues/17)
-14) Add support for multiple tools [issue here](https://github.com/filip-michalsky/SalesGPT/issues/10)
-15) Add an agent controller for when stages need to be traversed linearly without skips [issue here](https://github.com/filip-michalsky/SalesGPT/issues/19)
-16) Add `tool_getter` to choose a tool based on vector distance to the tasks needed to be done
-17) What tools should the agent have? (e.g., the ability to search the internet)
-18) Add the ability of Sales Agent to interact with AI plugins on your website (.well-known/ai-plugin.json)
-19) More SalesGPT examples
+7) Add tutorials on Langsmith, PromptArmor, PromptLayer etc. 
+8) ~~Improve reliability of the parser [issue here](https://github.com/filip-michalsky/SalesGPT/issues/26) and [here](https://github.com/filip-michalsky/SalesGPT/issues/25)~~
+9) Improve Deployment Instructions
+10) Calling Functionality - sample code
+11) Enterprise-Grade Security - integration with [PromptArmor](https://promptarmor.com/) to protect your AI Sales Agents against security vulnerabilities
+12) LLM evaluations 
+13) Resolve tickets and PRs (ongoing)
+14) Add example implementation of OpenAI functions agent[issue here](https://github.com/filip-michalsky/SalesGPT/issues/17)
+15) Add support for multiple tools [issue here](https://github.com/filip-michalsky/SalesGPT/issues/10)
+16) Add an agent controller for when stages need to be traversed linearly without skips [issue here](https://github.com/filip-michalsky/SalesGPT/issues/19)
+17) Add `tool_getter` to choose a tool based on vector distance to the tasks needed to be done
+18) What tools should the agent have? (e.g., the ability to search the internet)
+19) Add the ability of Sales Agent to interact with AI plugins on your website (.well-known/ai-plugin.json)
+20) More SalesGPT examples
+21) Add PromptLayer for prompt evaluation
+22) Increase prompt security to prevent unauthorized access to the system prompt or changes to the bot's behavior
+23) Add LangSmith Tracing for testing, evaluation and debugging chains
 
 
 # About the Team
