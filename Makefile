@@ -16,6 +16,12 @@ test:	## run tests with pytest.
 	@pytest --cov=salesgpt --cov-report=term-missing --cov-report=html
 	@echo "Tests executed."
 
+test_tools: 
+	@echo "Running tests in tests/test_tools.py..."
+	@pytest tests/test_tools.py --cov=salesgpt --cov-report=term-missing --cov-report=html
+	@echo "Tests in tests/test_tools.py executed."
+
+
 # Set up the development environment
 setup:
 	pip install -U pip setuptools
