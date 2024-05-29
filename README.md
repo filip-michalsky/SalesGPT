@@ -29,6 +29,7 @@ We are building SalesGPT to power your best AI Sales Agents. Hence, we would lov
 
 ## :red_circle: Latest News
 
+- The AI Agent can access data from any data system (new, old or legacy) via an integration to [Mindware](https://www.mindware.co/)'s AI Solutions Engineer.
 - AI Sales Agents can now ACTUALLY sell! They autonomously generate Stripe payment links to sell products and services to customers.
 - You can now test your AI Sales Agents via our frontend.
 - Sales Agent can now take advantage of **tools**, such as look up products in a product catalog!
@@ -76,6 +77,9 @@ The AI Sales Agent understands the conversation stage (you can define your own s
 
 ### Close sales:
 -  The AI Agent can actually close sales by generating Stripe payment link and closing orders from customers.
+
+### Connect to ANY data system:
+- The AI Agent can leverage data from any data system (new, old or legacy) via an integration to [Mindware](https://www.mindware.co/).
 
 ### Automated Email Communication:
 - Enhance your sales process with automated email communication. SalesGPT can now send personalized emails to prospects, including follow-ups or product information. 
