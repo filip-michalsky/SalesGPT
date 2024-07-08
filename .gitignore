@@ -133,6 +133,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+website/docs/.env
 
 # Spyder project settings
 .spyderproject

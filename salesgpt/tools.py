@@ -24,7 +24,7 @@ def setup_knowledge_base(
     with open(product_catalog, "r") as f:
         product_catalog = f.read()
 
-    text_splitter = CharacterTextSplitter(chunk_size=10, chunk_overlap=0)
+    text_splitter = CharacterTextSplitter(chunk_size=5000, chunk_overlap=200)
     texts = text_splitter.split_text(product_catalog)
 
     llm = ChatOpenAI(model_name="gpt-4-0125-preview", temperature=0)
