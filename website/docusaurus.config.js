@@ -90,7 +90,7 @@ const config = {
         
         items: [
         {
-          to: '/Use_Cases/Basic_uses',
+          to: '/Use_Cases/Mattress_salesman',
           position: 'left',
           label: 'Use Cases',
         },
