@@ -1,0 +1,39 @@
+McDonald's Product 1: Big Mac
+Description: The Big Mac is a classic burger featuring two 100% beef patties, special sauce, lettuce, cheese, pickles, and onions on a sesame seed bun.
+Price: $3.99
+
+McDonald's Product 2: Quarter Pounder with Cheese
+Description: The Quarter Pounder with Cheese includes a quarter-pound 100% beef patty, two slices of cheese, onions, pickles, mustard, and ketchup on a sesame seed bun.
+Price: $4.29
+
+McDonald's Product 3: McChicken
+Description: The McChicken is a crispy chicken sandwich with shredded lettuce and mayonnaise on a toasted bun.
+Price: $1.29
+
+McDonald's Product 4: Filet-O-Fish
+Description: The Filet-O-Fish features a fish filet patty, tartar sauce, and a slice of cheese on a steamed bun.
+Price: $3.79
+
+McDonald's Product 5: Chicken McNuggets
+Description: Chicken McNuggets are bite-sized pieces of tender, juicy chicken, coated in a crispy breading. Available in 6, 10, 20, and 40 pieces.
+Price: $2.99 (6 pieces), $4.49 (10 pieces), $8.99 (20 pieces), $15.99 (40 pieces)
+
+McDonald's Product 6: French Fries
+Description: McDonald's French Fries are world-famous for their crispy exterior and fluffy interior, made from premium potatoes.
+Price: $1.39 (Small), $1.79 (Medium), $2.19 (Large)
+
+McDonald's Product 7: Happy Meal
+Description: The Happy Meal includes a choice of a hamburger, cheeseburger, or 4-piece Chicken McNuggets, along with kid-sized fries, apple slices, and a drink. Comes with a toy.
+Price: $3.49
+
+McDonald's Product 8: Egg McMuffin
+Description: The Egg McMuffin is a breakfast sandwich with a freshly cracked egg, Canadian bacon, and American cheese on a toasted English muffin.
+Price: $2.79
+
+McDonald's Product 9: Sausage Burrito
+Description: The Sausage Burrito is a warm flour tortilla filled with scrambled eggs, sausage, melted cheese, green chiles, and onions.
+Price: $1.29
+
+McDonald's Product 10: McFlurry
+Description: The McFlurry is a creamy, soft-serve ice cream dessert mixed with your choice of Oreo or M&M's candies.
+Price: $2.39
