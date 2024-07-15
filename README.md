@@ -29,7 +29,7 @@ We are building SalesGPT to power your best AI Sales Agents. Hence, we would lov
 
 # Need Help with building GenAI/LLM applications?
 
-If you need assistance, our team is here to help! Please reach out to us at [Odyssey AI Partners](https://www.odysseypartners.ai) for expert support and guidance.
+If you need assistance, our team is here to help! Please reach out to us at [Odyssey AI Partners](https://www.odysseypartners.ai?utm_source=github&utm_medium=readme&utm_campaign=salesgpt) for expert support and guidance.
 
 ## :red_circle: Latest News
 
