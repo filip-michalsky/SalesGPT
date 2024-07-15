@@ -27,9 +27,9 @@ Morever, SalesGPT has access to tools, such as your own pre-defined product know
 
 We are building SalesGPT to power your best AI Sales Agents. Hence, we would love to learn more about use cases you are building towards which will fuel SalesGPT development roadmap, so please don't hesitate to reach out.
 
-# Need Help with Your GenAI Tools?
+# Need Help with building GenAI/LLM applications?
 
-If you need assistance with your generative AI tools, our team is here to help! Reach out to us at [Odyssey Partners](https://www.odysseypartners.ai) for expert support and guidance.
+If you need assistance, our team is here to help! Please reach out to us at [Odyssey AI Partners](https://www.odysseypartners.ai) for expert support and guidance.
 
 ## :red_circle: Latest News
 
