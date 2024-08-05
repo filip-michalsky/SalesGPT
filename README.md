@@ -33,7 +33,6 @@ If you need assistance, our team is here to help! Please reach out to us at [Ody
 
 ## :red_circle: Latest News
 
-- The AI Agent can access data from any data system (new, old or legacy) via an integration to [Mindware](https://www.mindware.co/)'s AI Solutions Engineer.
 - AI Sales Agents can now ACTUALLY sell! They autonomously generate Stripe payment links to sell products and services to customers.
 - You can now test your AI Sales Agents via our frontend.
 - Sales Agent can now take advantage of **tools**, such as look up products in a product catalog!
