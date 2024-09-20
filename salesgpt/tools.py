@@ -4,11 +4,14 @@ import os
 import boto3
 import requests
 from langchain.agents import Tool
+from langchain.agents import load_tools
 from langchain.chains import RetrievalQA
 from langchain.text_splitter import CharacterTextSplitter
 from langchain_community.chat_models import BedrockChat
 from langchain_community.vectorstores import Chroma
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langchain_community.tools import DuckDuckGoSearchRun
+from langchain_community.utilities import OpenWeatherMapAPIWrapper
 from litellm import completion
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -244,6 +247,17 @@ def generate_calendly_invitation_link(query):
         return f"url: {data['resource']['booking_url']}"
     else:
         return "Failed to create Calendly link: "
+    
+def search_web(query):
+    search = DuckDuckGoSearchRun()
+    return search.invoke(query)
+
+def weather_search(query):
+    OPENWEATHERMAP_API_KEY = os.getenv(
+        "OPENWEATHERMAP_API_KEY")
+    weather = OpenWeatherMapAPIWrapper()
+    print("IT worked")
+    return weather.run(query)
 
 def get_tools(product_catalog):
     # query to get_tools can be used to be embedded and relevant tools found
@@ -251,11 +265,18 @@ def get_tools(product_catalog):
 
     # we only use four tools for now, but this is highly extensible!
     knowledge_base = setup_knowledge_base(product_catalog)
-    tools = [
+    
+    tools = load_tools(["openweathermap-api"])
+    tools.extend([
         Tool(
             name="ProductSearch",
             func=knowledge_base.run,
             description="useful for when you need to answer questions about product information or services offered, availability and their costs.",
+        ),
+        Tool(
+            name="WebSearch",
+            func=search_web,
+            description="useful for when you need to search the web for information.",
         ),
         Tool(
             name="GeneratePaymentLink",
@@ -273,6 +294,6 @@ def get_tools(product_catalog):
             description='''Useful for when you need to create invite for a personal meeting in Sleep Heaven shop. 
             Sends a calendly invitation based on the query input.''',
         )
-    ]
+    ])
 
     return tools
