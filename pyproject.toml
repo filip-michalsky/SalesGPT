@@ -38,6 +38,7 @@ langchain-openai = "0.0.2"
 tokenizers = "^0.15.2"
 boto3 = ">=1.33.2,<1.34.35"
 aioboto3 = "^12.3.0"
+httpx = ">=0.27,<0.28"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.11.0"

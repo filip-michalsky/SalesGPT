@@ -38,6 +38,39 @@ If you need assistance, our team is here to help! Please reach out to us at [Ody
 - You can now test your AI Sales Agents via our frontend.
 - Sales Agent can now take advantage of **tools**, such as look up products in a product catalog!
 
+# Web research in sales conversations
+
+When `SalesGPT.from_llm(..., use_tools=True)` is used, the agent can search
+public sources with `WebSearch` and read a source URL with `WebFetch` through
+[Parallel Search MCP](https://docs.parallel.ai/integrations/mcp/search-mcp).
+Search uses Fast mode, with no account or search API key required. The existing
+`ProductSearch` remains the tool for your own catalog, pricing and availability.
+
+```python
+sales_agent = SalesGPT.from_llm(
+    llm,
+    use_tools=True,
+    product_catalog="examples/sample_product_catalog.txt",
+    search_provider="parallel",  # default when tools are enabled
+    search_timeout=30.0,  # HTTP timeout in seconds
+)
+sales_agent.seed_agent()
+```
+
+Set `search_provider="none"` to keep the catalog and sales tools without web
+access. `use_tools=False` continues to disable all tools. These settings can also
+be supplied in the JSON configuration loaded by `SalesGPTAPI`. Tool descriptions
+are sent to your configured model; queries and requested URLs are sent to
+Parallel only when a web tool is called. Do not include private customer data in
+web queries. Web content is external evidence and must not override the agent's
+instructions or catalog facts.
+
+Search and fetch share an opaque ID for each conversation, including follow-up
+turns. `seed_agent()` starts a new conversation and resets that ID. Anonymous
+usage has rate limits; failures are returned as tool observations so the agent
+can explain that research was unavailable. Sync and async conversation steps are
+supported; the existing token-streaming path does not execute tools.
+
 # Demos and Use Cases
 
 <i>Unload AI Sales Agent Demos - Powered by SalesGPT:</i> *Our new virtual workforce?* 🤔

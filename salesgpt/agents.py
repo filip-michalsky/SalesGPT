@@ -25,6 +25,7 @@ from salesgpt.prompts import SALES_AGENT_TOOLS_PROMPT
 from salesgpt.stages import CONVERSATION_STAGES
 from salesgpt.templates import CustomPromptTemplateForTools
 from salesgpt.tools import get_tools, setup_knowledge_base
+from salesgpt.web_search import ParallelSearch
 
 
 def _create_retry_decorator(llm: Any) -> Callable[[Any], Any]:
@@ -68,6 +69,7 @@ class SalesGPT(Chain):
     model_name: str = "gpt-3.5-turbo-0613"  # TODO - make this an env variable
 
     use_tools: bool = False
+    web_search: Any = None
     salesperson_name: str = "Ted Lasso"
     salesperson_role: str = "Business Development Representative"
     company_name: str = "Sleep Haven"
@@ -129,6 +131,8 @@ class SalesGPT(Chain):
         """
         self.current_conversation_stage = self.retrieve_conversation_stage("1")
         self.conversation_history = []
+        if self.web_search is not None:
+            self.web_search.reset()
 
     @time_logger
     def determine_conversation_stage(self):
@@ -593,10 +597,17 @@ class SalesGPT(Chain):
             )
         sales_agent_executor = None
         knowledge_base = None
+        search_provider = kwargs.pop("search_provider", "parallel")
+        search_timeout = kwargs.pop("search_timeout", 30.0)
+        if search_provider not in ("parallel", "none"):
+            raise ValueError("search_provider must be 'parallel' or 'none'")
+        web_search = None
 
         if use_tools:
+            if search_provider == "parallel":
+                web_search = ParallelSearch(timeout=search_timeout)
             product_catalog = kwargs.pop("product_catalog", None)
-            tools = get_tools(product_catalog)
+            tools = get_tools(product_catalog, web_search=web_search)
 
             prompt = CustomPromptTemplateForTools(
                 template=SALES_AGENT_TOOLS_PROMPT,
@@ -617,7 +628,7 @@ class SalesGPT(Chain):
             llm_chain = LLMChain(llm=llm, prompt=prompt, verbose=verbose)
             tool_names = [tool.name for tool in tools]
             output_parser = SalesConvoOutputParser(
-                ai_prefix=kwargs.get("salesperson_name", ""), verbose=verbose
+                ai_prefix=kwargs.get("salesperson_name", "Ted Lasso"), verbose=verbose
             )
             sales_agent_with_tools = LLMSingleActionAgent(
                 llm_chain=llm_chain,
@@ -641,5 +652,6 @@ class SalesGPT(Chain):
             model_name=llm.model,
             verbose=verbose,
             use_tools=use_tools,
+            web_search=web_search,
             **kwargs,
         )
